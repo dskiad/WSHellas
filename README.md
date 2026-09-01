@@ -22,11 +22,15 @@ constitution, by-laws and dress code.
 | By-Laws | Regulations and operating rules |
 | Dress Code | Vest and patch regulations |
 
-## Honorary patent generator
+## GC DOC — the Grand Chancellor's documents
 
-`certificate.html` is a second, standalone page: a form that fills in the
-honorary patent of the **National Grand Lodge of Greece** and hands it back as a
-print-ready **A3 portrait PDF**.
+`gc-doc/` is a separate section of this repository: the documents of the
+Chancery of the **National Grand Lodge of Greece**, each one a form that fills
+in a sheet and hands it back as a print-ready **A3 portrait PDF**.
+[`gc-doc/index.html`](gc-doc/index.html) is the menu they all hang off.
+
+First of them is **Past Grand Officers** — the patent appointing a brother to
+past grand rank:
 
 | Field | Fills |
 | --- | --- |
@@ -39,23 +43,21 @@ print-ready **A3 portrait PDF**.
 
 Everything else on the patent — the wording, the arms, the chain collar, the
 seal and both signatures — is fixed. The date picker fills `DAY` and
-`MONTH & YEAR` in the right form (`24th`, `October 2025`), and the body copy
-scales itself down if a long rank or Grand Lodge name needs the room, so the
-text always sits inside the collar.
+`MONTH & YEAR` in the right form, and the body copy scales itself down if a
+long rank or Grand Lodge name needs the room, so the text always sits inside
+the collar.
 
-**Download PDF** saves the sheet directly. **Print** hands the same page to the
-browser's print dialogue, where *Save as PDF* produces a sharper file. The page
-carries its artwork, its two display faces (Great Vibes and Cinzel Decorative)
-and the PDF libraries inside itself, so both work with no network connection.
-The one thing it takes from the system is *Palatino Linotype* (falling back to
-Book Antiqua, then Palatino, then a Garamond) for the italic lines.
+Honorary Grand Officers and the letters of the Chancery come next; the menu
+lists them as in preparation. Artwork, display faces and the PDF engine are
+shared by every document in the folder, so a new one is a single small file —
+[`gc-doc/README.md`](gc-doc/README.md) says how to add it.
 
-Live at **https://dskiad.github.io/WSHellas/certificate.html**
+Live at **https://dskiad.github.io/WSHellas/gc-doc/**
 
 ## About this repository
 
-The site is a single file, `index.html`, plus the standalone
-`certificate.html` described above. Styles, scripts and all imagery
+The chapter site is a single file, `index.html`; the Chancery documents live
+beside it in `gc-doc/`. Styles, scripts and all imagery
 are embedded in it — images as data URIs — so the page is self-contained and
 needs no build step, no dependencies and no asset directory. The only external
 requests it makes are for the Google Fonts it uses (Cinzel, Cinzel Decorative,

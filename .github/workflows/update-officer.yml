@@ -1,0 +1,34 @@
+name: Update chapter officer
+on:
+  push:
+    paths:
+      - '.github/workflows/update-officer.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Update officer name
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("index.html")
+          s = p.read_text()
+          old = '<div class="officer-role">Master of Ceremonies</div><div class="officer-name">George Dryllis</div>'
+          new = '<div class="officer-role">Master of Ceremonies</div><div class="officer-name">Alexandros Epifanis</div>'
+          if old not in s:
+              raise SystemExit("Expected officer entry not found")
+          p.write_text(s.replace(old, new, 1))
+          PY
+          rm .github/workflows/update-officer.yml
+      - name: Commit change
+        run: |
+          git config user.name "Dimitrios Skiadopoulos"
+          git config user.email "grand.chancellor@nglgreece.gr"
+          git add index.html .github/workflows/update-officer.yml
+          git commit -m "Update Master of Ceremonies to Alexandros Epifanis"
+          git push origin HEAD:claude/repo-push-vfylka

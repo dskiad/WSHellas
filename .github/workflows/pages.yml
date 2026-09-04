@@ -22,16 +22,15 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Apply final Officers edition
+      - name: Publish final Officers edition
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import html, re
 
-          index = Path('index.html')
-          s = index.read_text(encoding='utf-8')
-
-          officers = [
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          officers=[
             ('President','Πρόεδρος','Dimitrios Skiadopoulos','Ηγείται του Chapter, προεδρεύει των συνεδριάσεων, κατευθύνει τη λειτουργία και τις δραστηριότητές του, εκπροσωπεί επίσημα το Chapter και μεριμνά για την εφαρμογή του Καταστατικού και του Εσωτερικού Κανονισμού.',True),
             ('Vice President','Αντιπρόεδρος','Dimitrios Panagakos','Είναι ο άμεσος συνεργάτης του Προέδρου. Τον υποστηρίζει στην άσκηση των καθηκόντων του και τον αναπληρώνει σε κάθε απουσία ή κώλυμά του. Συνοδεύει τον Πρόεδρο στις επίσημες εκδηλώσεις.',True),
             ('Secretary','Γραμματέας','Nikolaos Markopoulos','Είναι υπεύθυνος για τη διοικητική λειτουργία του Chapter. Τηρεί τα πρακτικά, το μητρώο των μελών, το αρχείο, την επίσημη αλληλογραφία και τις διοικητικές αναφορές. Όλα τα επίσημα έγγραφα του Chapter φέρουν τη σφραγίδα και την υπογραφή του. Είναι επίσης υπεύθυνος για την υπογραφή των καρτών μέλους του Chapter.',True),
@@ -42,101 +41,79 @@ jobs:
             ('Guardian of Membership','Έφορος Μελών','George Dryllis','Παρακολουθεί τα θέματα που αφορούν τα μέλη, την ιδιότητά τους και τη συμμόρφωσή τους προς τους κανόνες του Chapter. Μεριμνά για την ορθή χρήση των διακριτικών και για την προστασία της ιδιότητας του μέλους.',False),
             ('Master of Ceremonies','Τελετάρχης','Alexandros Epifanis','Είναι υπεύθυνος για το τελετουργικό και το πρωτόκολλο του Chapter. Οργανώνει τις επίσημες τελετές και εκδηλώσεις και συντονίζει την ομαλή εξέλιξη του προγράμματος.',False),
             ('Quartermaster','Επιμελητής',None,'Διαχειρίζεται την περιουσία και τον εξοπλισμό του Chapter, τα υλικά, τα διακριτικά, τα patches και κάθε άλλο αντικείμενο που ανήκει ή χρησιμοποιείται από το Chapter.',False),
-            ('Almoner','Ελεονόμος','Pavlos Sarof','Είναι υπεύθυνος για την αγαθοεργία και την κοινωνική μέριμνα του Chapter. Παρακολουθεί περιπτώσεις αδελφών ή άλλων προσώπων που χρειάζονται βοήθεια και συντονίζει τις σχετικές φιλανθρωπικές ενέργειες.',False),
+            ('Almoner','Ελεονόμος Αγαθοεργίας','Pavlos Sarof','Είναι υπεύθυνος για την αγαθοεργία και την κοινωνική μέριμνα του Chapter. Παρακολουθεί περιπτώσεις αδελφών ή άλλων προσώπων που χρειάζονται βοήθεια και συντονίζει τις σχετικές φιλανθρωπικές ενέργειες.',False),
             ('Ambassador','Πρέσβης','Pantelis Lathiotakis','Εκπροσωπεί το Chapter στις σχέσεις του με άλλα Motorcycle Clubs, Chapters και συναφείς οργανώσεις. Αναπτύσσει επικοινωνία, συνεργασίες και αδελφικούς δεσμούς.',False),
             ('Orator','Σύμβουλος','Andreas Tsounakos','Συμβουλεύει τον Πρόεδρο και το Chapter και συνδράμει στην επικοινωνία, στις επίσημες παρουσιάσεις, στις εκδηλώσεις και στη δημόσια εκπροσώπηση του Chapter.',False),
             ('Preparing Brother','Δοκιμαστής','Konstantinos Karmalis','Βασικό αξίωμα για την εισδοχή και τη μύηση νέου μέλους. Γνωρίζει και προετοιμάζει τον υποψήφιο, οργανώνει και επιβλέπει τη δοκιμασία που πρέπει να περάσει πριν κριθεί κατάλληλος να γίνει Widows Son και εισηγείται σχετικά για την ολοκλήρωση της εισδοχής του.',False),
             ('Steward','Επίτροπος Φιλοξενίας',None,'Μεριμνά για τη φιλοξενία των μελών και των επισκεπτών στις συναντήσεις και στις εκδηλώσεις του Chapter. Υποστηρίζει την πρακτική οργάνωση των εκδηλώσεων και βοηθά σε οτιδήποτε χρειαστεί για την ομαλή διεξαγωγή τους.',False),
           ]
 
-          road_by_name = {}
+          roads={}
           for _,_,name,_,_ in officers:
             if not name: continue
-            marker = f'<div class="officer-name">{name}</div>'
-            pos = s.find(marker)
-            if pos < 0: continue
-            r0 = s.find('<div class="officer-road">', pos)
-            if r0 >= 0 and r0-pos < 3000:
-              r1 = s.find('</div>', r0)
-              if r1 >= 0: road_by_name[name] = s[r0:r1+6]
+            m=f'<div class="officer-name">{name}</div>'; pos=s.find(m)
+            if pos<0: continue
+            a=s.find('<div class="officer-road">',pos)
+            if a>=0 and a-pos<3000:
+              b=s.find('</div>',a)
+              if b>=0: roads[name]=s[a:b+6]
 
-          def main_card(en, gr, name, duty, principal=False, lead=False):
-            cls='officer-card patch' + (' main-officer' if principal else '') + (' lead' if lead else '')
+          def card(en,gr,name,duty,principal=False,lead=False):
+            cls='officer-card patch'+(' main-officer' if principal else '')+(' lead' if lead else '')
             nm=html.escape(name) if name else 'Προς ορισμό'
-            nmc='officer-name' + ('' if name else ' vacant')
-            road=road_by_name.get(name,'') if name else ''
-            return f'''<div class="{cls}"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><div class="officer-role">{html.escape(en)}</div><div class="officer-title-gr">{html.escape(gr)}</div><div class="{nmc}">{nm}</div><div class="officer-duty"><span>Ρόλος</span>{html.escape(duty)}</div>{road}</div>'''
+            ncls='officer-name'+('' if name else ' vacant')
+            return f'<div class="{cls}"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><div class="officer-role">{html.escape(en)}</div><div class="officer-title-gr">{html.escape(gr)}</div><div class="{ncls}">{nm}</div><div class="officer-duty"><span>Ρόλος</span>{html.escape(duty)}</div>{roads.get(name,"") if name else ""}</div>'
 
-          grid=['<div class="officer-grid officers-2026">',
-                '<div class="officer-group-title founding"><b>Ειδική Ιδρυτική Ιδιότητα</b><span>Founding Distinction</span></div>',
-                '<div class="officer-card patch founding-president lead"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><div class="officer-role">Founding President</div><div class="officer-title-gr">Ιδρυτικός Πρόεδρος και Οικιστής</div><div class="officer-name">Dimitrios Skiadopoulos</div><div class="officer-duty"><span>Ιδρυτική Ιδιότητα</span>Ειδική και μόνιμη ιδρυτική διάκριση του Chapter. Δεν αποτελεί ξεχωριστό 16ο αξίωμα.</div>'+road_by_name.get('Dimitrios Skiadopoulos','')+'</div>',
-                '<div class="officer-group-title"><b>Κύριοι Αξιωματικοί</b><span>Principal Officers</span></div>']
-          for i,x in enumerate(officers[:6]): grid.append(main_card(*x, lead=(i==0)))
+          grid=['<div class="officer-grid officers-2026">','<div class="officer-group-title founding"><b>Ειδική Ιδρυτική Ιδιότητα</b><span>Founding Distinction</span></div>',f'<div class="officer-card patch founding-president lead"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><div class="officer-role">Founding President</div><div class="officer-title-gr">Ιδρυτικός Πρόεδρος και Οικιστής</div><div class="officer-name">Dimitrios Skiadopoulos</div><div class="officer-duty"><span>Ιδρυτική Ιδιότητα</span>Ειδική και μόνιμη ιδρυτική διάκριση του Chapter. Δεν αποτελεί ξεχωριστό 16ο αξίωμα.</div>{roads.get("Dimitrios Skiadopoulos","")}</div>','<div class="officer-group-title"><b>Κύριοι Αξιωματικοί</b><span>Principal Officers</span></div>']
+          for i,x in enumerate(officers[:6]): grid.append(card(*x,lead=(i==0)))
           grid.append('<div class="officer-group-title secondary"><b>Λοιποί Αξιωματικοί</b><span>Additional Officers</span></div>')
-          for x in officers[6:]: grid.append(main_card(*x))
+          for x in officers[6:]: grid.append(card(*x))
           grid.append('</div>')
-          new_grid=''.join(grid)
-
+          newgrid=''.join(grid)
           admin=s.find('<section id="administration">')
-          if admin < 0: raise SystemExit('Administration section not found')
+          if admin<0: raise SystemExit('administration section missing')
           start=s.find('<div class="officer-grid',admin)
-          if start < 0: raise SystemExit('Officer grid not found')
-          ends=[x for x in (s.find('<div class="const-offices"',start),s.find('</section>',start)) if x>=0]
-          if not ends: raise SystemExit('Officer grid end not found')
-          end=min(ends)
-          s=s[:start]+new_grid+s[end:]
+          if start<0: raise SystemExit('officer grid missing')
+          end_candidates=[x for x in (s.find('<div class="const-offices"',start),s.find('</section>',start)) if x>=0]
+          if not end_candidates: raise SystemExit('officer grid end missing')
+          s=s[:start]+newgrid+s[min(end_candidates):]
 
-          section_end=s.find('</section>',admin)
-          section=s[admin:section_end]
-          section=re.sub(r'<p class="lead">The Chapter is administered by <b>15 officers</b>.*?</p>', '<p class="lead">The Chapter is administered by <b>15 officers</b>. The first six positions constitute the <b>Principal Officers — Κύριοι Αξιωματικοί</b>. The <b>Founding President — Ιδρυτικός Πρόεδρος και Οικιστής</b> is a special permanent founding distinction and is not counted as a separate office.</p>', section, count=1, flags=re.S)
-          s=s[:admin]+section+s[section_end:]
-
+          # Add Officers beside the existing Dress Code action, preserving its classes/style.
           if 'href="officers.html"' not in s and "href='officers.html'" not in s:
-            candidates=[]
+            choices=[]
             for m in re.finditer(r'Dress\s*Code',s,re.I):
               a=s.rfind('<a',0,m.start()); b=s.find('</a>',m.end())
-              if a<0 or b<0 or m.start()-a>1600 or b-m.end()>1600: continue
-              tag=s[a:b+4]
-              near=s[max(0,a-2500):min(len(s),b+2500)]
-              score=(5 if re.search(r'Constitution',near,re.I) else 0)+(5 if re.search(r'By[- ]?Laws',near,re.I) else 0)+(3 if re.search(r'class=["\'][^"\']*(nav|btn|button|quick|link)',tag,re.I) else 0)
-              candidates.append((score,a,b,tag))
-            if candidates:
-              _,a,b,tag=max(candidates,key=lambda z:z[0])
+              if a<0 or b<0 or m.start()-a>1600: continue
+              tag=s[a:b+4]; near=s[max(0,a-2500):min(len(s),b+2500)]
+              score=(5 if re.search('Constitution',near,re.I) else 0)+(5 if re.search(r'By[- ]?Laws',near,re.I) else 0)
+              choices.append((score,b,tag))
+            if choices:
+              _,b,tag=max(choices,key=lambda x:x[0])
               oe=tag.find('>'); opening=tag[:oe+1]; inner=tag[oe+1:-4]
               opening=re.sub(r'href\s*=\s*(["\']).*?\1','href="officers.html"',opening,count=1,flags=re.S|re.I)
               if 'href="officers.html"' not in opening: opening=opening[:-1]+' href="officers.html">'
-              inner2=re.sub(r'Dress\s*Code','Officers',inner,flags=re.I)
-              if inner2==inner: inner2='Officers'
-              newtag=opening+inner2+'</a>'
-              s=s[:b+4]+newtag+s[b+4:]
-            else:
-              s=s.replace('</body>','<a href="officers.html" style="position:fixed;right:24px;bottom:24px;z-index:9999;background:#111;color:#eee;border:1px solid #999;padding:12px 20px;text-decoration:none;font-family:Arial,sans-serif">Officers</a></body>',1)
+              inner=re.sub(r'Dress\s*Code','Officers',inner,flags=re.I)
+              if 'Officers' not in inner: inner='Officers'
+              s=s[:b+4]+opening+inner+'</a>'+s[b+4:]
 
-          index.write_text(s,encoding='utf-8')
+          p.write_text(s,encoding='utf-8')
 
           founding=('Founding President','Ιδρυτικός Πρόεδρος και Οικιστής','Dimitrios Skiadopoulos','Ειδική και μόνιμη ιδρυτική διάκριση του Chapter. Δεν αποτελεί ξεχωριστό 16ο αξίωμα.','founding')
-          cards=[founding]+[(a,b,c,d,'principal' if e else 'additional') for a,b,c,d,e in officers]
-
-          def vest_card(en,gr,name,duty,kind):
-            name=name or 'Προς ορισμό'
-            badge='Founding Distinction' if kind=='founding' else ('Principal Officer' if kind=='principal' else 'Chapter Officer')
-            return f'''<article class="officer {kind}"><div class="rank"><span>{html.escape(en)}</span><small>{html.escape(gr)}</small></div><div class="vest"><div class="stitch"></div><div class="back-title">{html.escape(gr)}</div><p>{html.escape(duty)}</p><div class="micro">WIDOWS SONS · CHAPTER HELLAS</div></div><div class="base"><span>{html.escape(name)}</span><small>{badge}</small></div></article>'''
-
-          all_cards=''.join(vest_card(*x) for x in cards)
-          officers_page=f'''<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Αξιωματικοί | Widows Sons Chapter Hellas</title><meta name="description" content="Οι Αξιωματικοί του Widows Sons Masonic Riders Association — Chapter Hellas"><style>
-          :root{{--silver:#d6d9de;--steel:#9da4ad;--ink:#070809;--red:#9f171b;--gold:#bca66b}}*{{box-sizing:border-box}}html{{scroll-behavior:smooth}}body{{margin:0;background:radial-gradient(circle at 50% -10%,#292d31 0,#111315 35%,#050607 76%);color:#f4f4f2;font-family:Arial,Helvetica,sans-serif}}body:before{{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:repeating-linear-gradient(110deg,transparent 0 8px,rgba(255,255,255,.04) 9px,transparent 10px 18px)}}.top{{max-width:1280px;margin:auto;padding:34px 22px 14px;display:flex;justify-content:space-between;align-items:center;gap:18px}}.back{{color:#ddd;text-decoration:none;border:1px solid #575d64;padding:10px 16px;border-radius:3px;text-transform:uppercase;letter-spacing:.12em;font-size:12px;background:#0d0f11}}.cover{{max-width:1180px;margin:8px auto 54px;text-align:center;padding:32px 24px 38px;border-top:1px solid #40454b;border-bottom:1px solid #282c30;position:relative}}.logo-wrap{{width:190px;height:190px;margin:0 auto 18px;display:grid;place-items:center}}#chapterLogo{{max-width:100%;max-height:100%;filter:drop-shadow(0 8px 18px #000);display:none}}.logo-fallback{{font-family:Georgia,serif;font-weight:800;font-size:50px;color:#c8cbd0;letter-spacing:-.08em}}.kicker{{font-size:11px;letter-spacing:.38em;color:#aeb4bc;text-transform:uppercase}}h1{{font-family:Georgia,'Times New Roman',serif;font-size:clamp(46px,8vw,92px);line-height:.95;margin:15px 0 12px;letter-spacing:.05em;text-transform:uppercase;color:#e8eaed;text-shadow:0 3px 0 #000,0 0 22px rgba(255,255,255,.11)}}.sub{{max-width:760px;margin:auto;color:#aeb3b8;font-family:Georgia,serif;font-size:18px;line-height:1.6}}.legend{{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}}.legend span{{border:1px solid #3f444a;background:#0b0c0e;padding:8px 11px;color:#c9cdd2;font-size:11px;letter-spacing:.12em;text-transform:uppercase}}.section-title{{max-width:1280px;margin:0 auto 26px;padding:0 22px;display:flex;align-items:end;gap:16px}}.section-title h2{{margin:0;font-family:Georgia,serif;font-size:30px;text-transform:uppercase;letter-spacing:.08em}}.section-title:after{{content:"";height:1px;flex:1;background:linear-gradient(90deg,#8c9299,transparent)}}.grid{{max-width:1280px;margin:0 auto 80px;padding:0 22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:42px 28px}}.officer{{text-align:center;position:relative}}.rank{{min-height:78px;display:flex;flex-direction:column;justify-content:end;margin-bottom:12px;text-transform:uppercase}}.rank span{{font-family:Georgia,serif;font-weight:700;font-size:20px;letter-spacing:.07em;color:#eceef0}}.rank small{{margin-top:6px;color:#aeb4ba;font-size:12px;letter-spacing:.1em}}.vest{{position:relative;min-height:440px;padding:112px 52px 74px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(103deg,#050505 0,#242424 10%,#0b0b0b 26%,#181818 48%,#080808 65%,#202020 88%,#040404 100%);clip-path:polygon(18% 0,37% 8%,63% 8%,82% 0,100% 15%,88% 35%,91% 100%,9% 100%,12% 35%,0 15%);filter:drop-shadow(0 18px 18px rgba(0,0,0,.65));border-radius:16px}}.vest:before{{content:"";position:absolute;inset:14px 12px 16px;border:1px dashed #555;clip-path:inherit;opacity:.72}}.vest:after{{content:"";position:absolute;top:8px;left:50%;width:22%;height:72px;transform:translateX(-50%);border:2px solid #555;border-top:0;border-radius:0 0 52% 52%;background:#080808;box-shadow:0 3px 10px #000}}.stitch{{position:absolute;top:82px;bottom:28px;left:50%;border-left:1px dashed #343434;opacity:.7}}.back-title{{position:relative;z-index:2;font-family:Georgia,serif;text-transform:uppercase;font-weight:700;font-size:16px;letter-spacing:.08em;color:#d8dade;margin-bottom:18px;max-width:88%}}.vest p{{position:relative;z-index:2;margin:0;max-width:280px;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:1.55;color:#e8e5dc;text-shadow:0 1px 2px #000}}.micro{{position:absolute;z-index:2;bottom:47px;font-size:8px;letter-spacing:.24em;color:#74787d}}.base{{width:84%;margin:-7px auto 0;background:linear-gradient(#202226,#0b0c0e);border:1px solid #4a4f55;border-top:3px solid #8f949a;padding:13px 12px 12px;box-shadow:0 13px 22px #000}}.base span{{display:block;font-family:Georgia,serif;font-size:18px;font-weight:700;letter-spacing:.04em}}.base small{{display:block;margin-top:5px;color:#91979f;text-transform:uppercase;font-size:9px;letter-spacing:.18em}}.founding .rank span{{color:#d8c486}}.founding .vest:before{{border-color:#8b7b4f}}.founding .base{{border-top-color:#c1ac70}}.principal .base{{border-top-color:#c7ccd2}}footer{{padding:28px;text-align:center;border-top:1px solid #25292d;color:#72777e;font-size:11px;letter-spacing:.13em;text-transform:uppercase}}@media(max-width:980px){{.grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}@media(max-width:640px){{.top{{padding-top:18px}}.grid{{grid-template-columns:1fr;max-width:430px;padding:0 16px}}.cover{{margin-bottom:38px}}.vest{{min-height:420px}}h1{{font-size:48px}}}}
-          </style></head><body><div class="top"><a class="back" href="index.html">← Chapter Hellas</a><span class="kicker">Widows Sons Masonic Riders Association</span></div><header class="cover"><div class="logo-wrap"><img id="chapterLogo" alt="Widows Sons Chapter Hellas"><div class="logo-fallback" id="logoFallback">WS</div></div><div class="kicker">Official Chapter Officers · 2026</div><h1>Αξιωματικοί</h1><p class="sub">Widows Sons Masonic Riders Association — Chapter Hellas<br>Η επίσημη διάρθρωση των Αξιωματικών, οι τίτλοι τους και οι αρμοδιότητές τους.</p><div class="legend"><span>Founding President · Ιδρυτικός Πρόεδρος και Οικιστής</span><span>6 Principal Officers</span><span>15 Offices</span></div></header><div class="section-title"><h2>Chapter Officers</h2></div><main class="grid">{all_cards}</main><footer>Widows Sons Masonic Riders Association · Chapter Hellas</footer><script>
-          (async()=>{{try{{const t=await fetch('index.html',{{cache:'no-store'}}).then(r=>r.text());const d=new DOMParser().parseFromString(t,'text/html');let img=d.querySelector('#emblem img');if(!img)img=[...d.images].find(i=>/emblem|chapter hellas|widows sons|logo/i.test((i.alt||'')+' '+(i.id||'')+' '+(i.className||'')));if(!img)img=[...d.images].find(i=>(i.getAttribute('src')||'').startsWith('data:image'));if(img){{const src=img.getAttribute('src');if(src){{const el=document.getElementById('chapterLogo');el.src=src;el.style.display='block';document.getElementById('logoFallback').style.display='none';}}}}}}catch(e){{}}}})();
-          </script></body></html>'''
-          Path('officers.html').write_text(officers_page,encoding='utf-8')
+          data=[founding]+[(a,b,c,d,'principal' if e else 'additional') for a,b,c,d,e in officers]
+          def vest(x):
+            en,gr,name,duty,kind=x; name=name or 'Προς ορισμό'; badge='Founding Distinction' if kind=='founding' else ('Principal Officer' if kind=='principal' else 'Chapter Officer')
+            return f'''<article class="officer {kind}"><header class="rank"><b>{html.escape(en)}</b><span>{html.escape(gr)}</span></header><div class="vest"><div class="seam"></div><div class="vest-role">{html.escape(gr)}</div><p>{html.escape(duty)}</p><small>WIDOWS SONS · CHAPTER HELLAS</small></div><footer class="nameplate"><b>{html.escape(name)}</b><span>{badge}</span></footer></article>'''
+          cards=''.join(vest(x) for x in data)
+          page=f'''<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Αξιωματικοί | Widows Sons Chapter Hellas</title><style>
+          *{{box-sizing:border-box}}body{{margin:0;background:radial-gradient(circle at 50% -8%,#30343a,#111315 38%,#050607 78%);color:#eee;font-family:Arial,sans-serif}}body:before{{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background:repeating-linear-gradient(115deg,transparent 0 9px,#fff 10px,transparent 11px 20px)}}.top{{max-width:1280px;margin:auto;padding:28px 22px;display:flex;justify-content:space-between;align-items:center;gap:15px}}.back{{color:#ddd;text-decoration:none;border:1px solid #555b62;background:#0b0d0f;padding:10px 15px;text-transform:uppercase;letter-spacing:.12em;font-size:11px}}.brand{{font-size:10px;letter-spacing:.3em;color:#aeb4bc;text-transform:uppercase}}.cover{{text-align:center;max-width:1140px;margin:auto;padding:8px 22px 42px;border-bottom:1px solid #333}}.logo{{height:180px;display:grid;place-items:center;margin:auto auto 12px}}#chapterLogo{{max-height:180px;max-width:210px;display:none;filter:drop-shadow(0 10px 16px #000)}}#fallback{{font:800 54px Georgia;color:#c8cbd0}}h1{{font:700 clamp(48px,8vw,90px)/1 Georgia,serif;margin:10px 0;text-transform:uppercase;letter-spacing:.06em;text-shadow:0 3px #000}}.cover p{{font:18px/1.6 Georgia,serif;color:#b7bbc0;margin:auto;max-width:780px}}.badges{{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px}}.badges span{{font-size:10px;letter-spacing:.13em;text-transform:uppercase;border:1px solid #454a50;padding:8px 11px;background:#0c0e10;color:#c9cdd2}}.grid{{max-width:1280px;margin:50px auto 80px;padding:0 22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:44px 28px}}.officer{{text-align:center}}.rank{{min-height:78px;display:flex;flex-direction:column;justify-content:end;margin-bottom:12px;text-transform:uppercase}}.rank b{{font:700 20px Georgia,serif;letter-spacing:.07em}}.rank span{{font-size:12px;letter-spacing:.1em;color:#aeb4ba;margin-top:6px}}.vest{{position:relative;min-height:450px;padding:115px 50px 78px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(103deg,#030303,#252525 11%,#090909 28%,#1a1a1a 50%,#080808 70%,#222 89%,#030303);clip-path:polygon(18% 0,37% 8%,63% 8%,82% 0,100% 15%,88% 35%,91% 100%,9% 100%,12% 35%,0 15%);filter:drop-shadow(0 18px 18px #000);border-radius:18px}}.vest:before{{content:"";position:absolute;inset:14px 12px 16px;border:1px dashed #575b60;clip-path:inherit}}.vest:after{{content:"";position:absolute;top:8px;left:50%;width:23%;height:72px;transform:translateX(-50%);border:2px solid #555;border-top:0;border-radius:0 0 52% 52%;background:#080808}}.seam{{position:absolute;top:85px;bottom:30px;left:50%;border-left:1px dashed #333}}.vest-role{{z-index:2;font:700 16px Georgia,serif;text-transform:uppercase;letter-spacing:.07em;margin-bottom:18px;color:#d9dce0}}.vest p{{z-index:2;font:14px/1.56 Georgia,serif;color:#eee9df;max-width:285px;margin:0;text-shadow:0 1px 2px #000}}.vest small{{position:absolute;z-index:2;bottom:47px;font-size:8px;letter-spacing:.22em;color:#777c82}}.nameplate{{width:84%;margin:-7px auto 0;background:linear-gradient(#22252a,#090a0c);border:1px solid #4c5157;border-top:3px solid #aeb4bb;padding:13px;box-shadow:0 13px 22px #000}}.nameplate b{{display:block;font:700 18px Georgia,serif}}.nameplate span{{display:block;margin-top:5px;color:#9298a0;font-size:9px;letter-spacing:.18em;text-transform:uppercase}}.founding .rank b{{color:#d6c184}}.founding .nameplate{{border-top-color:#c4ad6a}}.founding .vest:before{{border-color:#8f7b4b}}@media(max-width:980px){{.grid{{grid-template-columns:repeat(2,1fr)}}}}@media(max-width:640px){{.grid{{grid-template-columns:1fr;max-width:430px;padding:0 15px}}.brand{{display:none}}.vest{{min-height:425px}}}}
+          </style></head><body><nav class="top"><a class="back" href="index.html">← Chapter Hellas</a><span class="brand">Widows Sons Masonic Riders Association</span></nav><header class="cover"><div class="logo"><img id="chapterLogo" alt="Chapter Hellas emblem"><div id="fallback">WS</div></div><div class="brand">Official Chapter Officers · 2026</div><h1>Αξιωματικοί</h1><p>Widows Sons Masonic Riders Association — Chapter Hellas<br>Η επίσημη διάρθρωση των Αξιωματικών, οι τίτλοι τους και οι αρμοδιότητές τους.</p><div class="badges"><span>Founding President · Ιδρυτικός Πρόεδρος και Οικιστής</span><span>6 Principal Officers</span><span>15 Offices</span></div></header><main class="grid">{cards}</main><script>(async()=>{{try{{const t=await fetch('index.html',{{cache:'no-store'}}).then(r=>r.text());const d=new DOMParser().parseFromString(t,'text/html');let img=d.querySelector('#emblem img');if(!img)img=[...d.images].find(i=>/emblem|chapter hellas|widows sons|logo/i.test((i.alt||'')+' '+(i.id||'')+' '+(i.className||'')));if(img&&img.src){{chapterLogo.src=img.src;chapterLogo.style.display='block';fallback.style.display='none'}}}}catch(e){{}}}})()</script></body></html>'''
+          Path('officers.html').write_text(page,encoding='utf-8')
           PY
-          rm -f .github/workflows/apply-final-officers-2026.yml .github/workflows/inspect-nav-2026.yml
-          git show HEAD^:.github/workflows/pages.yml > .github/workflows/pages.yml
           git config user.name "Dimitrios Skiadopoulos"
           git config user.email "grand.chancellor@nglgreece.gr"
-          git add index.html officers.html .github/workflows/pages.yml .github/workflows || true
+          git add index.html officers.html
           if ! git diff --cached --quiet; then
-            git commit -m "Publish final Officers edition and navigation"
+            git commit -m "Publish final Officers page and navigation"
             git push origin HEAD:claude/repo-push-vfylka
           fi
       - name: Configure Pages

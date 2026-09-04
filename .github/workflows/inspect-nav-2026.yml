@@ -1,0 +1,31 @@
+name: Inspect WSHellas navigation
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-nav-2026.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Print navigation and image tags
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text(encoding='utf-8')
+          for key in ['Dress Code','Constitution','By-Laws','Administration','Officers']:
+              print('\n===',key,'===')
+              for m in list(re.finditer(re.escape(key),s,re.I))[:6]:
+                  a=max(0,m.start()-1800); b=min(len(s),m.end()+2500)
+                  x=s[a:b]
+                  x=re.sub(r'data:image/[^;]+;base64,[A-Za-z0-9+/=]+','DATA_IMAGE',x)
+                  print(x)
+          print('\n=== IMG TAGS ===')
+          for tag in re.findall(r'<img\b[^>]*>',s,re.I)[:40]:
+              print(re.sub(r'data:image/[^;]+;base64,[A-Za-z0-9+/=]+','DATA_IMAGE',tag))
+          PY

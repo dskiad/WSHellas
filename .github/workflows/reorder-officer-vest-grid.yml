@@ -1,0 +1,80 @@
+name: Reorder officer vest grid
+on:
+  push:
+    paths:
+      - '.github/workflows/reorder-officer-vest-grid.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Put President and Vice President on first row
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          # Mark the President and Vice President vest units.
+          def add_class_for_title(text, title, cls):
+              marker = f'<div class="vest-title-en">{title}</div>'
+              pos = text.find(marker)
+              if pos < 0:
+                  raise SystemExit(f'{title} card not found')
+              art = text.rfind('<article class="', 0, pos)
+              if art < 0:
+                  raise SystemExit(f'{title} article start not found')
+              end = text.find('">', art)
+              head = text[art:end]
+              if cls not in head:
+                  head = head[:-1] + ' ' + cls + '"'
+                  text = text[:art] + head + text[end:]
+              return text
+
+          s = add_class_for_title(s, 'President', 'top-president')
+          s = add_class_for_title(s, 'Vice President', 'top-vice-president')
+
+          # Replace/append layout rules. These override the existing vest grid without changing content.
+          style = '''
+          <style id="officer-leadership-layout-2026">
+          .officer-vest-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:38px 28px!important}
+          .officer-vest-unit.top-president{grid-column:2/3!important}
+          .officer-vest-unit.top-vice-president{grid-column:3/4!important}
+          .officer-vest-unit.top-president,.officer-vest-unit.top-vice-president{align-self:start}
+          .officer-vest-unit.top-president .vest-office-title,.officer-vest-unit.top-vice-president .vest-office-title{min-height:86px}
+          @media(max-width:1100px){
+            .officer-vest-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+            .officer-vest-unit.top-president{grid-column:1/2!important}
+            .officer-vest-unit.top-vice-president{grid-column:2/3!important}
+          }
+          @media(max-width:700px){
+            .officer-vest-grid{grid-template-columns:1fr!important}
+            .officer-vest-unit.top-president,.officer-vest-unit.top-vice-president{grid-column:auto!important}
+          }
+          </style>
+          '''
+          old = re.compile(r'<style id="officer-leadership-layout-2026">.*?</style>', re.S)
+          if old.search(s):
+              s = old.sub(style.strip(), s, count=1)
+          else:
+              head_end = s.find('</head>')
+              if head_end < 0:
+                  raise SystemExit('head end not found')
+              s = s[:head_end] + style + '\n' + s[head_end:]
+
+          p.write_text(s, encoding='utf-8')
+          PY
+          rm -f .github/workflows/reorder-officer-vest-grid.yml
+      - name: Commit layout change
+        run: |
+          git config user.name "Dimitrios Skiadopoulos"
+          git config user.email "grand.chancellor@nglgreece.gr"
+          git add -A
+          git commit -m "Place President and Vice President on first officer row"
+          git push origin HEAD:claude/repo-push-vfylka

@@ -1,0 +1,89 @@
+name: Add vest configurator button
+on:
+  push:
+    paths:
+      - '.github/workflows/add-vest-configurator-button.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Add button to clothing section
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          href = 'https://dskiad.github.io/wsvest/'
+          if href in s:
+              print('Vest configurator link already present')
+          else:
+              # Locate the section about clothing / dress code by section content.
+              sections = list(re.finditer(r'<section\b[^>]*>.*?</section>', s, flags=re.S|re.I))
+              target = None
+              keywords = ['dress code', 'ένδυση', 'ενδυση', 'clothing', 'attire', 'γιλέκο', 'vest']
+              for m in sections:
+                  low = re.sub(r'<[^>]+>', ' ', m.group(0)).lower()
+                  if any(k in low for k in keywords):
+                      # Prefer sections explicitly about dress/clothing rather than officers.
+                      if 'dress' in low or 'ένδυση' in low or 'ενδυση' in low or 'clothing' in low or 'attire' in low:
+                          target = m
+                          break
+              if target is None:
+                  # Fallback: find a heading mentioning Dress Code / Ένδυση and its enclosing section.
+                  hm = re.search(r'<h[1-4][^>]*>[^<]*(?:Dress\s*Code|Ένδυση|Ενδυση|Attire|Clothing)[^<]*</h[1-4]>', s, flags=re.I)
+                  if hm:
+                      a = s.rfind('<section', 0, hm.start())
+                      b = s.find('</section>', hm.end())
+                      if a >= 0 and b >= 0:
+                          class Obj:
+                              def start(self): return a
+                              def end(self): return b+10
+                              def group(self, *_): return s[a:b+10]
+                          target = Obj()
+              if target is None:
+                  raise SystemExit('Clothing / Dress Code section not found')
+
+              block = '''
+                <div class="vest-configurator-cta">
+                  <a class="vest-configurator-button" href="https://dskiad.github.io/wsvest/" target="_blank" rel="noopener noreferrer">
+                    <span class="vest-configurator-button-gr">Φτιάξε το γιλέκο σου</span>
+                    <span class="vest-configurator-button-en">Build Your Vest</span>
+                  </a>
+                </div>
+              '''
+
+              sec = target.group(0)
+              sec = sec[:-10] + block + '\n</section>'
+              s = s[:target.start()] + sec + s[target.end():]
+
+              css = '''
+              <style id="vest-configurator-button-style">
+              .vest-configurator-cta{display:flex;justify-content:center;margin:34px 0 10px}
+              .vest-configurator-button{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:270px;padding:15px 28px 13px;border:1px solid rgba(210,174,94,.78);border-radius:5px;background:linear-gradient(180deg,#1a1b1d,#090a0b);box-shadow:0 10px 22px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.08);text-decoration:none!important;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+              .vest-configurator-button:hover{transform:translateY(-2px);border-color:#e0bd72;box-shadow:0 14px 26px rgba(0,0,0,.48),0 0 16px rgba(198,160,80,.14)}
+              .vest-configurator-button-gr{font:700 18px/1.15 'Cinzel',serif;color:#e4c47c;letter-spacing:.03em}
+              .vest-configurator-button-en{margin-top:4px;font:600 10px/1.1 'Oswald',sans-serif;color:#b9bec5;letter-spacing:.14em;text-transform:uppercase}
+              </style>
+              '''
+              head_end = s.find('</head>')
+              if head_end < 0:
+                  raise SystemExit('head end not found')
+              s = s[:head_end] + css + '\n' + s[head_end:]
+              p.write_text(s, encoding='utf-8')
+          PY
+          rm -f .github/workflows/add-vest-configurator-button.yml
+      - name: Commit button
+        run: |
+          git config user.name "Dimitrios Skiadopoulos"
+          git config user.email "grand.chancellor@nglgreece.gr"
+          git add -A
+          git commit -m "Add Build Your Vest button to clothing section"
+          git push origin HEAD:claude/repo-push-vfylka

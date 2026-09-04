@@ -1,0 +1,36 @@
+name: Inspect emblem image locations
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-emblem-images.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Print image tags and context
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text(encoding='utf-8')
+          tags=list(re.finditer(r'<img\b[^>]*>',s,flags=re.I|re.S))
+          print('IMG_COUNT',len(tags))
+          for i,m in enumerate(tags,1):
+              tag=m.group(0)
+              srcm=re.search(r'src=["\']([^"\']*)',tag,flags=re.I|re.S)
+              src=srcm.group(1) if srcm else ''
+              attrs=re.sub(r'src=["\'][^"\']*["\']','src="<SRC>"',tag,flags=re.I|re.S)
+              attrs=' '.join(attrs.split())[:500]
+              before=re.sub(r'\s+',' ',s[max(0,m.start()-180):m.start()])[-180:]
+              after=re.sub(r'\s+',' ',s[m.end():m.end()+180])[:180]
+              kind=('data' if src.startswith('data:') else src[:120])
+              print(f'IMG {i}: {attrs}')
+              print(' SRC_KIND:',kind,'LEN',len(src))
+              print(' BEFORE:',before)
+              print(' AFTER:',after)
+          PY

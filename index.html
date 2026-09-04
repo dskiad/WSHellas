@@ -352,6 +352,24 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     .vest-configurator-button-en{margin-top:4px;font:600 10px/1.1 'Oswald',sans-serif;color:#b9bec5;letter-spacing:.14em;text-transform:uppercase}
     </style>
     
+
+<style id="officer-leadership-layout-2026">
+.officer-vest-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:38px 28px!important}
+.officer-vest-unit.top-president{grid-column:2/3!important}
+.officer-vest-unit.top-vice-president{grid-column:3/4!important}
+.officer-vest-unit.top-president,.officer-vest-unit.top-vice-president{align-self:start}
+.officer-vest-unit.top-president .vest-office-title,.officer-vest-unit.top-vice-president .vest-office-title{min-height:86px}
+@media(max-width:1100px){
+  .officer-vest-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .officer-vest-unit.top-president{grid-column:1/2!important}
+  .officer-vest-unit.top-vice-president{grid-column:2/3!important}
+}
+@media(max-width:700px){
+  .officer-vest-grid{grid-template-columns:1fr!important}
+  .officer-vest-unit.top-president,.officer-vest-unit.top-vice-president{grid-column:auto!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -490,7 +508,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         </div>
       </article>
       <div class="officer-vest-group"><b>Κύριοι Αξιωματικοί</b><span>Principal Officers</span></div>
-      <article class="officer-vest-unit principal">
+      <article class="officer-vest-unit principa top-president"">
         <div class="vest-office-title">
           <div class="vest-title-en">President</div>
           <div class="vest-title-gr">Πρόεδρος</div>
@@ -503,7 +521,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
           <div class="vest-name">Dimitrios Skiadopoulos</div>
         </div>
       </article>
-      <article class="officer-vest-unit principal">
+      <article class="officer-vest-unit principa top-vice-president"">
         <div class="vest-office-title">
           <div class="vest-title-en">Vice President</div>
           <div class="vest-title-gr">Αντιπρόεδρος</div>

@@ -1,0 +1,51 @@
+name: Fix Almoner Greek title
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-almoner.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+          fetch-depth: 0
+
+      - name: Correct Greek Almoner title
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          replacements = {
+              'Ελεήμονας': 'Ελεονόμος Αγαθοεργίας',
+              'Ελεήμων': 'Ελεονόμος Αγαθοεργίας',
+          }
+          counts = {}
+          for old, new in replacements.items():
+              counts[old] = s.count(old)
+              s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          print(counts)
+          if not any(counts.values()):
+              raise SystemExit('No old Almoner Greek title found in index.html')
+          PY
+
+      - name: Commit correction and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name "Dimitrios Skiadopoulos"
+          git config user.email "grand.chancellor@nglgreece.gr"
+          rm .github/workflows/fix-almoner.yml
+          git add index.html .github/workflows/fix-almoner.yml
+          git commit -m "Correct Almoner Greek title to Eleonomos Agathoergias"
+          git push origin claude/repo-push-vfylka

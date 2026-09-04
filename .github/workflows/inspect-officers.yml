@@ -1,0 +1,31 @@
+name: Inspect officers section
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-officers.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Print officers HTML excerpts
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s = Path('index.html').read_text(encoding='utf-8')
+          print('OFFICER-ROLE COUNT:', s.count('officer-role'))
+          for m in re.finditer(r'officer-role', s, flags=re.I):
+              a=max(0,m.start()-500); b=min(len(s),m.start()+1500)
+              print('\n--- MATCH ---\n')
+              print(s[a:b])
+          for key in ['Administration','Officers','Διοίκηση','Αξιωματικ']:
+              i=s.lower().find(key.lower())
+              if i>=0:
+                  print(f'\n--- SECTION KEY {key} ---\n')
+                  print(s[max(0,i-1000):min(len(s),i+12000)])
+          PY

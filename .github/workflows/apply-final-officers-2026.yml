@@ -1,0 +1,126 @@
+name: Apply final Chapter Hellas officers 2026
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-final-officers-2026.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Apply final officers list
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import html
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          officers = [
+              ('President','Πρόεδρος','Dimitrios Skiadopoulos','Ηγείται του Chapter, προεδρεύει των συνεδριάσεων, κατευθύνει τη λειτουργία και τις δραστηριότητές του, εκπροσωπεί επίσημα το Chapter και μεριμνά για την εφαρμογή του Καταστατικού και του Εσωτερικού Κανονισμού.',True),
+              ('Vice President','Αντιπρόεδρος','Dimitrios Panagakos','Είναι ο άμεσος συνεργάτης του Προέδρου. Τον υποστηρίζει στην άσκηση των καθηκόντων του και τον αναπληρώνει σε κάθε απουσία ή κώλυμά του. Συνοδεύει τον Πρόεδρο στις επίσημες εκδηλώσεις.',True),
+              ('Secretary','Γραμματέας','Nikolaos Markopoulos','Είναι υπεύθυνος για τη διοικητική λειτουργία του Chapter. Τηρεί τα πρακτικά, το μητρώο των μελών, το αρχείο, την επίσημη αλληλογραφία και τις διοικητικές αναφορές. Όλα τα επίσημα έγγραφα του Chapter φέρουν τη σφραγίδα και την υπογραφή του. Είναι επίσης υπεύθυνος για την υπογραφή των καρτών μέλους του Chapter.',True),
+              ('Treasurer','Ταμίας','Panagiotis Vlahos','Διαχειρίζεται τα οικονομικά του Chapter, τους τραπεζικούς λογαριασμούς, τις συνδρομές, τις εισπράξεις και τις πληρωμές και τηρεί τα προβλεπόμενα οικονομικά αρχεία και στοιχεία.',True),
+              ('Sergeant-at-Arms','Αρχιφύλακας','Marinos Andreas','Μεριμνά για την εσωτερική τάξη και πειθαρχία. Επιβλέπει την τήρηση του Κανονισμού και των αποφάσεων του Chapter, αντιμετωπίζει παραβάσεις και αναφέρεται στον Πρόεδρο όταν απαιτείται.',True),
+              ('Road Captain','Αρχηγός Αποστολής','Panagiotis Floris','Έχει την κύρια ευθύνη για τις οργανωμένες μοτοσικλετιστικές διαδρομές. Σχεδιάζει τις διαδρομές και τις αποστολές και έχει την ευθύνη της διάταξης, της ασφάλειας και της πορείας της ομάδας στον δρόμο.',True),
+              ('Road Sergeant','Ομαδάρχης',None,'Υποστηρίζει τον Road Captain κατά τις διαδρομές. Επιβλέπει το τμήμα ή την ομάδα που του ανατίθεται και μεριμνά για την πειθαρχία, την επικοινωνία και την ασφάλεια του σχηματισμού.',False),
+              ('Guardian of Membership','Έφορος Μελών','George Dryllis','Παρακολουθεί τα θέματα που αφορούν τα μέλη, την ιδιότητά τους και τη συμμόρφωσή τους προς τους κανόνες του Chapter. Μεριμνά για την ορθή χρήση των διακριτικών και για την προστασία της ιδιότητας του μέλους.',False),
+              ('Master of Ceremonies','Τελετάρχης','Alexandros Epifanis','Είναι υπεύθυνος για το τελετουργικό και το πρωτόκολλο του Chapter. Οργανώνει τις επίσημες τελετές και εκδηλώσεις και συντονίζει την ομαλή εξέλιξη του προγράμματος.',False),
+              ('Quartermaster','Επιμελητής',None,'Διαχειρίζεται την περιουσία και τον εξοπλισμό του Chapter, τα υλικά, τα διακριτικά, τα patches και κάθε άλλο αντικείμενο που ανήκει ή χρησιμοποιείται από το Chapter.',False),
+              ('Almoner','Ελεονόμος','Pavlos Sarof','Είναι υπεύθυνος για την αγαθοεργία και την κοινωνική μέριμνα του Chapter. Παρακολουθεί περιπτώσεις αδελφών ή άλλων προσώπων που χρειάζονται βοήθεια και συντονίζει τις σχετικές φιλανθρωπικές ενέργειες.',False),
+              ('Ambassador','Πρέσβης','Pantelis Lathiotakis','Εκπροσωπεί το Chapter στις σχέσεις του με άλλα Motorcycle Clubs, Chapters και συναφείς οργανώσεις. Αναπτύσσει επικοινωνία, συνεργασίες και αδελφικούς δεσμούς.',False),
+              ('Orator','Σύμβουλος','Andreas Tsounakos','Συμβουλεύει τον Πρόεδρο και το Chapter και συνδράμει στην επικοινωνία, στις επίσημες παρουσιάσεις, στις εκδηλώσεις και στη δημόσια εκπροσώπηση του Chapter.',False),
+              ('Preparing Brother','Δοκιμαστής','Konstantinos Karmalis','Βασικό αξίωμα για την εισδοχή και τη μύηση νέου μέλους. Γνωρίζει και προετοιμάζει τον υποψήφιο, οργανώνει και επιβλέπει τη δοκιμασία που πρέπει να περάσει πριν κριθεί κατάλληλος να γίνει Widows Son και εισηγείται σχετικά για την ολοκλήρωση της εισδοχής του.',False),
+              ('Steward','Επίτροπος Φιλοξενίας',None,'Μεριμνά για τη φιλοξενία των μελών και των επισκεπτών στις συναντήσεις και στις εκδηλώσεις του Chapter. Υποστηρίζει την πρακτική οργάνωση των εκδηλώσεων και βοηθά σε οτιδήποτε χρειαστεί για την ομαλή διεξαγωγή τους.',False),
+          ]
+
+          # Preserve existing roadname blocks for named officers.
+          road_by_name = {}
+          for _,_,name,_,_ in officers:
+              if not name:
+                  continue
+              marker = f'<div class="officer-name">{name}</div>'
+              pos = s.find(marker)
+              if pos < 0:
+                  continue
+              r0 = s.find('<div class="officer-road">', pos)
+              if r0 >= 0 and r0 - pos < 2500:
+                  r1 = s.find('</div>', r0)
+                  if r1 >= 0:
+                      road_by_name[name] = s[r0:r1+6]
+
+          def card(en, gr, name, duty, main, idx):
+              cls = 'officer-card patch'
+              if main:
+                  cls += ' main-officer'
+              if idx == 1:
+                  cls += ' lead'
+              display_name = html.escape(name) if name else 'Προς ορισμό'
+              name_cls = 'officer-name' + ('' if name else ' vacant')
+              road = road_by_name.get(name, '') if name else ''
+              return f'''      <div class="{cls}">
+        <span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
+        <div class="officer-role">{html.escape(en)}</div>
+        <div class="officer-title-gr">{html.escape(gr)}</div>
+        <div class="{name_cls}">{display_name}</div>
+        <div class="officer-duty"><span>Ρόλος</span>{html.escape(duty)}</div>
+        {road}
+      </div>'''
+
+          parts = [
+              '    <div class="officer-grid officers-2026">',
+              '      <div class="officer-group-title founding"><b>Ειδική Ιδρυτική Ιδιότητα</b><span>Founding Distinction</span></div>',
+              '      <div class="officer-card patch founding-president lead">',
+              '        <span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>',
+              '        <div class="officer-role">Founding President</div>',
+              '        <div class="officer-title-gr">Ιδρυτικός Πρόεδρος και Οικιστής</div>',
+              '        <div class="officer-name">Dimitrios Skiadopoulos</div>',
+              '        <div class="officer-duty"><span>Ιδρυτική Ιδιότητα</span>Ειδική και μόνιμη ιδρυτική διάκριση του Chapter. Δεν αποτελεί ξεχωριστό 16ο αξίωμα.</div>',
+              road_by_name.get('Dimitrios Skiadopoulos',''),
+              '      </div>',
+              '      <div class="officer-group-title"><b>Κύριοι Αξιωματικοί</b><span>Principal Officers</span></div>'
+          ]
+          for i, data in enumerate(officers[:6], 1):
+              parts.append(card(*data, i))
+          parts.append('      <div class="officer-group-title secondary"><b>Λοιποί Αξιωματικοί</b><span>Additional Officers</span></div>')
+          for i, data in enumerate(officers[6:], 7):
+              parts.append(card(*data, i))
+          parts.append('    </div>\n\n')
+          new_grid = '\n'.join(parts)
+
+          admin = s.find('<section id="administration">')
+          if admin < 0:
+              raise SystemExit('Administration section not found')
+          start = s.find('<div class="officer-grid', admin)
+          if start < 0:
+              raise SystemExit('Officer grid not found')
+          candidates = [x for x in (s.find('<div class="const-offices"', start), s.find('</section>', start)) if x >= 0]
+          if not candidates:
+              raise SystemExit('Officer grid end not found')
+          end = min(candidates)
+          s = s[:start] + new_grid + s[end:]
+
+          # Keep the section introduction aligned with the final structure.
+          import re
+          section_end = s.find('</section>', admin)
+          section = s[admin:section_end]
+          section = re.sub(r'<p class="lead">The Chapter is administered by <b>15 officers</b>.*?</p>',
+                           '<p class="lead">The Chapter is administered by <b>15 officers</b>. The first six positions constitute the <b>Principal Officers — Κύριοι Αξιωματικοί</b>. The <b>Founding President — Ιδρυτικός Πρόεδρος και Οικιστής</b> is a special permanent founding distinction and is not counted as a separate office.</p>',
+                           section, count=1, flags=re.S)
+          s = s[:admin] + section + s[section_end:]
+
+          p.write_text(s, encoding='utf-8')
+          PY
+          rm .github/workflows/apply-final-officers-2026.yml
+      - name: Commit final officers page
+        run: |
+          git config user.name "Dimitrios Skiadopoulos"
+          git config user.email "grand.chancellor@nglgreece.gr"
+          git add index.html .github/workflows/apply-final-officers-2026.yml
+          git commit -m "Apply final Chapter Hellas officers list"
+          git push origin HEAD:claude/repo-push-vfylka

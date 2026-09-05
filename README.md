@@ -25,7 +25,6 @@ The Chapter Hellas public information website includes the organization, adminis
 | Emblem | The official Chapter Hellas emblem and its symbolism |
 | Constitution | The Constitution of Chapter Hellas |
 | By-Laws | Regulations and operating rules |
-| Dress Code | Vest and patch regulations, with access to the vest configurator |
 
 ## About this repository
 

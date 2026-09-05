@@ -1,0 +1,94 @@
+name: Apply Chapter Hellas introduction
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-chapter-hellas-intro.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Insert official Chapter Hellas introduction
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          section_matches = list(re.finditer(r'<section\b[^>]*>.*?</section>', s, flags=re.S|re.I))
+          target = None
+          for m in section_matches:
+              txt = re.sub(r'<[^>]+>', ' ', m.group(0)).lower()
+              if 'organization' in txt and ('chapter hellas' in txt or 'widows sons' in txt):
+                  target = m
+                  break
+          if target is None:
+              raise SystemExit('Organization section not found')
+
+          block = '''
+          <div class="chapter-hellas-intro" id="chapter-hellas-intro">
+            <div class="chapter-hellas-intro-copy">
+              <div class="eyebrow">Widows Sons MRA — Chapter Hellas</div>
+              <h3>Chapter Hellas</h3>
+              <p><strong>Widows Sons MRA Chapter Hellas</strong> is an independent chapter of the association, established and structured with the valuable support and fraternal assistance of <strong>Widows Sons Bulgaria</strong> and our American brethren — with special and heartfelt thanks to <strong>Joe Norman</strong>, President of the American chapter, <strong>Bill “Storman” from Chicago</strong>, and <strong>Wilheim Neiszer “Wilhelm” from Mexico</strong>.</p>
+              <p>Chapter Hellas operates completely autonomously while maintaining strong bonds of international friendship and mutual support within the global Widows Sons network.</p>
+              <p>The Chapter may propose new sub-chapters within Greek territory through its Chapter Committee.</p>
+            </div>
+            <figure class="chapter-hellas-intro-photo">
+              <img src="assets/chapter-hellas-support.jpg" alt="Fraternal Widows Sons support for Chapter Hellas">
+            </figure>
+          </div>
+          '''
+
+          sec = target.group(0)
+          # Replace existing block if rerun, otherwise insert after first heading/lead area.
+          sec = re.sub(r'\s*<div class="chapter-hellas-intro".*?</div>\s*</div>\s*', '\n', sec, flags=re.S)
+          insert_at = None
+          # Prefer before the first major grid/card collection in the section.
+          for marker in ['<div class="', '<article', '<ul', '<ol']:
+              pos = sec.find(marker)
+              if pos > 0:
+                  insert_at = pos
+                  break
+          if insert_at is None:
+              insert_at = sec.rfind('</section>')
+          sec = sec[:insert_at] + block + '\n' + sec[insert_at:]
+          s = s[:target.start()] + sec + s[target.end():]
+
+          css = '''
+          <style id="chapter-hellas-intro-style">
+          .chapter-hellas-intro{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(280px,.88fr);gap:34px;align-items:stretch;margin:34px 0 42px;padding:26px;border:1px solid rgba(205,173,98,.28);border-radius:12px;background:linear-gradient(145deg,rgba(20,21,23,.92),rgba(7,8,9,.96));box-shadow:0 18px 40px rgba(0,0,0,.34)}
+          .chapter-hellas-intro-copy{display:flex;flex-direction:column;justify-content:center}
+          .chapter-hellas-intro .eyebrow{font:600 11px/1.2 'Oswald',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#c9a85f;margin-bottom:9px}
+          .chapter-hellas-intro h3{margin:0 0 14px;font:700 29px/1.1 'Cinzel',serif;color:#f1eee5}
+          .chapter-hellas-intro p{margin:0 0 13px;font:400 17px/1.62 'EB Garamond',Georgia,serif;color:#ddd8cf}
+          .chapter-hellas-intro p:last-child{margin-bottom:0}
+          .chapter-hellas-intro strong{color:#f2e7c5;font-weight:600}
+          .chapter-hellas-intro-photo{margin:0;min-height:330px;border-radius:9px;overflow:hidden;border:1px solid rgba(255,255,255,.10);background:#050506;box-shadow:0 12px 26px rgba(0,0,0,.36)}
+          .chapter-hellas-intro-photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
+          @media(max-width:820px){.chapter-hellas-intro{grid-template-columns:1fr;padding:18px}.chapter-hellas-intro-photo{min-height:260px}.chapter-hellas-intro p{font-size:16px}}
+          </style>
+          '''
+          style_re = re.compile(r'<style id="chapter-hellas-intro-style">.*?</style>', flags=re.S)
+          if style_re.search(s):
+              s = style_re.sub(css.strip(), s, count=1)
+          else:
+              head_end = s.find('</head>')
+              if head_end < 0: raise SystemExit('head end not found')
+              s = s[:head_end] + css + '\n' + s[head_end:]
+
+          p.write_text(s, encoding='utf-8')
+          PY
+          rm -f .github/workflows/apply-chapter-hellas-intro.yml
+      - name: Commit and push
+        run: |
+          git config user.name "Dimitrios Skiadopoulos"
+          git config user.email "grand.chancellor@nglgreece.gr"
+          git add -A
+          git commit -m "Add official Chapter Hellas introduction"
+          git push origin HEAD:claude/repo-push-vfylka

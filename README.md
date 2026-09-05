@@ -1,42 +1,42 @@
 # Widows Sons Masonic Riders Association — Chapter Hellas
 
-The chapter's public information page: organization, administration, emblem,
-constitution, by-laws and dress code.
+## 🌐 LIVE WEBSITE
 
-## Live page
+### 👉 https://dskiad.github.io/WSHellas/
 
-**https://dskiad.github.io/WSHellas/**
+**Open the official Chapter Hellas website:**  
+https://dskiad.github.io/WSHellas/
 
-> The link goes live once GitHub Pages is enabled for this repository:
-> **Settings → Pages → Build and deployment → Source: _Deploy from a branch_**,
-> then pick the branch holding `index.html` and the `/ (root)` folder.
+---
+
+The Chapter Hellas public information website includes the organization, administration, officers, emblem, constitution, by-laws and dress code.
+
+## Quick links
+
+- **Live Chapter Hellas website:** https://dskiad.github.io/WSHellas/
+- **Vest Configurator — Build Your Vest:** https://dskiad.github.io/wsvest/
 
 ## Contents
 
 | Section | What it covers |
 | --- | --- |
 | Organization | What the Widows Sons are, and what Chapter Hellas is |
-| Administration | The officers of the chapter and their duties |
-| Emblem | The Chapter Hellas emblem and its symbolism |
-| Constitution | The constitution of Chapter Hellas |
+| Administration | The officers of the Chapter and their duties |
+| Emblem | The official Chapter Hellas emblem and its symbolism |
+| Constitution | The Constitution of Chapter Hellas |
 | By-Laws | Regulations and operating rules |
-| Dress Code | Vest and patch regulations |
+| Dress Code | Vest and patch regulations, with access to the vest configurator |
 
 ## About this repository
 
-The whole site is a single file, `index.html`. Styles, scripts and all imagery
-are embedded in it — images as data URIs — so the page is self-contained and
-needs no build step, no dependencies and no asset directory. The only external
-requests it makes are for the Google Fonts it uses (Cinzel, Cinzel Decorative,
-EB Garamond, Oswald and Mrs Saint Delafield).
+The main site is contained in `index.html`. The page is designed for direct deployment through GitHub Pages.
 
 ## Viewing or editing locally
 
-Open `index.html` in any browser, or serve the directory:
+Open `index.html` in any browser, or serve the directory locally:
 
-```
+```bash
 python3 -m http.server 8000
-# then visit http://localhost:8000
 ```
 
-Edit `index.html` directly and reload the browser to see the change.
+Then visit `http://localhost:8000`.

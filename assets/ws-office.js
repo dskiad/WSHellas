@@ -52,8 +52,14 @@ var WSDoc = (function(){
     c.width = Math.round(w * k); c.height = Math.round(h * k);
     var g = c.getContext('2d');
     if(g.imageSmoothingQuality){ g.imageSmoothingQuality = 'high'; }
+    /* The documents are printed on white paper, so the art needs no
+       transparency; laid on white and handed over as JPEG it keeps its
+       own compression inside the PDF, whether or not the document itself
+       is compressed. */
+    g.fillStyle = '#ffffff';
+    g.fillRect(0, 0, c.width, c.height);
     g.drawImage(img, 0, 0, c.width, c.height);
-    try { return c.toDataURL('image/png'); } catch(e){ return null; }
+    try { return c.toDataURL('image/jpeg', 0.92); } catch(e){ return null; }
   }
   function settled(img){
     if(!img || img.complete){ return Promise.resolve(img); }
@@ -104,6 +110,7 @@ var WSDoc = (function(){
   }
   function cellText(c){
     if(c && typeof c === 'object'){
+      if(c._field && !c.content){ return '<span class="sub">……………………</span>'; }
       return esc(c.content) + (c._gr ? '<br><span class="sub">' + esc(c._gr) + '</span>' : '');
     }
     return esc(c);

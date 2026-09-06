@@ -31,6 +31,11 @@
 
   function mm(pt){ return pt * 25.4 / 72; }
 
+  /* the kind of picture, read off the data itself */
+  function fmt(data){
+    return (typeof data === 'string' && data.indexOf('data:image/jpeg') === 0) ? 'JPEG' : 'PNG';
+  }
+
   /* Width of a string as it will actually be drawn, letter-spacing and all. */
   function widthOf(doc, str, charSpace){
     var w = doc.getTextWidth(str);
@@ -102,7 +107,7 @@
     var nat = (key === 'emblem') ? (art.emblemH / art.emblemW) : 1;
     var H = W * (nat || 1);
     if(y + H + 12 > PH - MB){ doc.addPage(); y = MT + 4; }
-    doc.addImage(data, 'PNG', CX - W/2, y, W, H);
+    doc.addImage(data, fmt(data), CX - W/2, y, W, H);
     y += H + 3.4;
     if(s.caption){
       line(doc, String(s.caption).toUpperCase(),
@@ -117,7 +122,7 @@
     var y = MT;
     if(art && art.emblem){
       var w = 25, h = w * (art.emblemH / art.emblemW || 1);
-      doc.addImage(art.emblem, 'PNG', CX - w/2, y, w, h);
+      doc.addImage(art.emblem, fmt(art.emblem), CX - w/2, y, w, h);
       y += h + 4.5;
     }
     line(doc, ORG.toUpperCase(), {font:DISPLAY, style:'bold', size:12.4, spacing:0.42, align:'center', y:y});
@@ -158,6 +163,14 @@
     y += 2.2;
     doc.line(ML, y, PW - MR, y);
     return y + 7;
+  }
+
+  /* The jsPDF namespace, for the form fields; the renderer asks for it only
+     when a document actually carries one. */
+  function ns(){
+    var g = (typeof window !== 'undefined' && window.jspdf) ||
+            (typeof globalThis !== 'undefined' && globalThis.jspdf);
+    return g || null;
   }
 
   /* ---------- a table in the house style ---------- */
@@ -212,6 +225,28 @@
       didDrawCell: function(data){
         if(data.section !== 'body'){ return; }
         var raw = data.cell.raw;
+        /* a cell the brother fills in himself, once the document is in his hands */
+        if(raw && raw._field){
+          var N = ns();
+          if(N && N.AcroFormTextField){
+            /* A form field takes its appearance from the font in hand, and the
+               letterhead faces carry no metrics it can use. Set one of the
+               standard faces while the field is made, then put ours back. */
+            var was = doc.getFont();
+            doc.setFont('helvetica', 'normal');
+            try{
+              var f = new N.AcroFormTextField();
+              var pad = 0.7;
+              f.Rect = [data.cell.x + pad, data.cell.y + pad,
+                        data.cell.width - pad*2, data.cell.height - pad*2];
+              f.fieldName = raw._field;
+              f.value = raw.content || '';
+              f.fontSize = 8;
+              doc.addField(f);
+            }catch(e){ /* a reader without forms loses nothing but the field */ }
+            doc.setFont(was.fontName, was.fontStyle);
+          }
+        }
         if(raw && raw._gr){
           var n = greekLines(doc, data.cell, data.column.index);
           var yy = data.cell.y + data.cell.height - data.cell.styles.cellPadding.bottom
@@ -249,7 +284,7 @@
       /* the hand of the signatory, set upon the rule as it would be signed */
       if(sig.autograph && art && art.autograph){
         var aw = COL * 0.9, ah = aw * (art.autographH / art.autographW || 0.2);
-        doc.addImage(art.autograph, 'PNG', cx - aw/2, base - ah + 2.6, aw, ah);
+        doc.addImage(art.autograph, fmt(art.autograph), cx - aw/2, base - ah + 2.6, aw, ah);
       }
       var yy = base + name;
       line(doc, sig.name || '', {style:'bold', size:9.6, x:cx - doc.getTextWidth(sig.name || '')/2, y:yy});
@@ -267,7 +302,7 @@
     }
 
     if(spec.seal !== false && art && art.seal){
-      doc.addImage(art.seal, 'PNG', CX - SEAL/2, base - SEAL + 2, SEAL, SEAL);
+      doc.addImage(art.seal, fmt(art.seal), CX - SEAL/2, base - SEAL + 2, SEAL, SEAL);
       line(doc, 'OFFICIAL SEAL OF CHAPTER HELLAS',
            {size:6.2, spacing:0.4, colour:FAINT, align:'center', y:base + capH});
     }
@@ -289,12 +324,25 @@
     }
   }
 
+  /* Does the document carry a cell the reader is meant to fill? Compressed
+     content streams and form annotations do not agree in jsPDF — the fields
+     survive the file but no reader finds them — so a document with fields is
+     written uncompressed. */
+  function carriesFields(spec){
+    return (spec.sections || []).some(function(s){
+      return s.table && (s.table.rows || []).some(function(r){
+        return r.some(function(c){ return c && c._field; });
+      });
+    });
+  }
+
   /* ---------- draw the whole document ---------- */
   function build(jsPDFCtor, spec, art, fonts, code){
     var doc = new jsPDFCtor({
-      unit: 'mm', format: 'a4', compress: true,
+      unit: 'mm', format: 'a4', compress: !carriesFields(spec),
       encryption: { userPassword: code, ownerPassword: code,
-                    userPermissions: ['print', 'copy'] }
+                    /* printing, copying, and the filling of the fields */
+                    userPermissions: ['print', 'copy', 'modify', 'annot-forms'] }
     });
     fonts.register(doc);
     doc.setProperties({

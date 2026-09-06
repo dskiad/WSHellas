@@ -52,6 +52,12 @@ var WSDocs = (function(){
   }
   function term(t){ return { content:t, styles:{ fontSize:7.9, textColor:[60,64,70] } }; }
   function blank(){ return { content:'……………………………………', styles:{ textColor:[139,143,150] } }; }
+  /* a cell left open, to be filled in the reader once the document is issued */
+  function field(name, value){
+    return { content:value || '', _field:name, styles:{ fontSize:8.4, fillColor:[252,251,248] } };
+  }
+  /* the obedience under which the brethren hold their Lodges */
+  var OBEDIENCE = 'NGLG - est. 1986';
 
   function base(no, subject, sections, opts){
     opts = opts || {};
@@ -233,6 +239,7 @@ var WSDocs = (function(){
      throughout by the Bulgarian brethren as well. */
   var OFFICERS = [
     { en:'President', el:'Πρόεδρος', name:'Dimitrios Skiadopoulos', road:'BuildSmith',
+      lodge:'Themistocles No. 96',
       rank:{en:'Principal Officer'},
       term:{en:'Five years · Elected'},
       duties:{en:'Leads the Chapter as a whole and holds the highest responsibility for its operation and its direction. Presides over the assemblies, organises and directs the activities, represents the Chapter officially, and ensures the faithful application of the Charter, the Internal Regulations and the decisions of the Chapter.'} },
@@ -305,11 +312,16 @@ var WSDocs = (function(){
            el:'Οι υπογράφοντες αδελφοί, Διδάσκαλοι Τέκτονες εν καλή καταστάσει κανονικών Στοών και αναβάτες μοτοσικλέτας, παρακαλούν ευσεβάστως τη Widows Sons MRA όπως τους χορηγήσει χάρτη προς ίδρυση Chapter εν Ελλάδι, υπό την επωνυμία Chapter Hellas, με έδρα τον Πειραιά.'}
         ] },
       { title:{en:'II. The Founding Brethren', el:'Οι ιδρυτές αδελφοί'},
-        table:{ head:['Office','Brother','Road Name','Lodge','Signature'], widths:[25,24,15,20,16],
-                rows: OFFICERS.filter(function(o){ return o.name; }).map(function(o){
-                        return [ office(o.en, o.el), person(o.name), road(o.road), blank(), blank() ];
+        table:{ head:['Office','Brother','Road Name','Lodge','Grand Lodge','Signature'],
+                widths:[19,20,12,18,18,13],
+                rows: OFFICERS.filter(function(o){ return o.name; }).map(function(o, i){
+                        var n = i + 1;
+                        return [ office(o.en, o.el), person(o.name), road(o.road),
+                                 field('lodge-' + n, o.lodge || ''),
+                                 field('grand-lodge-' + n, OBEDIENCE),
+                                 field('signature-' + n) ];
                       }),
-                note:'The founding brethren are the officers of the Chapter. Their Lodges and their signatures are entered at the assembly of foundation, and road names not yet advised are entered as they are given to the Secretary.' } },
+                note:'The founding brethren are the officers of the Chapter. NGLG is the National Grand Lodge of Greece, under whose constitution the brethren hold their Lodges. The pale cells are fillable: open this document in a PDF reader and enter the Lodge and the signature of each brother. Road names not yet advised are entered as they are given to the Secretary.' } },
       { title:{en:'III. The Emblem Borne by the Chapter', el:'Το έμβλημα που φέρει το Chapter'},
         image:'emblem', width:104, caption:'The emblem of Widows Sons MRA — Chapter Hellas',
         paragraphs:[

@@ -161,6 +161,14 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 .btn.ghost:hover{border-color:var(--steel); color:var(--bone); background:transparent;}
 .btn svg{vertical-align:-3px; margin-right:8px;}
 
+/* ---------- official seal ---------- */
+.official-seal{margin:30px auto 26px; display:flex; flex-direction:column; align-items:center; gap:12px;}
+.official-seal img{width:170px; height:auto; display:block;
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,.65)) drop-shadow(0 0 1px rgba(203,168,103,.35));}
+.official-seal figcaption{font-family:'Oswald',sans-serif; font-size:11px; letter-spacing:.26em;
+  text-transform:uppercase; color:var(--gold-bright); text-align:center;}
+@media(max-width:780px){.official-seal img{width:132px;} .official-seal figcaption{font-size:10px; letter-spacing:.2em;}}
+
 /* ---------- official document actions ---------- */
 .doc-actions{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:26px;}
 .doc-actions .btn{font-family:'Oswald',sans-serif; cursor:pointer; line-height:1;}
@@ -566,6 +574,12 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <h1>Masonic Riders Association</h1>
     <span class="script">Widows Sons</span>
     <h2>CHAPTER HELLAS</h2>
+
+    <figure class="official-seal">
+      <img id="wsSeal" src="assets/chapter-hellas-official-seal.png?v=20260906" alt="Official Seal of Widows Sons Masonic Riders Association — Chapter Hellas" loading="eager">
+      <figcaption>Official Seal of Chapter Hellas</figcaption>
+    </figure>
+
     <div class="rockertext">Meet on the Level &amp; Part upon the Square</div>
     <div class="motto">
       <span class="gr">«Τέκτονες, Διδάσκαλοι, Αδελφοί στην ψυχή, Widows Sons στην άσφαλτο.»</span>
@@ -1191,11 +1205,15 @@ var WSDoc = (function(){
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  /* The letterhead emblem is the one already on the page — no second copy. */
-  function emblem(){
-    var el = document.getElementById('wsEmblem');
-    return el ? el.getAttribute('src') : '';
+  /* The letterhead emblem and the Chapter seal are the ones already on the
+     page — no second copy. The .src property is read rather than the
+     attribute, so the absolute URL travels into the print frame. */
+  function art(id){
+    var el = document.getElementById(id);
+    return el ? (el.src || el.getAttribute('src') || '') : '';
   }
+  function emblem(){ return art('wsEmblem'); }
+  function seal(){ return art('wsSeal'); }
 
   /* A table in the house style.
      spec = { head:[..], widths:['30%',..], rows:[[cell,..],..], note:'…' }
@@ -1286,12 +1304,18 @@ var WSDoc = (function(){
 '  display:flex; align-items:center; justify-content:center; text-align:center;',
 '  font-family:"Oswald",Arial,sans-serif; font-size:6.6pt; letter-spacing:.16em;',
 '  text-transform:uppercase; color:#a5a199; line-height:1.7; flex:none; }',
+'.doc-seal-art{ margin:0; flex:none; text-align:center; }',
+'.doc-seal-art img{ width:40mm; height:40mm; object-fit:contain; display:block; }',
+'.doc-seal-art figcaption{ font-family:"Oswald",Arial,sans-serif; font-size:6.4pt;',
+'  letter-spacing:.16em; text-transform:uppercase; color:#8a8f96; margin-top:1.5mm; }',
 '.doc-sign-col{ text-align:center; min-width:64mm; }',
 '.doc-place{ font-size:10pt; margin-bottom:7mm; text-align:right; }',
 '.doc-sign-title{ font-family:"Cinzel",Georgia,serif; font-size:10.5pt; font-weight:700;',
 '  letter-spacing:.14em; text-transform:uppercase; }',
 '.doc-sign-line{ border-bottom:0.7pt solid #16181c; height:16mm; margin:1mm 0 2mm; }',
 '.doc-sign-name{ font-weight:600; font-size:10pt; }',
+'.doc-sign-road{ font-family:"Oswald",Arial,sans-serif; font-size:8pt; letter-spacing:.18em;',
+'  text-transform:uppercase; color:#9E1B1F; margin-top:1.2mm; }',
 '.doc-sign-role{ font-family:"Oswald",Arial,sans-serif; font-size:7.6pt; letter-spacing:.16em;',
 '  text-transform:uppercase; color:#6b6f77; margin-top:1mm; }',
 
@@ -1311,14 +1335,21 @@ var WSDoc = (function(){
     }).join('');
 
     var sign = doc.signature || {};
+    var sealArt = seal();
+    var sealPanel =
+      doc.seal === false ? '<div></div>' :
+      sealArt ? '<figure class="doc-seal-art">' +
+                  '<img src="' + sealArt + '" alt="">' +
+                  '<figcaption>Official Seal of Chapter Hellas</figcaption>' +
+                '</figure>'
+              : '<div class="doc-seal">Seal of<br>Chapter Hellas</div>';
     var signBlock =
-      '<div class="doc-sign">' +
-        (doc.seal === false ? '<div></div>' :
-          '<div class="doc-seal">Seal of<br>Chapter Hellas</div>') +
+      '<div class="doc-sign">' + sealPanel +
         '<div class="doc-sign-col">' +
           '<div class="doc-sign-title">' + esc(sign.title || '') + '</div>' +
           '<div class="doc-sign-line"></div>' +
           '<div class="doc-sign-name">' + esc(sign.name || '') + '</div>' +
+          (sign.road ? '<div class="doc-sign-road">&laquo;' + esc(sign.road) + '&raquo;</div>' : '') +
           (sign.role ? '<div class="doc-sign-role">' + esc(sign.role) + '</div>' : '') +
         '</div>' +
       '</div>';
@@ -1504,7 +1535,8 @@ var WSDocs = (function(){
         '<p>Issued by order of the Chapter and entered in its records. All emblems, patches and insignia ' +
         'of office remain the property of Widows Sons MRA and are returned to the Chapter upon a ' +
         'brother’s departure from office or from the Chapter.</p>',
-      signature: { title:'The Secretary', name:'Nikolaos Markopoulos', role:'Γραμματέας · Chapter Hellas' },
+      signature: { title:'The Founding President', name:'Dimitrios Skiadopoulos',
+                    road:'Build Smith', role:'Ιδρυτικός Πρόεδρος & Οικιστής · Chapter Hellas' },
       seal: true
     };
   }

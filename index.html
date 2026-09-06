@@ -236,6 +236,20 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
   box-shadow:0 0 0 1px rgba(203,168,103,.25), 0 0 46px rgba(203,168,103,.18);
 }
 
+/* ---------- the colophon at the foot of the page ---------- */
+.colophon{margin:30px auto 0; padding-top:22px; border-top:1px solid var(--stitch);
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  max-width:760px; text-align:left;}
+.colophon-portrait{width:30px; height:30px; border-radius:50%; object-fit:cover; flex:none;
+  border:1px solid rgba(203,168,103,.55); box-shadow:0 2px 8px rgba(0,0,0,.6);}
+.colophon-text p{margin:0; font-size:14px; color:var(--bone-dim); line-height:1.5;}
+.colophon-text b{color:var(--bone); font-weight:600;}
+.colophon-road{font-family:'Oswald',sans-serif; font-size:11.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--gold-bright);}
+.colophon-rights{margin-top:3px !important; font-size:12.5px; color:var(--steel-dim);}
+@media(max-width:560px){ .colophon{flex-direction:column; text-align:center; gap:10px;}
+  .colophon-text p{font-size:13px;} }
+
 /* ---------- the seal, struck in wax, at the foot of the page ---------- */
 .wax{margin:0 auto 34px; text-align:center;}
 .wax-seal{
@@ -1292,6 +1306,16 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <div class="rockertext">Masonic Riders Assn. · Chapter Hellas</div>
     <div class="fmotto">Widows Sons</div>
     <p>Meet on the Level &amp; Part upon the Square</p>
+
+    <div class="colophon">
+      <img class="colophon-portrait" src="assets/president-portrait.jpg?v=20260906"
+           alt="Dimitrios Skiadopoulos, Founding President of Chapter Hellas">
+      <div class="colophon-text">
+        <p>Powered by the Founding President <b>Dimitrios Skiadopoulos</b>
+          <span class="colophon-road">&laquo;Build Smith&raquo;</span> · created in September 2026</p>
+        <p class="colophon-rights">Property of Widows Sons Masonic Riders Association — Chapter Hellas</p>
+      </div>
+    </div>
   </div>
 </footer>
 

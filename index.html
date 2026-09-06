@@ -758,7 +758,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
         <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty">Είναι υπεύθυνος για τη διοικητική λειτουργία του Chapter. Τηρεί τα πρακτικά, το μητρώο των μελών, το διοικητικό αρχείο, την επίσημη αλληλογραφία και τις προβλεπόμενες αναφορές. Όλα τα επίσημα έγγραφα του Chapter φέρουν υποχρεωτικά τη σφραγίδα και αποκλειστικά την υπογραφή του Γραμματέα. Μόνο ο Γραμματέας υπογράφει τις κάρτες μελών του Chapter.</div>
+        <div class="ws-vest-duty">Είναι υπεύθυνος για τη διοικητική λειτουργία του Chapter. Τηρεί τα πρακτικά, το μητρώο των μελών, το διοικητικό αρχείο, την επίσημη αλληλογραφία και τις προβλεπόμενες αναφορές. Είναι θεματοφύλακας της σφραγίδας. Κάθε επίσημο έγγραφο του Chapter φέρει στο τέλος του τη σφραγίδα στο κέντρο, την υπογραφή του Γραμματέα αριστερά και την υπογραφή του Προέδρου δεξιά· τα ιδρυτικά έγγραφα υπογράφονται από τον Ιδρυτικό Πρόεδρο. Μόνο ο Γραμματέας υπογράφει τις κάρτες μελών του Chapter.</div>
       </div>
       <div class="ws-officer-base">Nikolaos Markopoulos</div>
     </article>
@@ -1299,20 +1299,19 @@ var WSDoc = (function(){
 /* ---- closing, signature, seal ---- */
 '.doc-close{ margin-top:7mm; }',
 '.doc-sign{ margin-top:10mm; page-break-inside:avoid; display:flex; align-items:flex-end;',
-'  justify-content:space-between; gap:10mm; }',
+'  justify-content:space-between; gap:5mm; }',
 '.doc-seal{ width:38mm; height:38mm; border:0.8pt dashed #b0aca2; border-radius:50%;',
 '  display:flex; align-items:center; justify-content:center; text-align:center;',
 '  font-family:"Oswald",Arial,sans-serif; font-size:6.6pt; letter-spacing:.16em;',
 '  text-transform:uppercase; color:#a5a199; line-height:1.7; flex:none; }',
-'.doc-sign-dual{ align-items:flex-end; gap:6mm; }',
-'.doc-sign-dual .doc-sign-side{ display:flex; align-items:flex-end; gap:5mm; }',
-'.doc-sign-dual .doc-sign-col{ min-width:56mm; }',
-'.doc-sign-dual .doc-seal-art img{ width:31mm; height:31mm; }',
+'.doc-sign-centre{ flex:0 0 auto; display:flex; justify-content:center; }',
+'.doc-sign-empty{ min-width:0; }',
+'.doc-seal-art img{ width:34mm; height:34mm; }',
 '.doc-seal-art{ margin:0; flex:none; text-align:center; }',
 '.doc-seal-art img{ width:40mm; height:40mm; object-fit:contain; display:block; }',
 '.doc-seal-art figcaption{ font-family:"Oswald",Arial,sans-serif; font-size:6.4pt;',
 '  letter-spacing:.16em; text-transform:uppercase; color:#8a8f96; margin-top:1.5mm; }',
-'.doc-sign-col{ text-align:center; min-width:64mm; }',
+'.doc-sign-col{ text-align:center; flex:1 1 0; min-width:52mm; }',
 '.doc-place{ font-size:10pt; margin-bottom:7mm; text-align:right; }',
 '.doc-sign-title{ font-family:"Cinzel",Georgia,serif; font-size:10.5pt; font-weight:700;',
 '  letter-spacing:.14em; text-transform:uppercase; }',
@@ -1362,19 +1361,14 @@ var WSDoc = (function(){
     /* A founding document is signed by the Founding President alone. Every
        document issued thereafter bears the seal and the signature of the
        Secretary on the left, and that of the President on the right. */
-    var signBlock;
-    if(doc.signatures){
-      signBlock = '<div class="doc-sign doc-sign-dual">' +
-                    '<div class="doc-sign-side">' + sealPanel +
-                      signCol(doc.signatures.left) +
-                    '</div>' +
-                    signCol(doc.signatures.right) +
-                  '</div>';
-    } else {
-      signBlock = '<div class="doc-sign">' + (sealPanel || '<div></div>') +
-                    signCol(doc.signature || {}) +
-                  '</div>';
-    }
+    var left  = doc.signatures ? signCol(doc.signatures.left)  : '';
+    var right = doc.signatures ? signCol(doc.signatures.right) : signCol(doc.signature || {});
+    var signBlock =
+      '<div class="doc-sign">' +
+        (left || '<div class="doc-sign-col doc-sign-empty"></div>') +
+        '<div class="doc-sign-centre">' + sealPanel + '</div>' +
+        right +
+      '</div>';
 
     return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
       '<title>' + esc(CHAPTER + ' — ' + (doc.subject || 'Document')) + '</title>' +
@@ -1492,7 +1486,7 @@ var WSDocs = (function(){
     ['Vice President','Αντιπρόεδρος','Dimitrios Panagakos','Developer','Principal Officer','By appointment',
      'Second in the hierarchy and the immediate associate of the President. Supports the President in the exercise of his duties and stands fully in his place in any absence or impediment. Accompanies the President at official events and assists in coordinating the administration of the Chapter.'],
     ['Secretary','Γραμματέας','Nikolaos Markopoulos','','Principal Officer','By appointment',
-     'Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Custodian of the seal: every official document of the Chapter bears the seal and the signature of the Secretary at its foot on the left, and the signature of the President on the right. The founding documents of the Chapter are signed by the Founding President. The Secretary alone signs the membership cards of the Chapter.'],
+     'Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Custodian of the seal: every official document of the Chapter bears, at its foot, the seal in the centre, the signature of the Secretary on the left and the signature of the President on the right. The founding documents of the Chapter are signed by the Founding President. The Secretary alone signs the membership cards of the Chapter.'],
     ['Treasurer','Ταμίας','Panagiotis Vlahos','','Principal Officer','Five years',
      'Holds responsibility for the financial management of the Chapter. Administers the bank accounts, the subscriptions, the receipts and the payments, keeps the financial books and the supporting records, and presents the prescribed financial statements and reports to the administration.'],
     ['Sergeant-at-Arms','Υπεύθυνος Τάξης','Marinos Andreas','','Principal Officer','By appointment',

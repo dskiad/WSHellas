@@ -150,8 +150,8 @@ var WSDocs = (function(){
         ] },
       { title:{en:'Article III — Membership', el:'Άρθρο Γ΄ — Μέλη'},
         paragraphs:[
-          {en:'Membership is open to Master Masons in good standing of a regular Lodge, who own and ride a motorcycle, and who are received according to the Internal Regulations.',
-           el:'Μέλος δύναται να γίνει Διδάσκαλος Τέκτων εν καλή καταστάσει κανονικής Στοάς, ο οποίος κατέχει και οδηγεί μοτοσικλέτα και γίνεται δεκτός κατά τον Εσωτερικό Κανονισμό.'},
+          {en:'Membership is open to Master Masons in good standing of a regular Lodge under the National Grand Lodge of Greece or another regularly recognized Grand Lodge, who own and ride a motorcycle, and who are received according to the Internal Regulations.',
+           el:'Μέλος δύναται να γίνει Διδάσκαλος Τέκτων εν καλή καταστάσει κανονικής Στοάς υπό την Εθνική Μεγάλη Στοά της Ελλάδος ή άλλη κανονικώς αναγνωρισμένη Μεγάλη Στοά, ο οποίος κατέχει και οδηγεί μοτοσικλέτα και γίνεται δεκτός κατά τον Εσωτερικό Κανονισμό.'},
           {en:'Every candidate passes through the trial appointed by the Chapter and is presented by the Preparing Brother before he is received.',
            el:'Κάθε υποψήφιος διέρχεται τη δοκιμασία που ορίζει το Chapter και παρουσιάζεται από τον Δοκιμαστή πριν γίνει δεκτός.'}
         ] },

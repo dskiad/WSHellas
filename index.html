@@ -561,7 +561,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       <a href="#administration">Administration</a>
       <a href="#emblem">Emblem</a>
       <a href="#constitution">Constitution</a>
-      <a href="#bylaws">By-Laws</a><a href="officers.html">Officers</a>
+      <a href="#bylaws">By-Laws</a><a href="officers.html">Officers</a><a href="secretary.html">Secretary</a>
     </nav>
     <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
@@ -575,6 +575,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <span class="script">Widows Sons</span>
     <h2>CHAPTER HELLAS</h2>
 
+    <img id="wsLetterhead" src="assets/chapter-hellas-letterhead-emblem.png?v=20260906" alt=""
+         style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; left:-9999px;">
     <figure class="official-seal">
       <img id="wsSeal" src="assets/chapter-hellas-official-seal.png?v=20260906" alt="Official Seal of Widows Sons Masonic Riders Association — Chapter Hellas" loading="eager">
       <figcaption>Official Seal of Chapter Hellas</figcaption>
@@ -707,7 +709,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
           Officers PDF
         </button>
-        <span class="doc-actions-hint">Το επίσημο έγγραφο των Αξιωματικών · opens the print dialog — choose <b>Save as PDF</b>.</span>
+        <span class="doc-actions-hint">Το επίσημο έγγραφο των Αξιωματικών · the PDF opens with the security code <b>1966</b>. Every document of the Chapter is on the <a href="secretary.html" style="color:var(--gold-bright)">Secretary</a> page.</span>
       </div>
     </div>
 
@@ -1170,218 +1172,18 @@ document.querySelectorAll('nav.links a').forEach(function(a){
   });
 });
 </script>
+<script src="assets/ws-office.js"></script>
+<script src="assets/ws-docs.js"></script>
 <script>
-/* =====================================================================
-   WSDoc — the office that issues the documents of Chapter Hellas.
-
-   It carries the specification of a document to the renderer in
-   assets/ws-pdf.js, which draws it on A4 under the Chapter letterhead,
-   and hands the brother a PDF sealed with the Chapter's security code.
-
-   The renderer, the letterhead faces and jsPDF are fetched only when a
-   document is actually called for, so no visitor pays for them.
-   ===================================================================== */
-var WSDoc = (function(){
-
-  /* The security code every document of the Chapter is issued under. */
-  var CODE = '1966';
-
-  var PARTS = ['assets/vendor/jspdf.umd.min.js',
-               'assets/vendor/jspdf.plugin.autotable.min.js',
-               'assets/vendor/ws-fonts.js',
-               'assets/ws-pdf.js'];
-  var loading = null;
-
-  function script(src){
-    return new Promise(function(done, fail){
-      var s = document.createElement('script');
-      s.src = src; s.async = false;
-      s.onload = function(){ done(); };
-      s.onerror = function(){ fail(new Error('could not load ' + src)); };
-      document.head.appendChild(s);
-    });
-  }
-  function press(){
-    if(!loading){
-      loading = PARTS.reduce(function(chain, src){
-        return chain.then(function(){ return script(src); });
-      }, Promise.resolve());
-    }
-    return loading;
-  }
-
-  /* An image on the page, handed to the PDF as PNG. */
-  function plate(img){
-    if(!img || !img.naturalWidth){ return null; }
-    var c = document.createElement('canvas');
-    c.width = img.naturalWidth; c.height = img.naturalHeight;
-    c.getContext('2d').drawImage(img, 0, 0);
-    try { return c.toDataURL('image/png'); } catch(e){ return null; }
-  }
-  function settled(img){
-    if(!img || img.complete){ return Promise.resolve(img); }
-    return new Promise(function(done){
-      img.addEventListener('load',  function(){ done(img); }, {once:true});
-      img.addEventListener('error', function(){ done(null); }, {once:true});
-    });
-  }
-  function art(){
-    var e = document.getElementById('wsEmblem'), s = document.getElementById('wsSeal');
-    return Promise.all([settled(e), settled(s)]).then(function(){
-      return { emblem: plate(e), emblemW: e ? e.naturalWidth : 1,
-               emblemH: e ? e.naturalHeight : 1, seal: plate(s) };
-    });
-  }
-
-  function fileName(spec){
-    var name = 'Chapter Hellas ' + (spec.subject || 'Document') + ' ' + (spec.date || '');
-    return name.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.pdf';
-  }
-
-  /* Issue a document: draw it, seal it with the code, hand it over. */
-  function issue(spec){
-    return press().then(art).then(function(plates){
-      var ctor = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
-      var doc = window.WSPdf.build(ctor, spec, plates, window.WSFonts, CODE);
-      doc.save(fileName(spec));
-    });
-  }
-
-  return { issue:issue, CODE:CODE };
-})();
-
-
-/* =====================================================================
-   WSDocs — the register of the documents the Chapter issues.
-
-   Every document is a function returning its specification, so this
-   register is where the internal regulations, the letters and the
-   certificates still to come are added: write the function, and the
-   same letterhead, the same tables, the same sealed foot and the same
-   security code are had for nothing.
-   ===================================================================== */
-var WSDocs = (function(){
-
-  var PLACE = 'Athens, Greece';
-  var DATE  = '1 September 2026';
-
-  /* How the Chapter executes its documents.
-
-     FOUNDING — the founding documents of the Chapter are signed by the
-     Founding President, already a Widows Son at the foundation.
-
-     EXECUTED — every document issued thereafter bears, at its foot, the
-     seal in the centre, the signature of the Secretary on the left and
-     the signature of the President on the right. */
-  var FOUNDING = {
-    title:'The Founding President', name:'Dimitrios Skiadopoulos', road:'Build Smith',
-    role:'Ιδρυτικός Πρόεδρος & Οικιστής · Chapter Hellas'
-  };
-  var EXECUTED = {
-    left:  { title:'The Secretary', name:'Nikolaos Markopoulos',
-             role:'Γραμματέας · Chapter Hellas' },
-    right: { title:'The President', name:'Dimitrios Skiadopoulos', road:'Build Smith',
-             role:'Πρόεδρος · Chapter Hellas' }
-  };
-
-  /* --- cells in the house style --- */
-  function office(en, gr){
-    return { content:en, _gr:gr, styles:{ font:'WSCinzel', fontStyle:'bold', fontSize:8.8 } };
-  }
-  function person(n){
-    return n ? { content:n, styles:{ fontStyle:'bold' } }
-             : { content:'To be appointed', styles:{ fontStyle:'italic', textColor:[139,143,150] } };
-  }
-  function road(r){
-    return r ? { content:String(r).toUpperCase(), styles:{ textColor:[158,27,31], fontSize:8.2 } }
-             : { content:'to be advised', styles:{ fontStyle:'italic', textColor:[139,143,150] } };
-  }
-  function term(t){ return { content:t, styles:{ fontSize:7.9, textColor:[60,64,70] } }; }
-
-  /* The fifteen offices of the Chapter, as carried in Section 02.
-     [ office, Greek title, brother, road name, rank, term, duties ] */
-  var OFFICERS = [
-    ['President','Πρόεδρος','Dimitrios Skiadopoulos','BuildSmith','Principal Officer','Five years',
-     'Leads the Chapter as a whole and holds the highest responsibility for its operation and its direction. Presides over the assemblies, organises and directs the activities, represents the Chapter officially, and ensures the faithful application of the Constitution, the Internal Regulations and the decisions of the Chapter.'],
-    ['Vice President','Αντιπρόεδρος','Dimitrios Panagakos','Developer','Principal Officer','By appointment',
-     'Second in the hierarchy and the immediate associate of the President. Supports the President in the exercise of his duties and stands fully in his place in any absence or impediment. Accompanies the President at official events and assists in coordinating the administration of the Chapter.'],
-    ['Secretary','Γραμματέας','Nikolaos Markopoulos','','Principal Officer','By appointment',
-     'Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Custodian of the seal: every official document of the Chapter bears, at its foot, the seal in the centre, the signature of the Secretary on the left and the signature of the President on the right. The founding documents of the Chapter are signed by the Founding President. The Secretary alone signs the membership cards of the Chapter.'],
-    ['Treasurer','Ταμίας','Panagiotis Vlahos','','Principal Officer','Five years',
-     'Holds responsibility for the financial management of the Chapter. Administers the bank accounts, the subscriptions, the receipts and the payments, keeps the financial books and the supporting records, and presents the prescribed financial statements and reports to the administration.'],
-    ['Sergeant-at-Arms','Υπεύθυνος Τάξης','Marinos Andreas','','Principal Officer','By appointment',
-     'Responsible for internal order, for discipline and for the observance of the Regulations and the decisions of the Chapter. Oversees the proper conduct of the members, addresses breaches or questions of discipline and, where required, reports and escalates them to the President.'],
-    ['Road Captain','Αρχηγός Αποστολής','Panagiotis Floris','','Principal Officer','Five years',
-     'Holds the principal responsibility for every organised ride and mission. Plans the route, the stopping points and the progress of the column, organises and controls the formation, and answers for the discipline, the safety and the orderly movement of the group on the road.'],
-    ['Road Sergeant','Ομαδάρχης','','','Chapter Officer','By appointment',
-     'Directly supports the Road Captain on organised rides and missions. Oversees the section, group or formation assigned to him, maintains communication with the Road Captain, and attends to spacing, discipline, cohesion and the safety of the riders on the road.'],
-    ['Warden','Έφορος Μελών & Συμμόρφωσης','George Dryllis','','Chapter Officer','By appointment',
-     'Follows the matters concerning the members, their standing and their compliance with the Constitution, the Internal Regulations and the decisions of the Chapter. Oversees the proper wearing of the vest, the emblems and the insignia, and contributes to the protection of the property and the identity of the Chapter.'],
-    ['Orator','Σύμβουλος','Andreas Tsounakos','','Chapter Officer','By appointment',
-     'Serves as counsellor to the President and to the Chapter. Assists in the forming of positions and official presentations, in communication, at events and in public representation, seeing that the word and the presence of the Chapter answer to its principles and to its standing.'],
-    ['Ambassador','Εκπρόσωπος προς άλλα Motorcycle Clubs','Pantelis Lathiotakis','','Chapter Officer','By appointment',
-     'Represents the Chapter in its relations with other Motorcycle Clubs, Widows Sons Chapters and kindred organisations. Develops and maintains communication, cooperation and fraternal ties, and informs the administration of contacts, invitations and matters of external relations.'],
-    ['Almoner','Ελεονόμος Αγαθοεργίας','Pavlos Sarof','','Chapter Officer','By appointment',
-     'Responsible for the charitable work, the social care and the benevolent action of the Chapter. Follows the cases of brethren, families or other persons in need of help, proposes the means of support, and coordinates the charitable and benevolent works of the Chapter.'],
-    ['Quartermaster','Επιμελητής','','','Chapter Officer','By appointment',
-     'Administers the property, the equipment and the stores of the Chapter. Holds responsibility for the emblems, the patches, the insignia and every object belonging to or used by the Chapter, and attends to their recording, safe keeping, issue, delivery and return.'],
-    ['Master of Ceremonies','Τελετάρχης','Alexandros Epifanis','','Chapter Officer','By appointment',
-     'Responsible for the ceremonial, the protocol and the formal order of the ceremonies and events of the Chapter. Prepares the flow of the programme, guides the participants through the prescribed procedures, and coordinates the smooth and dignified conduct of every official ceremony.'],
-    ['Preparing Brother','Δοκιμαστής','Konstantinos Karmalis','','Chapter Officer','By appointment',
-     'A fundamental office for the admission and the initiation of a new member. Comes to know and prepares the candidate, guides him before his admission, organises and oversees the trial he must pass before he is judged fit to become a Widows Son, and reports to the President and the administration for the completion of his admission.'],
-    ['Event Manager','Υπεύθυνος Εκδηλώσεων','','','Chapter Officer','By appointment',
-     'Responsible for the practical preparation, organisation and support of the events of the Chapter. Coordinates the requirements of place, time, hospitality and operation, and assists in whatever is required before, during and after an event for its smooth conduct.']
-  ];
-
-  function officers(){
-    return {
-      subject: 'Officers',
-      ref:     'Ref. CH-OFF-2026-01',
-      place:   PLACE,
-      date:    DATE,
-      lead: ['The Chapter is administered by fifteen officers, the first six of whom constitute the Principal Officers of the Chapter. This report sets out every office — its duties, its responsibilities and the term for which it is held — together with the brother who holds it and his road name, so that it may serve as a complete guide to the officers of Chapter Hellas.'],
-      sections: [
-        { title: 'I. Offices, Duties and Terms',
-          table: {
-            head:   ['Office','Duties and Responsibilities','Term'],
-            widths: [23, 62, 15],
-            rows:   OFFICERS.map(function(o){ return [ office(o[0],o[1]), o[6], term(o[5]) ]; }),
-            note:   'The President, the Treasurer and the Road Captain serve five-year terms. The remaining offices are filled by appointment, in accordance with the rules of the Chapter and the decisions of the President.'
-          } },
-        { title: 'II. The Officers of the Chapter',
-          table: {
-            head:   ['Office','Brother','Road Name','Rank'],
-            widths: [28, 27, 23, 22],
-            rows:   OFFICERS.map(function(o){
-                      return [ office(o[0],o[1]), person(o[2]), road(o[3]), term(o[4]) ];
-                    }),
-            note:   'The first six offices constitute the Principal Officers — Κύριοι Αξιωματικοί — of the Chapter. Road names not yet entered above are to be advised to the Secretary and will be carried in the next issue of this report.'
-          } },
-        { title: 'III. Founding Distinction of the Chapter',
-          table: {
-            head:   ['Distinction','Brother','Nature of the Distinction'],
-            widths: [26, 24, 50],
-            rows:   [[ office('Founding President','Ιδρυτικός Πρόεδρος & Οικιστής'),
-                       person('Dimitrios Skiadopoulos'),
-                       'A special and permanent founding distinction of the Chapter, held in recognition of its foundation. It does not constitute a sixteenth office and carries no duties beyond those of the office held by the brother who bears it.' ]]
-          } }
-      ],
-      closing: ['Issued by order of the Chapter and entered in its records. All emblems, patches and insignia of office remain the property of Widows Sons MRA and are returned to the Chapter upon a brother’s departure from office or from the Chapter.'],
-      signature: FOUNDING,
-      seal: true
-    };
-  }
-
-  return { officers:officers, FOUNDING:FOUNDING, EXECUTED:EXECUTED };
-})();
-
+/* The Officers document, issued from the Administration section. The whole
+   register of the Chapter's documents is on the Secretary's page. */
 var btnOfficers = document.getElementById('btnOfficersPdf');
 if(btnOfficers){
   btnOfficers.addEventListener('click', function(){
     var label = btnOfficers.innerHTML;
     btnOfficers.disabled = true;
     btnOfficers.textContent = 'Preparing…';
-    WSDoc.issue(WSDocs.officers()).catch(function(err){
+    WSDoc.pdf(WSDocs.officers()).catch(function(err){
       window.alert('The document could not be issued. ' + err.message);
     }).then(function(){
       btnOfficers.disabled = false;

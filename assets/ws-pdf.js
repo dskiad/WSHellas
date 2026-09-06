@@ -68,6 +68,50 @@
     return y;
   }
 
+  /* A block of text. A string is set as it stands; a pair {en, gr} sets the
+     English and then the Greek beneath it, which is how every founding
+     document of the Chapter is drawn. */
+  function block(doc, item, y, o){
+    o = o || {};
+    if(item === null || item === undefined){ return y; }
+    if(typeof item === 'string'){ return paragraph(doc, item, y, o); }
+    if(item.en){ y = paragraph(doc, item.en, y, o); }
+    var second = { size:(o.size || 10.4) - 1.1, colour:GREY, style:'italic',
+                   lead:o.lead || 1.3, width:o.width, x:o.x };
+    var el = item.el || item.gr;
+    if(el){ y = paragraph(doc, el, y + 0.9, second); }
+    if(item.bg){ y = paragraph(doc, item.bg, y + 0.9, second); }
+    return y;
+  }
+
+  /* A heading, bilingual in the same manner. */
+  function heading(doc, title, y){
+    if(typeof title === 'string'){ title = { en: title }; }
+    line(doc, String(title.en || '').toUpperCase(),
+         {font:DISPLAY, style:'bold', size:9.8, spacing:0.5, colour:CRIMSON, x:ML, y:y});
+    var sub = [title.el || title.gr, title.bg].filter(Boolean).join('  ·  ');
+    if(sub){ y += 3.7; line(doc, sub, {size:8, style:'italic', colour:GREY, x:ML, y:y}); }
+    return y;
+  }
+
+  /* An image set into the body of a document, with its legend. */
+  function plate(doc, s, art, y){
+    var key = s.image, data = art && art[key];
+    if(!data){ return y; }
+    var W = s.width || 60;
+    var nat = (key === 'emblem') ? (art.emblemH / art.emblemW) : 1;
+    var H = W * (nat || 1);
+    if(y + H + 12 > PH - MB){ doc.addPage(); y = MT + 4; }
+    doc.addImage(data, 'PNG', CX - W/2, y, W, H);
+    y += H + 3.4;
+    if(s.caption){
+      line(doc, String(s.caption).toUpperCase(),
+           {size:6.6, spacing:0.4, colour:FAINT, align:'center', y:y});
+      y += 3;
+    }
+    return y + 2;
+  }
+
   /* ---------- the letterhead ---------- */
   function letterhead(doc, spec, art){
     var y = MT;
@@ -92,8 +136,13 @@
     /* subject */
     line(doc, 'SUBJECT', {size:7.4, spacing:1.15, colour:GOLD, align:'center', y:y});
     y += 6.6;
-    line(doc, String(spec.subject || '').toUpperCase(),
-         {font:DISPLAY, style:'bold', size:18, spacing:0.55, align:'center', y:y});
+    var subj = spec.subject; if(typeof subj === 'string'){ subj = { en: subj }; }
+    var sen = subj.en || '';
+    line(doc, sen.toUpperCase(), {font:DISPLAY, style:'bold',
+         size: sen.length > 26 ? 15 : 18, spacing:0.55, align:'center', y:y});
+    [subj.el || subj.gr, subj.bg].filter(Boolean).forEach(function(t){
+      y += 5.0; line(doc, t, {size:10.4, style:'italic', colour:GREY, align:'center', y:y});
+    });
     y += 3.4;
     doc.setDrawColor.apply(doc, GOLD); doc.setLineWidth(0.3);
     doc.line(CX - 11, y, CX + 11, y);
@@ -228,7 +277,8 @@
     var n = doc.internal.getNumberOfPages();
     for(var p = 1; p <= n; p++){
       doc.setPage(p);
-      var t = (ORG + ' — ' + CHAPTER + (spec.subject ? ' · ' + spec.subject : '')).toUpperCase();
+      var sj = spec.subject, sname = (typeof sj === 'string') ? sj : (sj && sj.en) || '';
+      var t = (ORG + ' — ' + CHAPTER + (sname ? ' · ' + sname : '')).toUpperCase();
       line(doc, t, {size:6.4, spacing:0.42, colour:FAINT, align:'center', y:PH - 9});
       line(doc, p + ' / ' + n, {size:6.4, spacing:0.3, colour:FAINT, align:'center', y:PH - 6});
     }
@@ -250,24 +300,24 @@
 
     var y = letterhead(doc, spec, art), i, j;
 
-    (spec.lead || []).forEach(function(p){ y = paragraph(doc, p, y, {size:10.6}) + 1.6; });
+    (spec.lead || []).forEach(function(p){ y = block(doc, p, y, {size:10.6}) + 1.8; });
 
     (spec.sections || []).forEach(function(s){
-      if(y + 26 > PH - MB){ doc.addPage(); y = MT + 4; }
+      if(y + 30 > PH - MB){ doc.addPage(); y = MT + 4; }
       y += 3.4;
-      line(doc, String(s.title || '').toUpperCase(),
-           {font:DISPLAY, style:'bold', size:9.8, spacing:0.5, colour:CRIMSON, x:ML, y:y});
+      y = heading(doc, s.title || '', y);
       y += 1.9;
       doc.setDrawColor.apply(doc, RULE); doc.setLineWidth(0.15);
       doc.line(ML, y, PW - MR, y);
-      y += 4.2;
+      y += 4.4;
+      if(s.image){ y = plate(doc, s, art, y); }
       if(s.table){ y = table(doc, s.table, y); }
-      (s.paragraphs || []).forEach(function(p){ y = paragraph(doc, p, y, {}) + 1.4; });
+      (s.paragraphs || []).forEach(function(p){ y = block(doc, p, y, {}) + 1.6; });
     });
 
     if(spec.closing && spec.closing.length){
       y += 3;
-      spec.closing.forEach(function(p){ y = paragraph(doc, p, y, {size:10.4}) + 1.4; });
+      spec.closing.forEach(function(p){ y = block(doc, p, y, {size:10.4}) + 1.6; });
     }
 
     y += 4;

@@ -39,3 +39,4 @@ jobs:
           git add -A
           git commit -m 'Fix Chapter Hellas gallery with validated JPEG photos'
           git push origin HEAD:claude/repo-push-vfylka
+# retry after confirming all nine base64 chunks are present

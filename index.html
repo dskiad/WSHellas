@@ -1172,283 +1172,93 @@ document.querySelectorAll('nav.links a').forEach(function(a){
 </script>
 <script>
 /* =====================================================================
-   WSDoc — official document engine of Chapter Hellas.
+   WSDoc — the office that issues the documents of Chapter Hellas.
 
-   One letterhead for everything the Chapter issues: reports, the
-   internal regulations, letters and certificates. Describe a document
-   and call WSDoc.print(doc); the browser renders it on A4 and opens its
-   print dialog, where "Save as PDF" produces the file.
+   It carries the specification of a document to the renderer in
+   assets/ws-pdf.js, which draws it on A4 under the Chapter letterhead,
+   and hands the brother a PDF sealed with the Chapter's security code.
 
-     WSDoc.print({
-       subject:  'Officers',            // the theme, set in the header
-       ref:      'CH-OFF-2026-01',      // document reference
-       lead:     '<p>…</p>',            // opening paragraph(s)
-       sections: [{title:'…', html:'…'}],
-       closing:  '<p>…</p>',
-       place:    'Athens, Greece',
-       date:     '1 September 2026',
-       signature:{title:'The Secretary', name:'…', role:'…'},
-       seal:     true                   // reserve the panel for the seal
-     });
-
-   WSDoc.table() builds a table in the house style; every document
-   should use it so the documents stay of one family.
+   The renderer, the letterhead faces and jsPDF are fetched only when a
+   document is actually called for, so no visitor pays for them.
    ===================================================================== */
 var WSDoc = (function(){
 
-  var ORG     = 'Widows Sons Masonic Riders Association';
-  var CHAPTER = 'Chapter Hellas';
+  /* The security code every document of the Chapter is issued under. */
+  var CODE = '1966';
 
-  function esc(s){
-    return String(s == null ? '' : s)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  var PARTS = ['assets/vendor/jspdf.umd.min.js',
+               'assets/vendor/jspdf.plugin.autotable.min.js',
+               'assets/vendor/ws-fonts.js',
+               'assets/ws-pdf.js'];
+  var loading = null;
+
+  function script(src){
+    return new Promise(function(done, fail){
+      var s = document.createElement('script');
+      s.src = src; s.async = false;
+      s.onload = function(){ done(); };
+      s.onerror = function(){ fail(new Error('could not load ' + src)); };
+      document.head.appendChild(s);
+    });
   }
-
-  /* The letterhead emblem and the Chapter seal are the ones already on the
-     page — no second copy. The .src property is read rather than the
-     attribute, so the absolute URL travels into the print frame. */
-  function art(id){
-    var el = document.getElementById(id);
-    return el ? (el.src || el.getAttribute('src') || '') : '';
-  }
-  function emblem(){ return art('wsEmblem'); }
-  function seal(){ return art('wsSeal'); }
-
-  /* A table in the house style.
-     spec = { head:[..], widths:['30%',..], rows:[[cell,..],..], note:'…' }
-     A cell may be a string, or {html:'…'} to pass markup through. */
-  function table(spec){
-    var cell = function(c, tag){
-      var cls = '', v;
-      if(c && typeof c === 'object'){ v = c.html || ''; cls = c.className || ''; }
-      else { v = esc(c); }
-      return '<' + tag + (cls ? ' class="' + cls + '"' : '') + '>' + v + '</' + tag + '>';
-    };
-    var out = '<table class="doc-table">';
-    if(spec.widths){
-      out += '<colgroup>' + spec.widths.map(function(w){
-        return '<col style="width:' + w + '">';
-      }).join('') + '</colgroup>';
+  function press(){
+    if(!loading){
+      loading = PARTS.reduce(function(chain, src){
+        return chain.then(function(){ return script(src); });
+      }, Promise.resolve());
     }
-    if(spec.head){
-      out += '<thead><tr>' + spec.head.map(function(h){ return cell(h,'th'); }).join('') + '</tr></thead>';
-    }
-    out += '<tbody>' + spec.rows.map(function(r){
-      return '<tr>' + r.map(function(c){ return cell(c,'td'); }).join('') + '</tr>';
-    }).join('') + '</tbody></table>';
-    if(spec.note){ out += '<p class="doc-note">' + spec.note + '</p>'; }
-    return out;
+    return loading;
   }
 
-  function styles(){
-    return [
-'@page{ size:A4; margin:15mm 14mm 20mm; }',
-'*{ box-sizing:border-box; }',
-'html,body{ margin:0; padding:0; }',
-'body{ font-family:"EB Garamond",Georgia,"Times New Roman",serif; font-size:10.4pt;',
-'  line-height:1.55; color:#16181c; background:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact; }',
-'h1,h2,h3{ font-family:"Cinzel",Georgia,serif; margin:0; font-weight:700; }',
-'p{ margin:0 0 7pt; text-align:justify; }',
-
-/* ---- letterhead ---- */
-'.doc-head{ text-align:center; padding-bottom:6mm; border-bottom:1.6pt solid #9E1B1F; position:relative; }',
-'.doc-head:after{ content:""; position:absolute; left:0; right:0; bottom:-2.6pt; height:0.7pt; background:#AD8A4E; }',
-'.doc-head img{ width:29mm; height:auto; display:block; margin:0 auto 4mm; }',
-'.doc-org{ font-family:"Cinzel",Georgia,serif; font-size:13pt; font-weight:700; letter-spacing:.10em;',
-'  text-transform:uppercase; line-height:1.28; }',
-'.doc-chapter{ font-family:"Cinzel",Georgia,serif; font-size:11pt; font-weight:600; letter-spacing:.26em;',
-'  text-transform:uppercase; color:#9E1B1F; margin-top:1.5mm; }',
-'.doc-motto{ font-family:"EB Garamond",Georgia,serif; font-style:italic; font-size:9pt; color:#6b6f77; margin-top:2mm; }',
-
-/* ---- subject block ---- */
-'.doc-subject{ text-align:center; margin:7mm 0 5mm; }',
-'.doc-subject .k{ font-family:"Oswald",Arial,sans-serif; font-size:7.6pt; letter-spacing:.34em;',
-'  text-transform:uppercase; color:#8a6d35; }',
-'.doc-subject h1{ font-size:19pt; letter-spacing:.13em; text-transform:uppercase; margin-top:2mm; }',
-'.doc-subject .rule{ width:22mm; height:0.9pt; background:#AD8A4E; margin:3.5mm auto 0; }',
-'.doc-meta{ display:flex; justify-content:space-between; font-family:"Oswald",Arial,sans-serif;',
-'  font-size:7.6pt; letter-spacing:.16em; text-transform:uppercase; color:#6b6f77;',
-'  border-top:0.6pt solid #d8d4ca; border-bottom:0.6pt solid #d8d4ca; padding:2mm 0; margin-bottom:6mm; }',
-
-/* ---- body ---- */
-'.doc-section{ margin-top:6.5mm; }',
-'.doc-section > h2{ font-size:10.6pt; letter-spacing:.14em; text-transform:uppercase; color:#9E1B1F;',
-'  border-bottom:0.6pt solid #d8d4ca; padding-bottom:1.6mm; margin-bottom:3.2mm; }',
-'.doc-lead{ font-size:11pt; }',
-'.doc-note{ font-size:8.6pt; color:#5c6067; font-style:italic; text-align:left; margin-top:2.5mm; }',
-
-/* ---- tables ---- */
-'.doc-table{ width:100%; border-collapse:collapse; margin-top:1mm; font-size:9.3pt; }',
-'.doc-table thead{ display:table-header-group; }',
-'.doc-table th{ font-family:"Oswald",Arial,sans-serif; font-weight:500; font-size:7.8pt;',
-'  letter-spacing:.16em; text-transform:uppercase; text-align:left; color:#fff; background:#22262c;',
-'  padding:2.2mm 2.4mm; border:0.5pt solid #22262c; }',
-'.doc-table td{ padding:2.1mm 2.4mm; border:0.5pt solid #cfcbc1; vertical-align:top; }',
-'.doc-table tbody tr{ page-break-inside:avoid; }',
-'.doc-table tbody tr:nth-child(even){ background:#f6f4ef; }',
-'.doc-table .office{ font-family:"Cinzel",Georgia,serif; font-weight:700; font-size:9.2pt; }',
-'.doc-table .office-gr{ display:block; font-family:"Oswald",Arial,sans-serif; font-size:7.2pt;',
-'  letter-spacing:.04em; color:#6b6f77; margin-top:0.7mm; font-weight:400; }',
-'.doc-table .name{ font-weight:600; }',
-'.doc-table .road{ font-family:"Oswald",Arial,sans-serif; font-size:8.4pt; letter-spacing:.10em;',
-'  text-transform:uppercase; color:#9E1B1F; }',
-'.doc-table .muted{ color:#8b8f96; font-style:italic; }',
-'.doc-table .term{ font-family:"Oswald",Arial,sans-serif; font-size:8.2pt; letter-spacing:.08em; }',
-
-/* ---- closing, signature, seal ---- */
-'.doc-close{ margin-top:7mm; }',
-'.doc-sign{ margin-top:10mm; page-break-inside:avoid; display:flex; align-items:flex-end;',
-'  justify-content:space-between; gap:5mm; }',
-'.doc-seal{ width:38mm; height:38mm; border:0.8pt dashed #b0aca2; border-radius:50%;',
-'  display:flex; align-items:center; justify-content:center; text-align:center;',
-'  font-family:"Oswald",Arial,sans-serif; font-size:6.6pt; letter-spacing:.16em;',
-'  text-transform:uppercase; color:#a5a199; line-height:1.7; flex:none; }',
-'.doc-sign-centre{ flex:0 0 auto; display:flex; justify-content:center; }',
-'.doc-sign-empty{ min-width:0; }',
-'.doc-seal-art img{ width:34mm; height:34mm; }',
-'.doc-seal-art{ margin:0; flex:none; text-align:center; }',
-'.doc-seal-art img{ width:40mm; height:40mm; object-fit:contain; display:block; }',
-'.doc-seal-art figcaption{ font-family:"Oswald",Arial,sans-serif; font-size:6.4pt;',
-'  letter-spacing:.16em; text-transform:uppercase; color:#8a8f96; margin-top:1.5mm; }',
-'.doc-sign-col{ text-align:center; flex:1 1 0; min-width:52mm; }',
-'.doc-place{ font-size:10pt; margin-bottom:7mm; text-align:right; }',
-'.doc-sign-title{ font-family:"Cinzel",Georgia,serif; font-size:10.5pt; font-weight:700;',
-'  letter-spacing:.14em; text-transform:uppercase; }',
-'.doc-sign-line{ border-bottom:0.7pt solid #16181c; height:16mm; margin:1mm 0 2mm; }',
-'.doc-sign-name{ font-weight:600; font-size:10pt; }',
-'.doc-sign-road{ font-family:"Oswald",Arial,sans-serif; font-size:8pt; letter-spacing:.18em;',
-'  text-transform:uppercase; color:#9E1B1F; margin-top:1.2mm; }',
-'.doc-sign-role{ font-family:"Oswald",Arial,sans-serif; font-size:7.6pt; letter-spacing:.16em;',
-'  text-transform:uppercase; color:#6b6f77; margin-top:1mm; }',
-
-/* ---- running footer ---- */
-'.doc-foot{ position:fixed; bottom:6mm; left:0; right:0; text-align:center;',
-'  font-family:"Oswald",Arial,sans-serif; font-size:6.8pt; letter-spacing:.22em;',
-'  text-transform:uppercase; color:#9a968e; }',
-'@media screen{ body{ padding:14mm; } .doc-foot{ display:none; } }'
-    ].join('\n');
+  /* An image on the page, handed to the PDF as PNG. */
+  function plate(img){
+    if(!img || !img.naturalWidth){ return null; }
+    var c = document.createElement('canvas');
+    c.width = img.naturalWidth; c.height = img.naturalHeight;
+    c.getContext('2d').drawImage(img, 0, 0);
+    try { return c.toDataURL('image/png'); } catch(e){ return null; }
+  }
+  function settled(img){
+    if(!img || img.complete){ return Promise.resolve(img); }
+    return new Promise(function(done){
+      img.addEventListener('load',  function(){ done(img); }, {once:true});
+      img.addEventListener('error', function(){ done(null); }, {once:true});
+    });
+  }
+  function art(){
+    var e = document.getElementById('wsEmblem'), s = document.getElementById('wsSeal');
+    return Promise.all([settled(e), settled(s)]).then(function(){
+      return { emblem: plate(e), emblemW: e ? e.naturalWidth : 1,
+               emblemH: e ? e.naturalHeight : 1, seal: plate(s) };
+    });
   }
 
-  function html(doc){
-    var sections = (doc.sections || []).map(function(s){
-      return '<div class="doc-section">' +
-               (s.title ? '<h2>' + esc(s.title) + '</h2>' : '') + s.html +
-             '</div>';
-    }).join('');
-
-    var sealArt = seal();
-    var sealPanel =
-      doc.seal === false ? '' :
-      sealArt ? '<figure class="doc-seal-art">' +
-                  '<img src="' + sealArt + '" alt="">' +
-                  '<figcaption>Official Seal of Chapter Hellas</figcaption>' +
-                '</figure>'
-              : '<div class="doc-seal">Seal of<br>Chapter Hellas</div>';
-
-    /* One signatory column: the office, the rule to sign upon, the brother. */
-    function signCol(sig, cls){
-      if(!sig){ return ''; }
-      return '<div class="doc-sign-col' + (cls ? ' ' + cls : '') + '">' +
-               '<div class="doc-sign-title">' + esc(sig.title || '') + '</div>' +
-               '<div class="doc-sign-line"></div>' +
-               '<div class="doc-sign-name">' + esc(sig.name || '') + '</div>' +
-               (sig.road ? '<div class="doc-sign-road">&laquo;' + esc(sig.road) + '&raquo;</div>' : '') +
-               (sig.role ? '<div class="doc-sign-role">' + esc(sig.role) + '</div>' : '') +
-             '</div>';
-    }
-
-    /* A founding document is signed by the Founding President alone. Every
-       document issued thereafter bears the seal and the signature of the
-       Secretary on the left, and that of the President on the right. */
-    var left  = doc.signatures ? signCol(doc.signatures.left)  : '';
-    var right = doc.signatures ? signCol(doc.signatures.right) : signCol(doc.signature || {});
-    var signBlock =
-      '<div class="doc-sign">' +
-        (left || '<div class="doc-sign-col doc-sign-empty"></div>') +
-        '<div class="doc-sign-centre">' + sealPanel + '</div>' +
-        right +
-      '</div>';
-
-    return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
-      '<title>' + esc(CHAPTER + ' — ' + (doc.subject || 'Document')) + '</title>' +
-      '<link rel="preconnect" href="https://fonts.googleapis.com">' +
-      '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
-      '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&' +
-        'family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Oswald:wght@400;500&display=swap" rel="stylesheet">' +
-      '<style>' + styles() + '</style></head><body>' +
-      '<div class="doc-head">' +
-        (emblem() ? '<img src="' + emblem() + '" alt="">' : '') +
-        '<div class="doc-org">' + esc(ORG) + '</div>' +
-        '<div class="doc-chapter">' + esc(CHAPTER) + '</div>' +
-        '<div class="doc-motto">Meet on the Level &amp; Part upon the Square</div>' +
-      '</div>' +
-      '<div class="doc-subject">' +
-        '<div class="k">Subject</div><h1>' + esc(doc.subject || '') + '</h1>' +
-        '<div class="rule"></div>' +
-      '</div>' +
-      '<div class="doc-meta">' +
-        '<span>' + esc(doc.ref || '') + '</span>' +
-        '<span>' + esc((doc.place || '') + (doc.date ? ' · ' + doc.date : '')) + '</span>' +
-      '</div>' +
-      (doc.lead ? '<div class="doc-lead">' + doc.lead + '</div>' : '') +
-      sections +
-      (doc.closing ? '<div class="doc-close">' + doc.closing + '</div>' : '') +
-      '<div class="doc-place">' + esc(doc.place || '') +
-        (doc.date ? ', ' + esc(doc.date) : '') + '</div>' +
-      signBlock +
-      '<div class="doc-foot">' + esc(ORG + ' — ' + CHAPTER) +
-        (doc.subject ? ' · ' + esc(doc.subject) : '') + '</div>' +
-      '</body></html>';
+  function fileName(spec){
+    var name = 'Chapter Hellas ' + (spec.subject || 'Document') + ' ' + (spec.date || '');
+    return name.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.pdf';
   }
 
-  /* Render into an off-screen frame and hand it to the print dialog, so
-     the visitor never leaves the page and no pop-up is blocked. */
-  function print(doc){
-    var old = document.getElementById('wsdoc-frame');
-    if(old){ old.parentNode.removeChild(old); }
-
-    var f = document.createElement('iframe');
-    f.id = 'wsdoc-frame';
-    f.setAttribute('aria-hidden','true');
-    f.style.cssText = 'position:fixed; right:0; bottom:0; width:210mm; height:297mm;' +
-                      'opacity:0; border:0; pointer-events:none; z-index:-1;';
-    document.body.appendChild(f);
-
-    var d = f.contentDocument || f.contentWindow.document;
-    d.open(); d.write(html(doc)); d.close();
-
-    var fired = false;
-    var go = function(){
-      if(fired){ return; }
-      fired = true;
-      try{
-        f.contentWindow.focus();
-        f.contentWindow.print();
-      }catch(e){
-        window.alert('The document could not be opened for printing. ' +
-                     'Please try again from a desktop browser.');
-      }
-    };
-    /* Wait for the emblem and the letterhead fonts, but never hang on them. */
-    var ready = f.contentDocument.fonts && f.contentDocument.fonts.ready;
-    if(ready && ready.then){ ready.then(function(){ setTimeout(go, 120); }); }
-    setTimeout(go, 2500);
+  /* Issue a document: draw it, seal it with the code, hand it over. */
+  function issue(spec){
+    return press().then(art).then(function(plates){
+      var ctor = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+      var doc = window.WSPdf.build(ctor, spec, plates, window.WSFonts, CODE);
+      doc.save(fileName(spec));
+    });
   }
 
-  return { print:print, table:table, html:html, esc:esc, ORG:ORG, CHAPTER:CHAPTER };
+  return { issue:issue, CODE:CODE };
 })();
 
 
 /* =====================================================================
-   WSDocs — the register of documents the Chapter issues.
+   WSDocs — the register of the documents the Chapter issues.
 
-   Every document is a function returning a WSDoc specification, so the
-   report below is the model for the internal regulations, the letters
-   and the certificates still to come: add a function here and print it
-   with WSDoc.print(WSDocs.name()).
-
-   Officers of Chapter Hellas — the first document issued on the template.
+   Every document is a function returning its specification, so this
+   register is where the internal regulations, the letters and the
+   certificates still to come are added: write the function, and the
+   same letterhead, the same tables, the same sealed foot and the same
+   security code are had for nothing.
    ===================================================================== */
 var WSDocs = (function(){
 
@@ -1460,13 +1270,9 @@ var WSDocs = (function(){
      FOUNDING — the founding documents of the Chapter are signed by the
      Founding President, already a Widows Son at the foundation.
 
-     EXECUTED — every official document issued thereafter bears the seal
-     and the signature of the Secretary on the left at its end, and the
-     signature of the President on the right.
-
-     Pass one of the two as the signature of a document:
-       signature:  FOUNDING          — a founding document
-       signatures: EXECUTED          — every other document          */
+     EXECUTED — every document issued thereafter bears, at its foot, the
+     seal in the centre, the signature of the Secretary on the left and
+     the signature of the President on the right. */
   var FOUNDING = {
     title:'The Founding President', name:'Dimitrios Skiadopoulos', road:'Build Smith',
     role:'Ιδρυτικός Πρόεδρος & Οικιστής · Chapter Hellas'
@@ -1477,6 +1283,20 @@ var WSDocs = (function(){
     right: { title:'The President', name:'Dimitrios Skiadopoulos', road:'Build Smith',
              role:'Πρόεδρος · Chapter Hellas' }
   };
+
+  /* --- cells in the house style --- */
+  function office(en, gr){
+    return { content:en, _gr:gr, styles:{ font:'WSCinzel', fontStyle:'bold', fontSize:8.8 } };
+  }
+  function person(n){
+    return n ? { content:n, styles:{ fontStyle:'bold' } }
+             : { content:'To be appointed', styles:{ fontStyle:'italic', textColor:[139,143,150] } };
+  }
+  function road(r){
+    return r ? { content:String(r).toUpperCase(), styles:{ textColor:[158,27,31], fontSize:8.2 } }
+             : { content:'to be advised', styles:{ fontStyle:'italic', textColor:[139,143,150] } };
+  }
+  function term(t){ return { content:t, styles:{ fontSize:7.9, textColor:[60,64,70] } }; }
 
   /* The fifteen offices of the Chapter, as carried in Section 02.
      [ office, Greek title, brother, road name, rank, term, duties ] */
@@ -1513,67 +1333,40 @@ var WSDocs = (function(){
      'Responsible for the practical preparation, organisation and support of the events of the Chapter. Coordinates the requirements of place, time, hospitality and operation, and assists in whatever is required before, during and after an event for its smooth conduct.']
   ];
 
-  function office(en, gr){
-    return {html:'<span class="office">' + WSDoc.esc(en) + '</span>' +
-                 '<span class="office-gr">' + WSDoc.esc(gr) + '</span>'};
-  }
-  function person(n){
-    return n ? {html:'<span class="name">' + WSDoc.esc(n) + '</span>'}
-             : {html:'<span class="muted">To be appointed</span>'};
-  }
-  function road(r){
-    return r ? {html:'<span class="road">' + WSDoc.esc(r) + '</span>'}
-             : {html:'<span class="muted">to be advised</span>'};
-  }
-  function term(t){
-    return {html:'<span class="term">' + WSDoc.esc(t) + '</span>'};
-  }
-
   function officers(){
-    var duties = WSDoc.table({
-      head:   ['Office','Duties and Responsibilities','Term'],
-      widths: ['23%','62%','15%'],
-      rows:   OFFICERS.map(function(o){ return [ office(o[0],o[1]), o[6], term(o[5]) ]; }),
-      note:   'The President, the Treasurer and the Road Captain serve five-year terms. The remaining offices are filled by appointment, in accordance with the rules of the Chapter and the decisions of the President.'
-    });
-
-    var roster = WSDoc.table({
-      head:   ['Office','Brother','Road Name','Rank'],
-      widths: ['28%','27%','23%','22%'],
-      rows:   OFFICERS.map(function(o){
-        return [ office(o[0],o[1]), person(o[2]), road(o[3]),
-                 {html:'<span class="term">' + WSDoc.esc(o[4]) + '</span>'} ];
-      }),
-      note:   'The first six offices constitute the Principal Officers — Κύριοι Αξιωματικοί — of the Chapter. Road names not yet entered above are to be advised to the Secretary and will be carried in the next issue of this report.'
-    });
-
-    var founding = WSDoc.table({
-      head:   ['Distinction','Brother','Nature of the Distinction'],
-      widths: ['26%','24%','50%'],
-      rows:   [[ office('Founding President','Ιδρυτικός Πρόεδρος & Οικιστής'),
-                 person('Dimitrios Skiadopoulos'),
-                 'A special and permanent founding distinction of the Chapter, held in recognition of its foundation. It does not constitute a sixteenth office and carries no duties beyond those of the office held by the brother who bears it.' ]]
-    });
-
     return {
       subject: 'Officers',
       ref:     'Ref. CH-OFF-2026-01',
       place:   PLACE,
       date:    DATE,
-      lead:
-        '<p>The Chapter is administered by <b>fifteen officers</b>. The first six of these constitute the ' +
-        '<b>Principal Officers</b> of the Chapter. This report sets out every office — its duties, its ' +
-        'responsibilities and the term for which it is held — together with the brother who holds it and ' +
-        'his road name, so that it may serve as a complete guide to the officers of Chapter Hellas.</p>',
+      lead: ['The Chapter is administered by fifteen officers, the first six of whom constitute the Principal Officers of the Chapter. This report sets out every office — its duties, its responsibilities and the term for which it is held — together with the brother who holds it and his road name, so that it may serve as a complete guide to the officers of Chapter Hellas.'],
       sections: [
-        { title: 'I. Offices, Duties and Terms',            html: duties },
-        { title: 'II. The Officers of the Chapter',         html: roster },
-        { title: 'III. Founding Distinction of the Chapter', html: founding }
+        { title: 'I. Offices, Duties and Terms',
+          table: {
+            head:   ['Office','Duties and Responsibilities','Term'],
+            widths: [23, 62, 15],
+            rows:   OFFICERS.map(function(o){ return [ office(o[0],o[1]), o[6], term(o[5]) ]; }),
+            note:   'The President, the Treasurer and the Road Captain serve five-year terms. The remaining offices are filled by appointment, in accordance with the rules of the Chapter and the decisions of the President.'
+          } },
+        { title: 'II. The Officers of the Chapter',
+          table: {
+            head:   ['Office','Brother','Road Name','Rank'],
+            widths: [28, 27, 23, 22],
+            rows:   OFFICERS.map(function(o){
+                      return [ office(o[0],o[1]), person(o[2]), road(o[3]), term(o[4]) ];
+                    }),
+            note:   'The first six offices constitute the Principal Officers — Κύριοι Αξιωματικοί — of the Chapter. Road names not yet entered above are to be advised to the Secretary and will be carried in the next issue of this report.'
+          } },
+        { title: 'III. Founding Distinction of the Chapter',
+          table: {
+            head:   ['Distinction','Brother','Nature of the Distinction'],
+            widths: [26, 24, 50],
+            rows:   [[ office('Founding President','Ιδρυτικός Πρόεδρος & Οικιστής'),
+                       person('Dimitrios Skiadopoulos'),
+                       'A special and permanent founding distinction of the Chapter, held in recognition of its foundation. It does not constitute a sixteenth office and carries no duties beyond those of the office held by the brother who bears it.' ]]
+          } }
       ],
-      closing:
-        '<p>Issued by order of the Chapter and entered in its records. All emblems, patches and insignia ' +
-        'of office remain the property of Widows Sons MRA and are returned to the Chapter upon a ' +
-        'brother’s departure from office or from the Chapter.</p>',
+      closing: ['Issued by order of the Chapter and entered in its records. All emblems, patches and insignia of office remain the property of Widows Sons MRA and are returned to the Chapter upon a brother’s departure from office or from the Chapter.'],
       signature: FOUNDING,
       seal: true
     };
@@ -1584,7 +1377,17 @@ var WSDocs = (function(){
 
 var btnOfficers = document.getElementById('btnOfficersPdf');
 if(btnOfficers){
-  btnOfficers.addEventListener('click', function(){ WSDoc.print(WSDocs.officers()); });
+  btnOfficers.addEventListener('click', function(){
+    var label = btnOfficers.innerHTML;
+    btnOfficers.disabled = true;
+    btnOfficers.textContent = 'Preparing…';
+    WSDoc.issue(WSDocs.officers()).catch(function(err){
+      window.alert('The document could not be issued. ' + err.message);
+    }).then(function(){
+      btnOfficers.disabled = false;
+      btnOfficers.innerHTML = label;
+    });
+  });
 }
 </script>
 </body>

@@ -1,8 +1,12 @@
-name: Refine Section 01 photos and locator labels
+name: Refine Section 01 photos and locator labels v2
 on:
   push:
     paths:
       - '.github/workflows/section-one-photo-layout.yml'
+      - '.tmp/chapter-ph1-0.b64'
+      - '.tmp/chapter-ph1-1.b64'
+      - '.tmp/chapter-ph1-2.b64'
+      - '.tmp/chapter-ph1-3.b64'
 permissions:
   contents: write
 jobs:

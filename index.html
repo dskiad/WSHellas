@@ -154,6 +154,54 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 }
 .hero-emblem img{width:100%; height:auto; display:block; position:relative; z-index:1;
   box-shadow:0 0 0 1px rgba(0,0,0,.55), 0 6px 18px rgba(0,0,0,.45);}
+/* ---------- the motto of the Chapter, cut in metal ---------- */
+.chapter-motto{margin:30px auto 34px; max-width:940px; text-align:center; padding:0 14px;}
+.chapter-motto figcaption{
+  font-family:'Oswald',sans-serif; font-size:11px; letter-spacing:.34em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:18px; position:relative; display:inline-block; padding:0 22px;
+}
+/* a hairline of gold to either side of the label */
+.chapter-motto figcaption:before,
+.chapter-motto figcaption:after{
+  content:''; position:absolute; top:50%; width:46px; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(173,138,78,.85));
+}
+.chapter-motto figcaption:before{right:100%;}
+.chapter-motto figcaption:after{left:100%; transform:scaleX(-1);}
+.chapter-motto blockquote{
+  margin:0; font-family:'Cinzel',serif; font-weight:700;
+  font-size:clamp(19px, 3.05vw, 37px); line-height:1.38; letter-spacing:.07em;
+  color:#eef1f4;
+  /* the letters stand up from the plate: a light on the top edge, the body
+     of the letter falling away beneath it, and the shadow it throws */
+  text-shadow:
+    0 -1px 0 rgba(255,255,255,.55),
+    0 1px 0 #a7adb5,
+    0 2px 0 #8b9198,
+    0 3px 0 #71767d,
+    0 4px 0 #585d64,
+    0 5px 0 #3c4046,
+    0 6px 5px rgba(0,0,0,.5),
+    0 13px 22px rgba(0,0,0,.5);
+}
+.chapter-motto blockquote span{display:block;}
+.chapter-motto blockquote span + span{color:var(--gold-bright); margin-top:4px;
+  text-shadow:
+    0 -1px 0 rgba(255,238,205,.5),
+    0 1px 0 #8a6d35, 0 2px 0 #775d2c, 0 3px 0 #614b23,
+    0 4px 0 #4b3a1b, 0 5px 0 #35290f,
+    0 6px 5px rgba(0,0,0,.5), 0 13px 22px rgba(0,0,0,.5);}
+.chapter-motto p{
+  margin:20px auto 0; max-width:520px; font-style:italic; font-size:16px;
+  color:var(--bone-dim); line-height:1.6;
+}
+@media(max-width:640px){
+  .chapter-motto{margin:24px auto 26px;}
+  .chapter-motto figcaption{letter-spacing:.24em; font-size:10px;}
+  .chapter-motto figcaption:before,.chapter-motto figcaption:after{width:24px;}
+  .chapter-motto p{font-size:15px;}
+}
+
 .hero h1{font-size:15px; font-family:'Oswald',sans-serif; letter-spacing:.32em; text-transform:uppercase; color:var(--steel);}
 .hero .script{
   font-family:'Mrs Saint Delafield', cursive; color:var(--crimson-bright);
@@ -596,6 +644,15 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <h1>Masonic Riders Association</h1>
     <span class="script">Widows Sons</span>
     <h2>CHAPTER HELLAS</h2>
+
+    <figure class="chapter-motto">
+      <figcaption>The Motto of Chapter Hellas</figcaption>
+      <blockquote>
+        <span>The motorcycle carries us;</span>
+        <span>our principles direct us.</span>
+      </blockquote>
+      <p>Spoken among brothers — and kept upon every road we ride.</p>
+    </figure>
 
     <img id="wsLetterhead" src="assets/chapter-hellas-letterhead-emblem.png?v=20260906" alt=""
          style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; left:-9999px;">

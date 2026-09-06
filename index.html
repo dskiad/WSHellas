@@ -161,6 +161,13 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 .btn.ghost:hover{border-color:var(--steel); color:var(--bone); background:transparent;}
 .btn svg{vertical-align:-3px; margin-right:8px;}
 
+/* ---------- official document actions ---------- */
+.doc-actions{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:26px;}
+.doc-actions .btn{font-family:'Oswald',sans-serif; cursor:pointer; line-height:1;}
+.doc-actions-hint{font-size:15px; color:var(--bone-dim); max-width:430px;}
+.doc-actions-hint b{color:var(--steel); font-weight:600;}
+@media print{.doc-actions{display:none;}}
+
 /* ---------- section shell ---------- */
 section{padding:96px 0;}
 section + section{border-top:1px solid var(--stitch);}
@@ -680,6 +687,14 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       <h2><span class="section-prefix">SECTION 02 — </span>Officers of the Chapter <span style="color:var(--steel);font-size:.7em;">/ Αξιωματικοί του Chapter</span></h2>
       <p class="lead">The Chapter is administered by <b>15 officers</b>. The first six positions constitute the <b>Principal Officers — Κύριοι Αξιωματικοί</b>. The President, Treasurer and Road Captain serve five-year terms.</p>
       <p class="lead" style="margin-top:10px; font-size:16px;">The President, Treasurer and Road Captain serve five-year terms. The remaining appointments are made in accordance with the Chapter rules and decisions of the President.</p>
+
+      <div class="doc-actions">
+        <button type="button" class="btn solid" id="btnOfficersPdf">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+          Officers PDF
+        </button>
+        <span class="doc-actions-hint">Το επίσημο έγγραφο των Αξιωματικών · opens the print dialog — choose <b>Save as PDF</b>.</span>
+      </div>
     </div>
 
             <div class="ws-officers-vest-graph">
@@ -950,7 +965,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     </div>
 
     <div class="emblem-section">
-      <div class="emblem-frame"><img src="assets/official-emblem.webp?v=20260906" alt="Widows Sons MRA Chapter Hellas Official Emblem"></div>
+      <div class="emblem-frame"><img id="wsEmblem" src="assets/official-emblem.webp?v=20260906" alt="Widows Sons MRA Chapter Hellas Official Emblem"></div>
       <div>
         <ul class="symbol-list">
           <li>
@@ -1140,6 +1155,367 @@ document.querySelectorAll('nav.links a').forEach(function(a){
     if(window.innerWidth <= 920){ document.getElementById('navlinks').style.display='none'; }
   });
 });
+</script>
+<script>
+/* =====================================================================
+   WSDoc — official document engine of Chapter Hellas.
+
+   One letterhead for everything the Chapter issues: reports, the
+   internal regulations, letters and certificates. Describe a document
+   and call WSDoc.print(doc); the browser renders it on A4 and opens its
+   print dialog, where "Save as PDF" produces the file.
+
+     WSDoc.print({
+       subject:  'Officers',            // the theme, set in the header
+       ref:      'CH-OFF-2026-01',      // document reference
+       lead:     '<p>…</p>',            // opening paragraph(s)
+       sections: [{title:'…', html:'…'}],
+       closing:  '<p>…</p>',
+       place:    'Athens, Greece',
+       date:     '1 September 2026',
+       signature:{title:'The Secretary', name:'…', role:'…'},
+       seal:     true                   // reserve the panel for the seal
+     });
+
+   WSDoc.table() builds a table in the house style; every document
+   should use it so the documents stay of one family.
+   ===================================================================== */
+var WSDoc = (function(){
+
+  var ORG     = 'Widows Sons Masonic Riders Association';
+  var CHAPTER = 'Chapter Hellas';
+
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* The letterhead emblem is the one already on the page — no second copy. */
+  function emblem(){
+    var el = document.getElementById('wsEmblem');
+    return el ? el.getAttribute('src') : '';
+  }
+
+  /* A table in the house style.
+     spec = { head:[..], widths:['30%',..], rows:[[cell,..],..], note:'…' }
+     A cell may be a string, or {html:'…'} to pass markup through. */
+  function table(spec){
+    var cell = function(c, tag){
+      var cls = '', v;
+      if(c && typeof c === 'object'){ v = c.html || ''; cls = c.className || ''; }
+      else { v = esc(c); }
+      return '<' + tag + (cls ? ' class="' + cls + '"' : '') + '>' + v + '</' + tag + '>';
+    };
+    var out = '<table class="doc-table">';
+    if(spec.widths){
+      out += '<colgroup>' + spec.widths.map(function(w){
+        return '<col style="width:' + w + '">';
+      }).join('') + '</colgroup>';
+    }
+    if(spec.head){
+      out += '<thead><tr>' + spec.head.map(function(h){ return cell(h,'th'); }).join('') + '</tr></thead>';
+    }
+    out += '<tbody>' + spec.rows.map(function(r){
+      return '<tr>' + r.map(function(c){ return cell(c,'td'); }).join('') + '</tr>';
+    }).join('') + '</tbody></table>';
+    if(spec.note){ out += '<p class="doc-note">' + spec.note + '</p>'; }
+    return out;
+  }
+
+  function styles(){
+    return [
+'@page{ size:A4; margin:15mm 14mm 20mm; }',
+'*{ box-sizing:border-box; }',
+'html,body{ margin:0; padding:0; }',
+'body{ font-family:"EB Garamond",Georgia,"Times New Roman",serif; font-size:10.4pt;',
+'  line-height:1.55; color:#16181c; background:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact; }',
+'h1,h2,h3{ font-family:"Cinzel",Georgia,serif; margin:0; font-weight:700; }',
+'p{ margin:0 0 7pt; text-align:justify; }',
+
+/* ---- letterhead ---- */
+'.doc-head{ text-align:center; padding-bottom:6mm; border-bottom:1.6pt solid #9E1B1F; position:relative; }',
+'.doc-head:after{ content:""; position:absolute; left:0; right:0; bottom:-2.6pt; height:0.7pt; background:#AD8A4E; }',
+'.doc-head img{ width:29mm; height:auto; display:block; margin:0 auto 4mm; }',
+'.doc-org{ font-family:"Cinzel",Georgia,serif; font-size:13pt; font-weight:700; letter-spacing:.10em;',
+'  text-transform:uppercase; line-height:1.28; }',
+'.doc-chapter{ font-family:"Cinzel",Georgia,serif; font-size:11pt; font-weight:600; letter-spacing:.26em;',
+'  text-transform:uppercase; color:#9E1B1F; margin-top:1.5mm; }',
+'.doc-motto{ font-family:"EB Garamond",Georgia,serif; font-style:italic; font-size:9pt; color:#6b6f77; margin-top:2mm; }',
+
+/* ---- subject block ---- */
+'.doc-subject{ text-align:center; margin:7mm 0 5mm; }',
+'.doc-subject .k{ font-family:"Oswald",Arial,sans-serif; font-size:7.6pt; letter-spacing:.34em;',
+'  text-transform:uppercase; color:#8a6d35; }',
+'.doc-subject h1{ font-size:19pt; letter-spacing:.13em; text-transform:uppercase; margin-top:2mm; }',
+'.doc-subject .rule{ width:22mm; height:0.9pt; background:#AD8A4E; margin:3.5mm auto 0; }',
+'.doc-meta{ display:flex; justify-content:space-between; font-family:"Oswald",Arial,sans-serif;',
+'  font-size:7.6pt; letter-spacing:.16em; text-transform:uppercase; color:#6b6f77;',
+'  border-top:0.6pt solid #d8d4ca; border-bottom:0.6pt solid #d8d4ca; padding:2mm 0; margin-bottom:6mm; }',
+
+/* ---- body ---- */
+'.doc-section{ margin-top:6.5mm; }',
+'.doc-section > h2{ font-size:10.6pt; letter-spacing:.14em; text-transform:uppercase; color:#9E1B1F;',
+'  border-bottom:0.6pt solid #d8d4ca; padding-bottom:1.6mm; margin-bottom:3.2mm; }',
+'.doc-lead{ font-size:11pt; }',
+'.doc-note{ font-size:8.6pt; color:#5c6067; font-style:italic; text-align:left; margin-top:2.5mm; }',
+
+/* ---- tables ---- */
+'.doc-table{ width:100%; border-collapse:collapse; margin-top:1mm; font-size:9.3pt; }',
+'.doc-table thead{ display:table-header-group; }',
+'.doc-table th{ font-family:"Oswald",Arial,sans-serif; font-weight:500; font-size:7.8pt;',
+'  letter-spacing:.16em; text-transform:uppercase; text-align:left; color:#fff; background:#22262c;',
+'  padding:2.2mm 2.4mm; border:0.5pt solid #22262c; }',
+'.doc-table td{ padding:2.1mm 2.4mm; border:0.5pt solid #cfcbc1; vertical-align:top; }',
+'.doc-table tbody tr{ page-break-inside:avoid; }',
+'.doc-table tbody tr:nth-child(even){ background:#f6f4ef; }',
+'.doc-table .office{ font-family:"Cinzel",Georgia,serif; font-weight:700; font-size:9.2pt; }',
+'.doc-table .office-gr{ display:block; font-family:"Oswald",Arial,sans-serif; font-size:7.2pt;',
+'  letter-spacing:.04em; color:#6b6f77; margin-top:0.7mm; font-weight:400; }',
+'.doc-table .name{ font-weight:600; }',
+'.doc-table .road{ font-family:"Oswald",Arial,sans-serif; font-size:8.4pt; letter-spacing:.10em;',
+'  text-transform:uppercase; color:#9E1B1F; }',
+'.doc-table .muted{ color:#8b8f96; font-style:italic; }',
+'.doc-table .term{ font-family:"Oswald",Arial,sans-serif; font-size:8.2pt; letter-spacing:.08em; }',
+
+/* ---- closing, signature, seal ---- */
+'.doc-close{ margin-top:7mm; }',
+'.doc-sign{ margin-top:10mm; page-break-inside:avoid; display:flex; align-items:flex-end;',
+'  justify-content:space-between; gap:10mm; }',
+'.doc-seal{ width:38mm; height:38mm; border:0.8pt dashed #b0aca2; border-radius:50%;',
+'  display:flex; align-items:center; justify-content:center; text-align:center;',
+'  font-family:"Oswald",Arial,sans-serif; font-size:6.6pt; letter-spacing:.16em;',
+'  text-transform:uppercase; color:#a5a199; line-height:1.7; flex:none; }',
+'.doc-sign-col{ text-align:center; min-width:64mm; }',
+'.doc-place{ font-size:10pt; margin-bottom:7mm; text-align:right; }',
+'.doc-sign-title{ font-family:"Cinzel",Georgia,serif; font-size:10.5pt; font-weight:700;',
+'  letter-spacing:.14em; text-transform:uppercase; }',
+'.doc-sign-line{ border-bottom:0.7pt solid #16181c; height:16mm; margin:1mm 0 2mm; }',
+'.doc-sign-name{ font-weight:600; font-size:10pt; }',
+'.doc-sign-role{ font-family:"Oswald",Arial,sans-serif; font-size:7.6pt; letter-spacing:.16em;',
+'  text-transform:uppercase; color:#6b6f77; margin-top:1mm; }',
+
+/* ---- running footer ---- */
+'.doc-foot{ position:fixed; bottom:6mm; left:0; right:0; text-align:center;',
+'  font-family:"Oswald",Arial,sans-serif; font-size:6.8pt; letter-spacing:.22em;',
+'  text-transform:uppercase; color:#9a968e; }',
+'@media screen{ body{ padding:14mm; } .doc-foot{ display:none; } }'
+    ].join('\n');
+  }
+
+  function html(doc){
+    var sections = (doc.sections || []).map(function(s){
+      return '<div class="doc-section">' +
+               (s.title ? '<h2>' + esc(s.title) + '</h2>' : '') + s.html +
+             '</div>';
+    }).join('');
+
+    var sign = doc.signature || {};
+    var signBlock =
+      '<div class="doc-sign">' +
+        (doc.seal === false ? '<div></div>' :
+          '<div class="doc-seal">Seal of<br>Chapter Hellas</div>') +
+        '<div class="doc-sign-col">' +
+          '<div class="doc-sign-title">' + esc(sign.title || '') + '</div>' +
+          '<div class="doc-sign-line"></div>' +
+          '<div class="doc-sign-name">' + esc(sign.name || '') + '</div>' +
+          (sign.role ? '<div class="doc-sign-role">' + esc(sign.role) + '</div>' : '') +
+        '</div>' +
+      '</div>';
+
+    return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
+      '<title>' + esc(CHAPTER + ' — ' + (doc.subject || 'Document')) + '</title>' +
+      '<link rel="preconnect" href="https://fonts.googleapis.com">' +
+      '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
+      '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&' +
+        'family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Oswald:wght@400;500&display=swap" rel="stylesheet">' +
+      '<style>' + styles() + '</style></head><body>' +
+      '<div class="doc-head">' +
+        (emblem() ? '<img src="' + emblem() + '" alt="">' : '') +
+        '<div class="doc-org">' + esc(ORG) + '</div>' +
+        '<div class="doc-chapter">' + esc(CHAPTER) + '</div>' +
+        '<div class="doc-motto">Meet on the Level &amp; Part upon the Square</div>' +
+      '</div>' +
+      '<div class="doc-subject">' +
+        '<div class="k">Subject</div><h1>' + esc(doc.subject || '') + '</h1>' +
+        '<div class="rule"></div>' +
+      '</div>' +
+      '<div class="doc-meta">' +
+        '<span>' + esc(doc.ref || '') + '</span>' +
+        '<span>' + esc((doc.place || '') + (doc.date ? ' · ' + doc.date : '')) + '</span>' +
+      '</div>' +
+      (doc.lead ? '<div class="doc-lead">' + doc.lead + '</div>' : '') +
+      sections +
+      (doc.closing ? '<div class="doc-close">' + doc.closing + '</div>' : '') +
+      '<div class="doc-place">' + esc(doc.place || '') +
+        (doc.date ? ', ' + esc(doc.date) : '') + '</div>' +
+      signBlock +
+      '<div class="doc-foot">' + esc(ORG + ' — ' + CHAPTER) +
+        (doc.subject ? ' · ' + esc(doc.subject) : '') + '</div>' +
+      '</body></html>';
+  }
+
+  /* Render into an off-screen frame and hand it to the print dialog, so
+     the visitor never leaves the page and no pop-up is blocked. */
+  function print(doc){
+    var old = document.getElementById('wsdoc-frame');
+    if(old){ old.parentNode.removeChild(old); }
+
+    var f = document.createElement('iframe');
+    f.id = 'wsdoc-frame';
+    f.setAttribute('aria-hidden','true');
+    f.style.cssText = 'position:fixed; right:0; bottom:0; width:210mm; height:297mm;' +
+                      'opacity:0; border:0; pointer-events:none; z-index:-1;';
+    document.body.appendChild(f);
+
+    var d = f.contentDocument || f.contentWindow.document;
+    d.open(); d.write(html(doc)); d.close();
+
+    var fired = false;
+    var go = function(){
+      if(fired){ return; }
+      fired = true;
+      try{
+        f.contentWindow.focus();
+        f.contentWindow.print();
+      }catch(e){
+        window.alert('The document could not be opened for printing. ' +
+                     'Please try again from a desktop browser.');
+      }
+    };
+    /* Wait for the emblem and the letterhead fonts, but never hang on them. */
+    var ready = f.contentDocument.fonts && f.contentDocument.fonts.ready;
+    if(ready && ready.then){ ready.then(function(){ setTimeout(go, 120); }); }
+    setTimeout(go, 2500);
+  }
+
+  return { print:print, table:table, html:html, esc:esc, ORG:ORG, CHAPTER:CHAPTER };
+})();
+
+
+/* =====================================================================
+   WSDocs — the register of documents the Chapter issues.
+
+   Every document is a function returning a WSDoc specification, so the
+   report below is the model for the internal regulations, the letters
+   and the certificates still to come: add a function here and print it
+   with WSDoc.print(WSDocs.name()).
+
+   Officers of Chapter Hellas — the first document issued on the template.
+   ===================================================================== */
+var WSDocs = (function(){
+
+  var PLACE = 'Athens, Greece';
+  var DATE  = '1 September 2026';
+
+  /* The fifteen offices of the Chapter, as carried in Section 02.
+     [ office, Greek title, brother, road name, rank, term, duties ] */
+  var OFFICERS = [
+    ['President','Πρόεδρος','Dimitrios Skiadopoulos','BuildSmith','Principal Officer','Five years',
+     'Leads the Chapter as a whole and holds the highest responsibility for its operation and its direction. Presides over the assemblies, organises and directs the activities, represents the Chapter officially, and ensures the faithful application of the Constitution, the Internal Regulations and the decisions of the Chapter.'],
+    ['Vice President','Αντιπρόεδρος','Dimitrios Panagakos','Developer','Principal Officer','By appointment',
+     'Second in the hierarchy and the immediate associate of the President. Supports the President in the exercise of his duties and stands fully in his place in any absence or impediment. Accompanies the President at official events and assists in coordinating the administration of the Chapter.'],
+    ['Secretary','Γραμματέας','Nikolaos Markopoulos','','Principal Officer','By appointment',
+     'Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Every official document of the Chapter bears the seal and, exclusively, the signature of the Secretary. The Secretary alone signs the membership cards of the Chapter.'],
+    ['Treasurer','Ταμίας','Panagiotis Vlahos','','Principal Officer','Five years',
+     'Holds responsibility for the financial management of the Chapter. Administers the bank accounts, the subscriptions, the receipts and the payments, keeps the financial books and the supporting records, and presents the prescribed financial statements and reports to the administration.'],
+    ['Sergeant-at-Arms','Υπεύθυνος Τάξης','Marinos Andreas','','Principal Officer','By appointment',
+     'Responsible for internal order, for discipline and for the observance of the Regulations and the decisions of the Chapter. Oversees the proper conduct of the members, addresses breaches or questions of discipline and, where required, reports and escalates them to the President.'],
+    ['Road Captain','Αρχηγός Αποστολής','Panagiotis Floris','','Principal Officer','Five years',
+     'Holds the principal responsibility for every organised ride and mission. Plans the route, the stopping points and the progress of the column, organises and controls the formation, and answers for the discipline, the safety and the orderly movement of the group on the road.'],
+    ['Road Sergeant','Ομαδάρχης','','','Chapter Officer','By appointment',
+     'Directly supports the Road Captain on organised rides and missions. Oversees the section, group or formation assigned to him, maintains communication with the Road Captain, and attends to spacing, discipline, cohesion and the safety of the riders on the road.'],
+    ['Warden','Έφορος Μελών & Συμμόρφωσης','George Dryllis','','Chapter Officer','By appointment',
+     'Follows the matters concerning the members, their standing and their compliance with the Constitution, the Internal Regulations and the decisions of the Chapter. Oversees the proper wearing of the vest, the emblems and the insignia, and contributes to the protection of the property and the identity of the Chapter.'],
+    ['Orator','Σύμβουλος','Andreas Tsounakos','','Chapter Officer','By appointment',
+     'Serves as counsellor to the President and to the Chapter. Assists in the forming of positions and official presentations, in communication, at events and in public representation, seeing that the word and the presence of the Chapter answer to its principles and to its standing.'],
+    ['Ambassador','Εκπρόσωπος προς άλλα Motorcycle Clubs','Pantelis Lathiotakis','','Chapter Officer','By appointment',
+     'Represents the Chapter in its relations with other Motorcycle Clubs, Widows Sons Chapters and kindred organisations. Develops and maintains communication, cooperation and fraternal ties, and informs the administration of contacts, invitations and matters of external relations.'],
+    ['Almoner','Ελεονόμος Αγαθοεργίας','Pavlos Sarof','','Chapter Officer','By appointment',
+     'Responsible for the charitable work, the social care and the benevolent action of the Chapter. Follows the cases of brethren, families or other persons in need of help, proposes the means of support, and coordinates the charitable and benevolent works of the Chapter.'],
+    ['Quartermaster','Επιμελητής','','','Chapter Officer','By appointment',
+     'Administers the property, the equipment and the stores of the Chapter. Holds responsibility for the emblems, the patches, the insignia and every object belonging to or used by the Chapter, and attends to their recording, safe keeping, issue, delivery and return.'],
+    ['Master of Ceremonies','Τελετάρχης','Alexandros Epifanis','','Chapter Officer','By appointment',
+     'Responsible for the ceremonial, the protocol and the formal order of the ceremonies and events of the Chapter. Prepares the flow of the programme, guides the participants through the prescribed procedures, and coordinates the smooth and dignified conduct of every official ceremony.'],
+    ['Preparing Brother','Δοκιμαστής','Konstantinos Karmalis','','Chapter Officer','By appointment',
+     'A fundamental office for the admission and the initiation of a new member. Comes to know and prepares the candidate, guides him before his admission, organises and oversees the trial he must pass before he is judged fit to become a Widows Son, and reports to the President and the administration for the completion of his admission.'],
+    ['Event Manager','Υπεύθυνος Εκδηλώσεων','','','Chapter Officer','By appointment',
+     'Responsible for the practical preparation, organisation and support of the events of the Chapter. Coordinates the requirements of place, time, hospitality and operation, and assists in whatever is required before, during and after an event for its smooth conduct.']
+  ];
+
+  function office(en, gr){
+    return {html:'<span class="office">' + WSDoc.esc(en) + '</span>' +
+                 '<span class="office-gr">' + WSDoc.esc(gr) + '</span>'};
+  }
+  function person(n){
+    return n ? {html:'<span class="name">' + WSDoc.esc(n) + '</span>'}
+             : {html:'<span class="muted">To be appointed</span>'};
+  }
+  function road(r){
+    return r ? {html:'<span class="road">' + WSDoc.esc(r) + '</span>'}
+             : {html:'<span class="muted">to be advised</span>'};
+  }
+  function term(t){
+    return {html:'<span class="term">' + WSDoc.esc(t) + '</span>'};
+  }
+
+  function officers(){
+    var duties = WSDoc.table({
+      head:   ['Office','Duties and Responsibilities','Term'],
+      widths: ['23%','62%','15%'],
+      rows:   OFFICERS.map(function(o){ return [ office(o[0],o[1]), o[6], term(o[5]) ]; }),
+      note:   'The President, the Treasurer and the Road Captain serve five-year terms. The remaining offices are filled by appointment, in accordance with the rules of the Chapter and the decisions of the President.'
+    });
+
+    var roster = WSDoc.table({
+      head:   ['Office','Brother','Road Name','Rank'],
+      widths: ['28%','27%','23%','22%'],
+      rows:   OFFICERS.map(function(o){
+        return [ office(o[0],o[1]), person(o[2]), road(o[3]),
+                 {html:'<span class="term">' + WSDoc.esc(o[4]) + '</span>'} ];
+      }),
+      note:   'The first six offices constitute the Principal Officers — Κύριοι Αξιωματικοί — of the Chapter. Road names not yet entered above are to be advised to the Secretary and will be carried in the next issue of this report.'
+    });
+
+    var founding = WSDoc.table({
+      head:   ['Distinction','Brother','Nature of the Distinction'],
+      widths: ['26%','24%','50%'],
+      rows:   [[ office('Founding President','Ιδρυτικός Πρόεδρος & Οικιστής'),
+                 person('Dimitrios Skiadopoulos'),
+                 'A special and permanent founding distinction of the Chapter, held in recognition of its foundation. It does not constitute a sixteenth office and carries no duties beyond those of the office held by the brother who bears it.' ]]
+    });
+
+    return {
+      subject: 'Officers',
+      ref:     'Ref. CH-OFF-2026-01',
+      place:   PLACE,
+      date:    DATE,
+      lead:
+        '<p>The Chapter is administered by <b>fifteen officers</b>. The first six of these constitute the ' +
+        '<b>Principal Officers</b> of the Chapter. This report sets out every office — its duties, its ' +
+        'responsibilities and the term for which it is held — together with the brother who holds it and ' +
+        'his road name, so that it may serve as a complete guide to the officers of Chapter Hellas.</p>',
+      sections: [
+        { title: 'I. Offices, Duties and Terms',            html: duties },
+        { title: 'II. The Officers of the Chapter',         html: roster },
+        { title: 'III. Founding Distinction of the Chapter', html: founding }
+      ],
+      closing:
+        '<p>Issued by order of the Chapter and entered in its records. All emblems, patches and insignia ' +
+        'of office remain the property of Widows Sons MRA and are returned to the Chapter upon a ' +
+        'brother’s departure from office or from the Chapter.</p>',
+      signature: { title:'The Secretary', name:'Nikolaos Markopoulos', role:'Γραμματέας · Chapter Hellas' },
+      seal: true
+    };
+  }
+
+  return { officers:officers };
+})();
+
+var btnOfficers = document.getElementById('btnOfficersPdf');
+if(btnOfficers){
+  btnOfficers.addEventListener('click', function(){ WSDoc.print(WSDocs.officers()); });
+}
 </script>
 </body>
 </html>

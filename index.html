@@ -371,12 +371,26 @@ section + section{border-top:1px solid var(--stitch);}
   font-size:15px; color:var(--bone-dim); background:rgba(173,138,78,.04);
 }
 
+/* ---------- the index of a code: article, name, and what it settles ---------- */
+.code-head{display:flex; align-items:baseline; justify-content:space-between; gap:20px;
+  flex-wrap:wrap; padding-bottom:14px; border-bottom:1px solid var(--stitch); margin-bottom:6px;}
+.code-head h3{font-size:22px; letter-spacing:.02em;}
+.code-head span{font-family:'Oswald',sans-serif; font-size:11px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--gold);}
+.code-index{list-style:none; margin:0; padding:0;}
+.code-index li{display:grid; grid-template-columns:44px 190px 1fr; gap:20px; align-items:baseline;
+  padding:16px 0; border-bottom:1px solid var(--stitch);}
+.code-index li:last-child{border-bottom:none;}
+.ix-no{font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:.12em; color:var(--gold);}
+.ix-name{font-family:'Cinzel',serif; font-weight:700; font-size:16px; color:var(--bone);}
+.ix-line{color:var(--bone-dim); font-size:16.5px; line-height:1.55;}
+@media(max-width:780px){
+  .code-index li{grid-template-columns:36px 1fr; gap:6px 14px; padding:14px 0;}
+  .ix-line{grid-column:2; font-size:15.5px;}
+  .code-head h3{font-size:19px;}
+}
+
 /* ---------- article cards (constitution / bylaws) ---------- */
-.article-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
-.article-card{padding:24px 24px 22px;}
-.article-card .num{font-family:'Cinzel Decorative',serif; font-size:34px; color:var(--stitch); line-height:1; margin-bottom:6px;}
-.article-card h4{font-size:19px; margin-bottom:8px; color:var(--bone);}
-.article-card p{color:var(--bone-dim); font-size:15.5px; margin:0;}
 
 .download-panel{
   margin-top:44px; padding:30px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
@@ -427,7 +441,6 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
   .two-col, .emblem-section{grid-template-columns:1fr;}
   .officer-grid{grid-template-columns:repeat(2,1fr);}
   .officer-card.lead{grid-column:span 2;}
-  .article-grid{grid-template-columns:1fr;}
   .gallery{grid-template-columns:repeat(2,1fr);}
   .rule-list{grid-template-columns:1fr;}
 }
@@ -1140,31 +1153,16 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <div class="section-head">
       <div class="eyebrow">04 — Constitution</div>
       <h2><span class="section-prefix">SECTION 04 — </span>Constitution of Chapter Hellas</h2>
-      <p class="lead">Articles 1–4 establish who the Chapter is, why it exists, and who may belong to it.</p>
+      <p class="lead">Four articles establish who the Chapter is, why it exists, and who may belong to it.</p>
     </div>
 
-    <div class="article-grid">
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">I</div>
-        <h4>Name</h4>
-        <p>Establishes the organization as Widows Sons Masonic Riders Association — Chapter Hellas, represented by a non-profit legal association, operating as an independent Chapter in Greece.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">II</div>
-        <h4>Purpose</h4>
-        <p>Protection and welfare of members and their families, aid to widows, at least one annual charitable donation, and strict neutrality on political and religious matters.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">III</div>
-        <h4>Members</h4>
-        <p>Master Masons in good standing with the National Grand Lodge of Greece or another recognized Grand Lodge; petition, Center Patch, and full-colors probation periods; the Masonic Riders Hellas outreach initiative; honorary membership for sitting and past Grand Masters.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">IV</div>
-        <h4>Withdrawal &amp; Reserve Status</h4>
-        <p>Provides for temporary reserve status on grounds of advanced age or medical necessity, with voting rights and full reinstatement decided by member vote.</p>
-      </div>
-    </div>
+    <div class="code-head"><h3>Constitution of Chapter Hellas</h3><span>Four articles · I–IV</span></div>
+    <ol class="code-index">
+      <li><span class="ix-no">I</span><span class="ix-name">Name</span><span class="ix-line">Establishes the Chapter as Widows Sons Masonic Riders Association — Chapter Hellas, an independent Chapter in Greece, represented by a non-profit association.</span></li>
+      <li><span class="ix-no">II</span><span class="ix-name">Purpose</span><span class="ix-line">Binds the Chapter to the welfare of its members and their families, to the relief of widows, to at least one charitable donation each year, and to strict neutrality in politics and religion.</span></li>
+      <li><span class="ix-no">III</span><span class="ix-name">Members</span><span class="ix-line">Admits Master Masons in good standing of a recognized Grand Lodge, fixes the petition and probation periods for the Center Patch and full colours, and provides for the Masonic Riders Hellas outreach and for honorary membership.</span></li>
+      <li><span class="ix-no">IV</span><span class="ix-name">Withdrawal &amp; Reserve Status</span><span class="ix-line">Allows a brother to pass to reserve status for advanced age or health, and settles his voting rights and his reinstatement by vote of the members.</span></li>
+    </ol>
 
   </div>
 </section>
@@ -1175,7 +1173,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <div class="section-head">
       <div class="eyebrow">05 — By-Laws</div>
       <h2><span class="section-prefix">SECTION 05 — </span>Regulations &amp; Operating Rules</h2>
-      <p class="lead">Articles 5–13 govern how the Chapter is run day to day: officers, elections, meetings, motorcycles, finances and discipline.</p>
+      <p class="lead">Nine articles govern how the Chapter is run day to day: officers, elections, meetings, motorcycles, finances and discipline.</p>
     </div>
 
     <div class="library-frame">
@@ -1183,44 +1181,18 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     </div>
     <p class="lead" style="font-size:15px; margin-top:14px; text-align:center; color:var(--bone-dim);">The Chapter's Constitution and By-Laws, and the reference by-laws of <span class="ws-bulgaria">Widows Sons Bulgaria</span> and of a sister chapter, kept as they should be — bound, shelved, and watched over.</p>
 
-    <div class="article-grid">
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">V</div><h4>Officers</h4>
-        <p>Defines the full slate of Chapter offices and the duties of each — President, Vice President, Secretary, Treasurer, Sergeant-at-Arms, Road Captain, Almoner, Warden, Orator, Ambassador, Master of Ceremonies and Quartermaster.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">VI</div><h4>Elections</h4>
-        <p>The President and the Treasurer are elected for a five-year term. All other officers — the Vice President, Secretary, and the other Sergeants — are appointed by the President for a one-year term, which the President may extend at his own discretion and order.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">VII</div><h4>Meetings</h4>
-        <p>Monthly regular meetings conducted under Robert's Rules of Order; attendance requirements for members and officers; a two-thirds majority for decisions.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">VIII</div><h4>Motorcycles</h4>
-        <p>Minimum engine displacement, a valid roadworthiness certificate, liability insurance and a Category A motorcycle license for every member.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">IX</div><h4>Funerals</h4>
-        <p>A standing three-member Funeral Committee attends the funeral of any member or close relative, wearing the Widows Sons emblem in tribute.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">X</div><h4>Logos &amp; Insignia</h4>
-        <p>Ownership and stewardship of patches, the required top rocker and shoulder emblem, and the rule that insignia may only be worn on the Chapter's approved black leather vest.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">XI</div><h4>Finances</h4>
-        <p>Initial membership fee covering colors and regalia, annual dues plus a charitable contribution, and honorary members' exemption from mandatory fees.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">XII</div><h4>Mandatory Events</h4>
-        <p>One mandatory annual event or ride approved by unanimous vote, plus dedicated fundraising events for the Chapter's chosen charitable cause.</p>
-      </div>
-      <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
-        <div class="num">XIII</div><h4>Grievances &amp; Disputes</h4>
-        <p>The Round Table — President, Vice President, Secretary and Officers — hears complaints and disputes between members, officers or chapters, with written charges and a formal hearing.</p>
-      </div>
-    </div>
+    <div class="code-head"><h3>By-Laws of Chapter Hellas</h3><span>Nine articles · V–XIII</span></div>
+    <ol class="code-index">
+      <li><span class="ix-no">V</span><span class="ix-name">Officers</span><span class="ix-line">Names the fifteen offices of the Chapter and sets out the duties of each.</span></li>
+      <li><span class="ix-no">VI</span><span class="ix-name">Elections</span><span class="ix-line">The President is elected for five years, the Treasurer and the Road Captain for two; the remaining offices are filled by appointment of the President.</span></li>
+      <li><span class="ix-no">VII</span><span class="ix-name">Meetings</span><span class="ix-line">Provides for monthly regular meetings under Robert’s Rules of Order, with attendance required and decisions carried by a two-thirds majority.</span></li>
+      <li><span class="ix-no">VIII</span><span class="ix-name">Motorcycles</span><span class="ix-line">Requires of every member a minimum engine displacement, a valid roadworthiness certificate, liability insurance and a Category A licence.</span></li>
+      <li><span class="ix-no">IX</span><span class="ix-name">Funerals</span><span class="ix-line">A standing committee of three attends the funeral of any member or close relative, wearing the emblem in tribute.</span></li>
+      <li><span class="ix-no">X</span><span class="ix-name">Logos &amp; Insignia</span><span class="ix-line">Holds the patches as the property of Widows Sons MRA and permits them to be worn only upon the Chapter’s approved black leather vest.</span></li>
+      <li><span class="ix-no">XI</span><span class="ix-name">Finances</span><span class="ix-line">Sets the entrance fee covering colours and regalia, the annual dues and charitable contribution, and exempts honorary members from mandatory fees.</span></li>
+      <li><span class="ix-no">XII</span><span class="ix-name">Mandatory Events</span><span class="ix-line">Requires one annual event or ride approved by unanimous vote, and fundraising events for the cause the Chapter has chosen.</span></li>
+      <li><span class="ix-no">XIII</span><span class="ix-name">Grievances &amp; Disputes</span><span class="ix-line">Refers complaints and disputes between members, officers or chapters to the Round Table, upon written charges and a formal hearing.</span></li>
+    </ol>
 
     <div class="download-panel patch">
       <span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>

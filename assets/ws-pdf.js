@@ -279,13 +279,15 @@
       var t = String(sig.title || '').toUpperCase();
       doc.setTextColor.apply(doc, INK);
       doc.text(t, cx - widthOf(doc, t, 0.5) / 2, y + head, { charSpace: 0.5 });
-      doc.setDrawColor.apply(doc, INK); doc.setLineWidth(0.25);
-      doc.line(x, base, x + COL, base);
-      /* the hand of the signatory, set upon the rule as it would be signed */
+      /* the hand of the signatory, set upon the rule as it would be
+         signed; the rule is drawn after it, so it runs whole beneath the
+         hand as it does on paper */
       if(sig.autograph && art && art.autograph){
         var aw = COL * 0.9, ah = aw * (art.autographH / art.autographW || 0.2);
         doc.addImage(art.autograph, fmt(art.autograph), cx - aw/2, base - ah + 2.6, aw, ah);
       }
+      doc.setDrawColor.apply(doc, INK); doc.setLineWidth(0.25);
+      doc.line(x, base, x + COL, base);
       var yy = base + name;
       line(doc, sig.name || '', {style:'bold', size:9.6, x:cx - doc.getTextWidth(sig.name || '')/2, y:yy});
       if(sig.road){

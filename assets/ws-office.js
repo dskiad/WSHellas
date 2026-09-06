@@ -15,10 +15,17 @@ var WSDoc = (function(){
   var CODE = '1966';
 
   var ORG = 'Widows Sons Masonic Riders Association', CHAPTER = 'Chapter Hellas';
+
+  /* The stamp of the edition. Every part of the office is fetched under
+     it, so a brother who has opened the office before is never served a
+     renderer older than the register it is asked to draw. Raise it
+     whenever a document, the renderer or the register changes, and raise
+     it in the same breath on the pages that carry the art. */
+  var EDITION = '20260907';
   var PARTS = ['assets/vendor/jspdf.umd.min.js',
                'assets/vendor/jspdf.plugin.autotable.min.js',
                'assets/vendor/ws-fonts.js',
-               'assets/ws-pdf.js'];
+               'assets/ws-pdf.js'].map(function(p){ return p + '?v=' + EDITION; });
   var loading = null;
 
   function script(src){
@@ -43,11 +50,11 @@ var WSDoc = (function(){
   /* The art is carried at the size it is actually printed at — the emblem
      sets 25mm wide and the seal 34mm, so 480px is beyond what 300 dpi
      asks for, and the document stays light. */
-  var ART_MAX = 480;
-  function plate(img){
+  var ART_MAX = 480, HAND_MAX = 700;
+  function plate(img, cap){
     if(!img || !img.naturalWidth){ return null; }
     var w = img.naturalWidth, h = img.naturalHeight;
-    var k = Math.min(1, ART_MAX / Math.max(w, h));
+    var k = Math.min(1, (cap || ART_MAX) / Math.max(w, h));
     var c = document.createElement('canvas');
     c.width = Math.round(w * k); c.height = Math.round(h * k);
     var g = c.getContext('2d');
@@ -55,7 +62,8 @@ var WSDoc = (function(){
     /* The documents are printed on white paper, so the art needs no
        transparency; laid on white and handed over as JPEG it keeps its
        own compression inside the PDF, whether or not the document itself
-       is compressed. */
+       is compressed. The renderer draws the signing rule over the hand,
+       so the rule is not lost beneath it. */
     g.fillStyle = '#ffffff';
     g.fillRect(0, 0, c.width, c.height);
     g.drawImage(img, 0, 0, c.width, c.height);
@@ -75,7 +83,8 @@ var WSDoc = (function(){
     return Promise.all([settled(e), settled(s), settled(a)]).then(function(){
       return { emblem: plate(e), emblemW: e ? e.naturalWidth : 1,
                emblemH: e ? e.naturalHeight : 1, seal: plate(s),
-               autograph: plate(a),
+               autograph: plate(a, HAND_MAX),
+               autographUrl: a ? a.src : '',
                autographW: a ? a.naturalWidth : 1, autographH: a ? a.naturalHeight : 1 };
     });
   }
@@ -124,8 +133,11 @@ var WSDoc = (function(){
   }
   function signHtml(sig, a){
     if(!sig){ return '<td></td>'; }
-    var hand = (sig.autograph && a && a.autograph)
-      ? '<div class="sig-hand"><img src="' + a.autograph + '" width="190"></div>' : '';
+    /* Word does not read a picture written into the page as data, so the
+       hand is linked to the file the page itself carries. */
+    var hand = (sig.autograph && a && (a.autographUrl || a.autograph))
+      ? '<div class="sig-hand"><img src="' + (a.autographUrl || a.autograph) +
+        '" width="190"></div>' : '';
     return '<td class="sig">' +
              '<div class="sig-title">' + esc(sig.title) + '</div>' +
              hand +

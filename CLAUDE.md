@@ -52,6 +52,13 @@ Both are declared once in `ws-docs.js` as `FOUNDING` and `EXECUTED`.
 - Every PDF is issued under the Chapter's security code, set in
   `assets/ws-office.js`. The Word export carries no code, so a document can be
   perfected before it is issued.
+- **The edition stamp.** `EDITION` in `assets/ws-office.js` is appended to every
+  part the office fetches, and the same stamp is written on the scripts and the
+  art in `secretary.html`. Raise it in both places whenever a document, the
+  register or the renderer changes — otherwise a brother who has opened the
+  office before is served a cached renderer and gets a document drawn by the old
+  rules (this is how the President's hand went missing from every document while
+  the code that draws it was already live).
 - The letterhead uses `assets/chapter-hellas-letterhead-emblem.png` (background
   cut away) and `assets/chapter-hellas-official-seal.png`. Both are read off the
   page by id — `#wsLetterhead` and `#wsSeal` — so a page that issues documents

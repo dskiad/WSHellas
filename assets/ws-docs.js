@@ -297,7 +297,7 @@ var WSDocs = (function(){
       rank:{en:'Principal Officer'},
       term:{en:'Two years · Elected'},
       duties:{en:'Holds the principal responsibility for every organised ride and mission. Plans the route, the stopping points and the progress of the column, organises and controls the formation, and answers for the discipline, the safety and the orderly movement of the group on the road.'} },
-    { en:'Road Sergeant', el:'Ομαδάρχης', name:'', road:'',
+    { en:'Road Sergeant', el:'Ομαδάρχης', name:'Christos Diavatis', road:'',
       rank:{en:'Chapter Officer'},
       term:{en:'By appointment'},
       duties:{en:'Directly supports the Road Captain on organised rides and missions. Oversees the section, group or formation assigned to him, maintains communication with the Road Captain, and attends to spacing, discipline, cohesion and the safety of the riders on the road.'} },

@@ -1,72 +1,79 @@
-/* Officer duty cards: use the real black leather vest image as the background. */
+/* Officer duty cards — real uploaded leather vest image, 2026-09-06. */
 #administration .vest-back,
 #administration .vest,
 .officers-vest-2026 .vest-back,
 .officers-vest-2026 .vest,
 body .officer .vest {
   position: relative !important;
-  background-image: linear-gradient(rgba(0,0,0,.10),rgba(0,0,0,.10)), url('officers-vest-bg.jpg') !important;
-  background-color: transparent !important;
-  background-position: center top !important;
-  background-repeat: no-repeat !important;
-  background-size: contain !important;
+  background: #050505 url('officers-vest-bg.jpg?v=202609060405') center top / 100% auto no-repeat !important;
   clip-path: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  filter: drop-shadow(0 18px 20px rgba(0,0,0,.46)) !important;
+  filter: drop-shadow(0 18px 22px rgba(0,0,0,.55)) !important;
   min-height: 500px !important;
-  aspect-ratio: 1229 / 1536;
+  aspect-ratio: 420 / 525 !important;
   overflow: visible !important;
-  padding: 145px 46px 78px !important;
+  padding: 138px 42px 72px !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   align-items: center !important;
 }
+
+/* Remove the former CSS-drawn vest so the actual photograph is visible. */
 #administration .vest-back::before,
 #administration .vest-back::after,
 #administration .vest::before,
 #administration .vest::after,
 .officers-vest-2026 .vest-back::before,
 .officers-vest-2026 .vest-back::after,
+.officers-vest-2026 .vest::before,
+.officers-vest-2026 .vest::after,
 body .officer .vest::before,
 body .officer .vest::after,
 body .officer .vest .seam {
   display: none !important;
+  content: none !important;
 }
+
+/* Duty copy is placed directly over the centre leather panel. */
 #administration .vest-duty,
 #administration .vest p,
 .officers-vest-2026 .vest-duty,
 body .officer .vest p {
   position: relative !important;
   z-index: 3 !important;
-  width: min(78%,285px) !important;
-  max-width: 285px !important;
-  margin: 16px auto 0 !important;
+  width: min(76%, 292px) !important;
+  max-width: 292px !important;
+  margin: 12px auto 0 !important;
   padding: 14px 15px !important;
-  background: rgba(0,0,0,.38) !important;
-  border: 1px solid rgba(255,255,255,.10) !important;
+  background: rgba(0,0,0,.30) !important;
+  border: 1px solid rgba(255,255,255,.11) !important;
   border-radius: 6px !important;
-  color: #f0ece4 !important;
-  text-shadow: 0 1px 2px #000 !important;
+  color: #f5f1e8 !important;
+  text-shadow: 0 1px 3px #000 !important;
   line-height: 1.52 !important;
-  box-shadow: 0 8px 18px rgba(0,0,0,.18) !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,.22) !important;
+  backdrop-filter: blur(1px);
 }
+
 #administration .vest-duty > span,
 .officers-vest-2026 .vest-duty > span,
 body .officer .vest-role {
   position: relative !important;
   z-index: 4 !important;
-  color: #d8b76d !important;
+  color: #e0bd72 !important;
   text-shadow: 0 1px 3px #000 !important;
 }
+
 #administration .vest-nameplate,
 .officers-vest-2026 .vest-nameplate,
 body .officer .nameplate {
   position: relative !important;
   z-index: 5 !important;
-  margin-top: -12px !important;
+  margin-top: -10px !important;
 }
+
 @media (max-width:700px) {
   #administration .vest-back,
   #administration .vest,
@@ -74,13 +81,13 @@ body .officer .nameplate {
   .officers-vest-2026 .vest,
   body .officer .vest {
     min-height: 470px !important;
-    padding: 132px 34px 68px !important;
+    padding: 126px 30px 64px !important;
   }
   #administration .vest-duty,
   #administration .vest p,
   .officers-vest-2026 .vest-duty,
   body .officer .vest p {
-    width: 80% !important;
+    width: 78% !important;
     font-size: 14px !important;
   }
 }

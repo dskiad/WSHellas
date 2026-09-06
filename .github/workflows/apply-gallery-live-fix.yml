@@ -13,30 +13,51 @@ jobs:
         with:
           ref: gallery-live-fix
           fetch-depth: 0
-      - name: Rebuild and validate gallery JPEGs
+      - name: Decode and validate exact JPEGs
         run: |
-          cat .tmp/gallery-new-1a.b64 .tmp/gallery-new-1b.b64 .tmp/gallery-new-1c.b64 | base64 -d > assets/chapter-hellas-road-1.jpg
-          cat .tmp/gallery-new-2a.b64 .tmp/gallery-new-2b.b64 .tmp/gallery-new-2c.b64 | base64 -d > assets/chapter-hellas-road-2.jpg
-          cat .tmp/gallery-new-3a.b64 .tmp/gallery-new-3b.b64 .tmp/gallery-new-3c.b64 | base64 -d > assets/chapter-hellas-road-3.jpg
+          set -euo pipefail
+          cat .tmp/gallery-new-1a.b64 .tmp/gallery-new-1b.b64 .tmp/gallery-new-1c.b64 | base64 -d > /tmp/chapter-hellas-road-1.jpg
+          cat .tmp/gallery-new-2a.b64 .tmp/gallery-new-2b.b64 .tmp/gallery-new-2c.b64 | base64 -d > /tmp/chapter-hellas-road-2.jpg
+          cat .tmp/gallery-new-3a.b64 .tmp/gallery-new-3b.b64 .tmp/gallery-new-3c.b64 | base64 -d > /tmp/chapter-hellas-road-3.jpg
           python - <<'PY'
           from pathlib import Path
           expected={1:23320,2:24038,3:22774}
           for i,size in expected.items():
-              p=Path(f'assets/chapter-hellas-road-{i}.jpg')
+              p=Path(f'/tmp/chapter-hellas-road-{i}.jpg')
               b=p.read_bytes()
               assert len(b)==size, (p, len(b), size)
               assert b[:2]==b'\xff\xd8', (p,'bad JPEG start')
               assert b[-2:]==b'\xff\xd9', (p,'bad JPEG end')
               print(f'{p}: VALID JPEG, {len(b)} bytes')
           PY
-          file assets/chapter-hellas-road-1.jpg assets/chapter-hellas-road-2.jpg assets/chapter-hellas-road-3.jpg
-      - name: Commit valid images to live branch
+          file /tmp/chapter-hellas-road-1.jpg /tmp/chapter-hellas-road-2.jpg /tmp/chapter-hellas-road-3.jpg
+      - name: Publish validated images on current live branch
         run: |
-          rm -f .tmp/gallery-new-*.b64
-          rm -f .github/workflows/apply-gallery-live-fix.yml
+          set -euo pipefail
+          git fetch origin claude/repo-push-vfylka
+          git checkout -B publish-gallery origin/claude/repo-push-vfylka
+          cp /tmp/chapter-hellas-road-1.jpg assets/chapter-hellas-road-1-v2.jpg
+          cp /tmp/chapter-hellas-road-2.jpg assets/chapter-hellas-road-2-v2.jpg
+          cp /tmp/chapter-hellas-road-3.jpg assets/chapter-hellas-road-3-v2.jpg
+          cp /tmp/chapter-hellas-road-1.jpg assets/chapter-hellas-road-1.jpg
+          cp /tmp/chapter-hellas-road-2.jpg assets/chapter-hellas-road-2.jpg
+          cp /tmp/chapter-hellas-road-3.jpg assets/chapter-hellas-road-3.jpg
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          for old,new in [
+              ('chapter-hellas-road-1-v2.jpg?v=20260906c','chapter-hellas-road-1-v2.jpg?v=20260906d'),
+              ('chapter-hellas-road-2-v2.jpg?v=20260906c','chapter-hellas-road-2-v2.jpg?v=20260906d'),
+              ('chapter-hellas-road-3-v2.jpg?v=20260906c','chapter-hellas-road-3-v2.jpg?v=20260906d')]:
+              if old not in s:
+                  raise SystemExit(f'Missing live gallery reference: {old}')
+              s=s.replace(old,new)
+          p.write_text(s,encoding='utf-8')
+          PY
+          file assets/chapter-hellas-road-1-v2.jpg assets/chapter-hellas-road-2-v2.jpg assets/chapter-hellas-road-3-v2.jpg
           git config user.name 'Dimitrios Skiadopoulos'
           git config user.email 'grand.chancellor@nglgreece.gr'
-          git add -A
-          git commit -m 'Fix Chapter Hellas gallery with validated JPEG photos'
+          git add index.html assets/chapter-hellas-road-1.jpg assets/chapter-hellas-road-2.jpg assets/chapter-hellas-road-3.jpg assets/chapter-hellas-road-1-v2.jpg assets/chapter-hellas-road-2-v2.jpg assets/chapter-hellas-road-3-v2.jpg
+          git commit -m 'Publish verified Chapter Hellas gallery photos'
           git push origin HEAD:claude/repo-push-vfylka
-# retry after confirming all nine base64 chunks are present

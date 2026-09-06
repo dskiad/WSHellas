@@ -1,0 +1,60 @@
+name: Adjust officer vest sizing
+on:
+  push:
+    paths:
+      - '.github/workflows/adjust-officer-vest-sizing.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Enlarge officer vests and duty text
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          def mark_president(s):
+              needle='<div class="ws-office-en">President</div>'
+              i=s.find(needle)
+              if i < 0:
+                  return s
+              a=s.rfind('<article', 0, i)
+              b=s.find('>', a)
+              if a < 0 or b < 0:
+                  return s
+              tag=s[a:b+1]
+              if 'ws-president' not in tag:
+                  tag=re.sub(r'class="([^"]*)"', lambda m: f'class="{m.group(1)} ws-president"', tag, count=1)
+                  s=s[:a]+tag+s[b+1:]
+              return s
+
+          def apply(path, scoped):
+              p=Path(path)
+              if not p.exists():
+                  return
+              s=p.read_text(encoding='utf-8')
+              s=mark_president(s)
+              s=re.sub(r'\n?/\* officer-vest-sizing-2026:start \*/.*?/\* officer-vest-sizing-2026:end \*/\n?', '\n', s, flags=re.S)
+              prefix='#administration ' if scoped else ''
+              css=f'''\n/* officer-vest-sizing-2026:start */\n{prefix}.ws-vest-shell{{\n  min-height:570px !important;\n  height:570px !important;\n  padding:125px 28px 48px !important;\n  box-sizing:border-box !important;\n}}\n{prefix}.ws-vest-duty{{\n  width:88% !important;\n  max-width:340px !important;\n  padding:14px 16px !important;\n  font-size:16px !important;\n  line-height:1.38 !important;\n  box-sizing:border-box !important;\n}}\n{prefix}.ws-officer-card.ws-president .ws-vest-shell{{\n  min-height:600px !important;\n  height:600px !important;\n}}\n{prefix}.ws-officer-card.ws-president .ws-vest-duty{{\n  width:90% !important;\n  max-width:350px !important;\n  font-size:16.5px !important;\n  line-height:1.38 !important;\n}}\n@media(max-width:820px){{\n  {prefix}.ws-vest-shell{{\n    min-height:570px !important;\n    height:570px !important;\n    padding:120px 22px 42px !important;\n  }}\n  {prefix}.ws-vest-duty{{\n    width:88% !important;\n    max-width:340px !important;\n    font-size:16px !important;\n  }}\n  {prefix}.ws-officer-card.ws-president .ws-vest-shell{{\n    min-height:600px !important;\n    height:600px !important;\n  }}\n}}\n/* officer-vest-sizing-2026:end */\n'''
+              if '</style>' not in s:
+                  raise SystemExit(f'No closing style tag in {path}')
+              s=s.replace('</style>', css+'\n</style>', 1)
+              p.write_text(s, encoding='utf-8')
+
+          apply('index.html', True)
+          apply('officers.html', False)
+          PY
+      - name: Commit and push
+        run: |
+          rm -f .github/workflows/adjust-officer-vest-sizing.yml
+          git config user.name 'Dimitrios Skiadopoulos'
+          git config user.email 'grand.chancellor@nglgreece.gr'
+          git add -A
+          git commit -m 'Enlarge officer vests and duty text area'
+          git push origin HEAD:claude/repo-push-vfylka

@@ -15,7 +15,7 @@ jobs:
       - name: Build official emblem asset
         run: |
           cat .tmp/official-emblem-1.b64 .tmp/official-emblem-2.b64 .tmp/official-emblem-3.b64 .tmp/official-emblem-4.b64 | base64 -d > assets/official-emblem.webp
-          echo '93b6611e3038a0b0ba7fb0a22d1cb8df729e79ad5d906e8e12de118b291b3fa1  assets/official-emblem.webp' | sha256sum -c -
+          echo 'aa97780d141c6f05eba7f42db8cf38c490e2644ad270c75762f4be5093b77096  assets/official-emblem.webp' | sha256sum -c -
       - name: Use it only for the official emblem section
         run: |
           python - <<'PY'
@@ -28,7 +28,6 @@ jobs:
               raise SystemExit('Official emblem section target not found')
           s=s.replace(old,new,1)
           p.write_text(s,encoding='utf-8')
-          # Safety checks: decorative top/header emblem must remain unchanged.
           if '<a class="brand" href="#home">\n      <img src="assets/widows-sons-mra-chapter-hellas-emblem.jpg"' not in s:
               raise SystemExit('Decorative header emblem was unexpectedly changed')
           if new not in s:

@@ -16,44 +16,44 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          import re
-          p=Path('index.html')
-          s=p.read_text(encoding='utf-8')
-          s=re.sub(r'\n?/\* sector-3-emblem-align:start \*/.*?/\* sector-3-emblem-align:end \*/\n?', '\n', s, flags=re.S)
-          css=r'''
-/* sector-3-emblem-align:start */
-#emblem .emblem-section{
-  align-items:stretch !important;
-}
-#emblem .emblem-frame{
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  align-self:stretch !important;
-  height:100% !important;
-  min-height:100% !important;
-}
-#emblem .emblem-frame img{
-  display:block !important;
-  margin:auto !important;
-  max-width:100% !important;
-  max-height:100% !important;
-  object-fit:contain !important;
-}
-@media(max-width:820px){
-  #emblem .emblem-frame{
-    min-height:0 !important;
-    height:auto !important;
-  }
-}
-/* sector-3-emblem-align:end */
-'''
+          import re, textwrap
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          s = re.sub(r'\n?/\* sector-3-emblem-align:start \*/.*?/\* sector-3-emblem-align:end \*/\n?', '\n', s, flags=re.S)
+          css = textwrap.dedent('''
+          /* sector-3-emblem-align:start */
+          #emblem .emblem-section{
+            align-items:stretch !important;
+          }
+          #emblem .emblem-frame{
+            display:flex !important;
+            align-items:center !important;
+            justify-content:center !important;
+            align-self:stretch !important;
+            height:100% !important;
+            min-height:100% !important;
+          }
+          #emblem .emblem-frame img{
+            display:block !important;
+            margin:auto !important;
+            max-width:100% !important;
+            max-height:100% !important;
+            object-fit:contain !important;
+          }
+          @media(max-width:820px){
+            #emblem .emblem-frame{
+              min-height:0 !important;
+              height:auto !important;
+            }
+          }
+          /* sector-3-emblem-align:end */
+          ''')
           if '</style>' not in s:
               raise SystemExit('Closing style tag not found')
           if 'id="emblem"' not in s or 'class="emblem-frame"' not in s:
               raise SystemExit('Sector 3 emblem markup not found')
-          s=s.replace('</style>', css+'\n</style>', 1)
-          p.write_text(s,encoding='utf-8')
+          s = s.replace('</style>', css + '\n</style>', 1)
+          p.write_text(s, encoding='utf-8')
           PY
       - name: Commit change
         run: |

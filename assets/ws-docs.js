@@ -13,7 +13,7 @@
    ===================================================================== */
 var WSDocs = (function(){
 
-  var PLACE = 'Athens, Greece';
+  var PLACE = 'Piraeus, Greece';
   var DATE  = '1 September 2026';
 
   /* How the Chapter executes its documents.
@@ -173,8 +173,8 @@ var WSDocs = (function(){
     ], {
       lead:[{en:'This Charter is the founding instrument of Chapter Hellas. It declares the name, the nature, the purposes, the membership and the government of the Chapter, and stands above every other rule it may adopt.',
              el:'Ο παρών Καταστατικός Χάρτης είναι το ιδρυτικό κείμενο του Chapter Hellas. Δηλώνει την επωνυμία, τη φύση, τους σκοπούς, τα μέλη και τη διοίκηση του Chapter και υπέρκειται κάθε άλλου κανόνα που ήθελε υιοθετήσει.'}],
-      closing:[{en:'Granted and adopted at the foundation of the Chapter, at Athens, and entered in its records.',
-                el:'Χορηγήθηκε και υιοθετήθηκε κατά την ίδρυση του Chapter, εν Αθήναις, και καταχωρήθηκε στα αρχεία του.'}]
+      closing:[{en:'Granted and adopted at the foundation of the Chapter, at Piraeus, and entered in its records.',
+                el:'Χορηγήθηκε και υιοθετήθηκε κατά την ίδρυση του Chapter, εν Πειραιεί, και καταχωρήθηκε στα αρχεία του.'}]
     });
   }
 
@@ -227,47 +227,6 @@ var WSDocs = (function(){
     });
   }
 
-  /* =================================================================
-     5 — Application for Foundation
-     ================================================================= */
-  function application(){
-    return base(5, {en:'Application for Foundation', el:'Αίτηση Ιδρύσεως'}, [
-      { title:{en:'I. The Petition', el:'Η αίτηση'},
-        paragraphs:[
-          {en:'The undersigned brethren, Master Masons in good standing of regular Lodges and riders of motorcycles, respectfully pray Widows Sons MRA to grant them a charter for the establishment of a Chapter in Greece, to be named Chapter Hellas, with its seat at Athens.',
-           el:'Οι υπογράφοντες αδελφοί, Διδάσκαλοι Τέκτονες εν καλή καταστάσει κανονικών Στοών και αναβάτες μοτοσικλέτας, παρακαλούν ευσεβάστως τη Widows Sons MRA όπως τους χορηγήσει χάρτη προς ίδρυση Chapter εν Ελλάδι, υπό την επωνυμία Chapter Hellas, με έδρα την Αθήνα.'}
-        ] },
-      { title:{en:'II. The Founding Brethren', el:'Οι ιδρυτές αδελφοί'},
-        table:{ head:['Brother','Road Name','Lodge','Signature'], widths:[30,20,26,24],
-                rows:[ [person('Dimitrios Skiadopoulos'), road('Build Smith'), blank(), blank()],
-                       [person(''), road(''), blank(), blank()],
-                       [person(''), road(''), blank(), blank()],
-                       [person(''), road(''), blank(), blank()],
-                       [person(''), road(''), blank(), blank()],
-                       [person(''), road(''), blank(), blank()],
-                       [person(''), road(''), blank(), blank()] ],
-                note:'The roll of founding brethren is completed and signed at the assembly of foundation.' } },
-      { title:{en:'III. Undertakings', el:'Δεσμεύσεις'},
-        paragraphs:[
-          {en:'The petitioners undertake to observe the constitution, the rules and the customs of Widows Sons MRA; to hold its name, emblem and insignia as its property and to return them upon demand; to keep the Chapter in charity, in good order and in good repute; and to render such account of themselves as the Association may require.',
-           el:'Οι αιτούντες αναλαμβάνουν να τηρούν το καταστατικό, τους κανόνες και τα έθιμα της Widows Sons MRA· να κατέχουν το όνομα, το έμβλημα και τα διακριτικά της ως περιουσία της και να τα επιστρέψουν εφόσον ζητηθούν· να διατηρούν το Chapter εν αγαθοεργία, ευταξία και καλή υπολήψει· και να λογοδοτούν όπως η Ένωση ήθελε απαιτήσει.'}
-        ] },
-      { title:{en:'IV. Prayer', el:'Παράκληση'},
-        paragraphs:[
-          {en:'Wherefore the petitioners pray that this application be received, that the charter be granted, and that Chapter Hellas be numbered among the Chapters of Widows Sons MRA.',
-           el:'Όθεν οι αιτούντες παρακαλούν όπως γίνει δεκτή η παρούσα αίτηση, χορηγηθεί ο χάρτης και το Chapter Hellas συναριθμηθεί μεταξύ των Chapters της Widows Sons MRA.'}
-        ] }
-    ], {
-      lead:[{en:'This application is addressed to Widows Sons Masonic Riders Association for the foundation of a Chapter in Greece.',
-             el:'Η παρούσα αίτηση απευθύνεται προς τη Widows Sons Masonic Riders Association για την ίδρυση Chapter εν Ελλάδι.'}],
-      closing:[{en:'Submitted in the name of the founding brethren.',
-                el:'Υποβάλλεται εξ ονόματος των ιδρυτών αδελφών.'}]
-    });
-  }
-
-  /* =================================================================
-     6 — Appointment of Officers
-     ================================================================= */
   /* The fifteen offices, as Section 02 carries them. Each office is given
      in English, Greek and Bulgarian, and so are its duties, the manner in
      which it is filled and its term, so that the document may be read
@@ -335,6 +294,43 @@ var WSDocs = (function(){
       duties:{en:'Responsible for the practical preparation, organisation and support of the events of the Chapter. Coordinates the requirements of place, time, hospitality and operation, and assists in whatever is required before, during and after an event for its smooth conduct.'} }
   ];
 
+  /* =================================================================
+     5 — Application for Foundation
+     ================================================================= */
+  function application(){
+    return base(5, {en:'Application for Foundation', el:'Αίτηση Ιδρύσεως'}, [
+      { title:{en:'I. The Petition', el:'Η αίτηση'},
+        paragraphs:[
+          {en:'The undersigned brethren, Master Masons in good standing of regular Lodges and riders of motorcycles, respectfully pray Widows Sons MRA to grant them a charter for the establishment of a Chapter in Greece, to be named Chapter Hellas, with its seat at Piraeus.',
+           el:'Οι υπογράφοντες αδελφοί, Διδάσκαλοι Τέκτονες εν καλή καταστάσει κανονικών Στοών και αναβάτες μοτοσικλέτας, παρακαλούν ευσεβάστως τη Widows Sons MRA όπως τους χορηγήσει χάρτη προς ίδρυση Chapter εν Ελλάδι, υπό την επωνυμία Chapter Hellas, με έδρα τον Πειραιά.'}
+        ] },
+      { title:{en:'II. The Founding Brethren', el:'Οι ιδρυτές αδελφοί'},
+        table:{ head:['Office','Brother','Road Name','Lodge','Signature'], widths:[25,24,15,20,16],
+                rows: OFFICERS.filter(function(o){ return o.name; }).map(function(o){
+                        return [ office(o.en, o.el), person(o.name), road(o.road), blank(), blank() ];
+                      }),
+                note:'The founding brethren are the officers of the Chapter. Their Lodges and their signatures are entered at the assembly of foundation, and road names not yet advised are entered as they are given to the Secretary.' } },
+      { title:{en:'III. Undertakings', el:'Δεσμεύσεις'},
+        paragraphs:[
+          {en:'The petitioners undertake to observe the constitution, the rules and the customs of Widows Sons MRA; to hold its name, emblem and insignia as its property and to return them upon demand; to keep the Chapter in charity, in good order and in good repute; and to render such account of themselves as the Association may require.',
+           el:'Οι αιτούντες αναλαμβάνουν να τηρούν το καταστατικό, τους κανόνες και τα έθιμα της Widows Sons MRA· να κατέχουν το όνομα, το έμβλημα και τα διακριτικά της ως περιουσία της και να τα επιστρέψουν εφόσον ζητηθούν· να διατηρούν το Chapter εν αγαθοεργία, ευταξία και καλή υπολήψει· και να λογοδοτούν όπως η Ένωση ήθελε απαιτήσει.'}
+        ] },
+      { title:{en:'IV. Prayer', el:'Παράκληση'},
+        paragraphs:[
+          {en:'Wherefore the petitioners pray that this application be received, that the charter be granted, and that Chapter Hellas be numbered among the Chapters of Widows Sons MRA.',
+           el:'Όθεν οι αιτούντες παρακαλούν όπως γίνει δεκτή η παρούσα αίτηση, χορηγηθεί ο χάρτης και το Chapter Hellas συναριθμηθεί μεταξύ των Chapters της Widows Sons MRA.'}
+        ] }
+    ], {
+      lead:[{en:'This application is addressed to Widows Sons Masonic Riders Association for the foundation of a Chapter in Greece.',
+             el:'Η παρούσα αίτηση απευθύνεται προς τη Widows Sons Masonic Riders Association για την ίδρυση Chapter εν Ελλάδι.'}],
+      closing:[{en:'Submitted in the name of the founding brethren.',
+                el:'Υποβάλλεται εξ ονόματος των ιδρυτών αδελφών.'}]
+    });
+  }
+
+  /* =================================================================
+     6 — Appointment of Officers
+     ================================================================= */
   function officers(){
     return base(6, {en:'Appointment of Officers', el:'Διορισμός Αξιωματικών'}, [
       { title:{en:'I. Offices, Duties and Terms', el:'Αξιώματα, καθήκοντα και θητεία'},

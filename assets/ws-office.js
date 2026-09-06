@@ -65,9 +65,12 @@ var WSDoc = (function(){
   function art(){
     var e = document.getElementById('wsLetterhead') || document.getElementById('wsEmblem');
     var s = document.getElementById('wsSeal');
-    return Promise.all([settled(e), settled(s)]).then(function(){
+    var a = document.getElementById('wsAutograph');
+    return Promise.all([settled(e), settled(s), settled(a)]).then(function(){
       return { emblem: plate(e), emblemW: e ? e.naturalWidth : 1,
-               emblemH: e ? e.naturalHeight : 1, seal: plate(s) };
+               emblemH: e ? e.naturalHeight : 1, seal: plate(s),
+               autograph: plate(a),
+               autographW: a ? a.naturalWidth : 1, autographH: a ? a.naturalHeight : 1 };
     });
   }
 
@@ -112,10 +115,13 @@ var WSDoc = (function(){
     }).join('');
     return '<table>' + h + b + '</table>' + (t.note ? '<p class="note">' + esc(t.note) + '</p>' : '');
   }
-  function signHtml(sig){
+  function signHtml(sig, a){
     if(!sig){ return '<td></td>'; }
+    var hand = (sig.autograph && a && a.autograph)
+      ? '<div class="sig-hand"><img src="' + a.autograph + '" width="190"></div>' : '';
     return '<td class="sig">' +
              '<div class="sig-title">' + esc(sig.title) + '</div>' +
+             hand +
              '<div class="sig-line">&nbsp;</div>' +
              '<div class="sig-name">' + esc(sig.name) + '</div>' +
              (sig.road ? '<div class="sig-road">«' + esc(String(sig.road).toUpperCase()) + '»</div>' : '') +
@@ -143,10 +149,10 @@ var WSDoc = (function(){
 
       var pair = spec.signatures;
       var foot = '<table class="feet"><tr>' +
-                 (pair ? signHtml(pair.left) : '<td></td>') +
+                 (pair ? signHtml(pair.left, a) : '<td></td>') +
                  '<td class="sealcell">' + (a.seal ? '<img src="' + a.seal + '" width="120">' : '') +
                    '<div class="note">Official Seal of Chapter Hellas</div></td>' +
-                 signHtml(pair ? pair.right : spec.signature) +
+                 signHtml(pair ? pair.right : spec.signature, a) +
                  '</tr></table>';
 
       var html =
@@ -172,6 +178,7 @@ var WSDoc = (function(){
         'td{border:1px solid #cfcbc1; padding:5pt; vertical-align:top;} .sub{color:#6b6f77; font-size:8.5pt;}' +
         '.feet{border:0; margin-top:26pt;} .feet td{border:0; text-align:center; vertical-align:bottom;}' +
         '.sig-title{font-weight:bold; letter-spacing:2px; text-transform:uppercase; font-size:10pt;}' +
+        '.sig-hand{margin-bottom:-30pt; text-align:center;} .sig-hand img{width:190px;}' +
         '.sig-line{border-bottom:1px solid #16181c; height:34pt;} .sig-name{font-weight:bold; padding-top:4pt;}' +
         '.sig-road{color:#9E1B1F; font-size:9pt; letter-spacing:1px;} .sig-role{color:#6b6f77; font-size:8.5pt;}' +
         '.plate{text-align:center;}' +

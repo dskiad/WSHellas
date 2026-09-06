@@ -24,7 +24,7 @@ var WSDocs = (function(){
      right. */
   var FOUNDING = {
     title:'The Founding President', name:'Dimitrios Skiadopoulos', road:'Build Smith',
-    role:'Ιδρυτικός Πρόεδρος & Οικιστής · Chapter Hellas'
+    role:'Ιδρυτικός Πρόεδρος & Οικιστής · Chapter Hellas', autograph:true
   };
   var EXECUTED = {
     left:  { title:'The Secretary', name:'Nikolaos Markopoulos',

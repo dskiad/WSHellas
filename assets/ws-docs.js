@@ -310,12 +310,20 @@ var WSDocs = (function(){
                         return [ office(o.en, o.el), person(o.name), road(o.road), blank(), blank() ];
                       }),
                 note:'The founding brethren are the officers of the Chapter. Their Lodges and their signatures are entered at the assembly of foundation, and road names not yet advised are entered as they are given to the Secretary.' } },
-      { title:{en:'III. Undertakings', el:'Δεσμεύσεις'},
+      { title:{en:'III. The Emblem Borne by the Chapter', el:'Το έμβλημα που φέρει το Chapter'},
+        image:'emblem', width:104, caption:'The emblem of Widows Sons MRA — Chapter Hellas',
+        paragraphs:[
+          {en:'The petitioners submit the emblem set out above as the emblem the Chapter shall bear. Its top rocker reads WIDOWS SONS MRA; its central oval carries the name Widows Sons in red script above the winged square and compasses, within which stands the all-seeing eye, and beneath them the motto, Meet on the Level & Part upon the Square; its bottom rocker reads CHAPTER HELLAS.',
+           el:'Οι αιτούντες υποβάλλουν το ανωτέρω έμβλημα ως το έμβλημα που θα φέρει το Chapter. Το άνω τόξο φέρει τις λέξεις WIDOWS SONS MRA· το κεντρικό οβάλ φέρει το όνομα Widows Sons με κόκκινη γραφή, άνωθεν του φτερωτού γνώμονα και διαβήτη, εντός των οποίων ίσταται ο πανεπόπτης οφθαλμός, και κάτωθεν αυτών το ρητό Meet on the Level & Part upon the Square· το κάτω τόξο φέρει τις λέξεις CHAPTER HELLAS.'},
+          {en:'The name, the emblem and the insignia are acknowledged to belong to Widows Sons MRA. The Chapter and its members shall hold them only while in good standing, and shall return every patch upon demand or upon a brother’s departure.',
+           el:'Το όνομα, το έμβλημα και τα διακριτικά αναγνωρίζεται ότι ανήκουν στη Widows Sons MRA. Το Chapter και τα μέλη του θα τα κατέχουν μόνον εφόσον τελούν εν καλή καταστάσει και θα επιστρέφουν κάθε patch εφόσον ζητηθεί ή κατά την αποχώρηση του αδελφού.'}
+        ] },
+      { title:{en:'IV. Undertakings', el:'Δεσμεύσεις'},
         paragraphs:[
           {en:'The petitioners undertake to observe the constitution, the rules and the customs of Widows Sons MRA; to hold its name, emblem and insignia as its property and to return them upon demand; to keep the Chapter in charity, in good order and in good repute; and to render such account of themselves as the Association may require.',
            el:'Οι αιτούντες αναλαμβάνουν να τηρούν το καταστατικό, τους κανόνες και τα έθιμα της Widows Sons MRA· να κατέχουν το όνομα, το έμβλημα και τα διακριτικά της ως περιουσία της και να τα επιστρέψουν εφόσον ζητηθούν· να διατηρούν το Chapter εν αγαθοεργία, ευταξία και καλή υπολήψει· και να λογοδοτούν όπως η Ένωση ήθελε απαιτήσει.'}
         ] },
-      { title:{en:'IV. Prayer', el:'Παράκληση'},
+      { title:{en:'V. Prayer', el:'Παράκληση'},
         paragraphs:[
           {en:'Wherefore the petitioners pray that this application be received, that the charter be granted, and that Chapter Hellas be numbered among the Chapters of Widows Sons MRA.',
            el:'Όθεν οι αιτούντες παρακαλούν όπως γίνει δεκτή η παρούσα αίτηση, χορηγηθεί ο χάρτης και το Chapter Hellas συναριθμηθεί μεταξύ των Chapters της Widows Sons MRA.'}

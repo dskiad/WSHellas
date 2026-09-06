@@ -157,8 +157,8 @@ var WSDocs = (function(){
         ] },
       { title:{en:'Article IV — Government', el:'Άρθρο Δ΄ — Διοίκηση'},
         paragraphs:[
-          {en:'The Chapter is administered by fifteen officers, the first six of whom are the Principal Officers. The President, the Treasurer and the Road Captain serve five-year terms; the remaining offices are filled by appointment of the President.',
-           el:'Το Chapter διοικείται από δεκαπέντε αξιωματικούς, εκ των οποίων οι πρώτοι έξι είναι οι Κύριοι Αξιωματικοί. Ο Πρόεδρος, ο Ταμίας και ο Αρχηγός Αποστολής υπηρετούν πενταετή θητεία· τα λοιπά αξιώματα πληρούνται με διορισμό του Προέδρου.'}
+          {en:'The Chapter is administered by fifteen officers, the first six of whom are the Principal Officers; the remaining offices are optional. The President, the Treasurer and the Road Captain are elected — the President for a term of five years, the Treasurer and the Road Captain every two years — and the remaining offices are filled by appointment of the President.',
+           el:'Το Chapter διοικείται από δεκαπέντε αξιωματικούς, εκ των οποίων οι πρώτοι έξι είναι οι Κύριοι Αξιωματικοί· τα λοιπά αξιώματα είναι προαιρετικά. Ο Πρόεδρος, ο Ταμίας και ο Αρχηγός Αποστολής εκλέγονται — ο Πρόεδρος για θητεία πέντε ετών, ο Ταμίας και ο Αρχηγός Αποστολής ανά διετία — τα δε λοιπά αξιώματα πληρούνται με διορισμό του Προέδρου.'}
         ] },
       { title:{en:'Article V — Insignia and Documents', el:'Άρθρο Ε΄ — Διακριτικά και έγγραφα'},
         paragraphs:[
@@ -287,7 +287,7 @@ var WSDocs = (function(){
       duties:{en:'Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Custodian of the seal: every official document of the Chapter bears, at its foot, the seal in the centre, the signature of the Secretary on the left and the signature of the President on the right. The founding documents are signed by the Founding President. The Secretary alone signs the membership cards of the Chapter.'} },
     { en:'Treasurer', el:'Ταμίας', name:'Panagiotis Vlahos', road:'',
       rank:{en:'Principal Officer'},
-      term:{en:'Five years · Elected'},
+      term:{en:'Two years · Elected'},
       duties:{en:'Holds responsibility for the financial management of the Chapter. Administers the bank accounts, the subscriptions, the receipts and the payments, keeps the financial books and the supporting records, and presents the prescribed financial statements and reports to the administration.'} },
     { en:'Sergeant-at-Arms', el:'Υπεύθυνος Τάξης', name:'Marinos Andreas', road:'',
       rank:{en:'Principal Officer'},
@@ -295,7 +295,7 @@ var WSDocs = (function(){
       duties:{en:'Responsible for internal order, for discipline and for the observance of the Regulations and the decisions of the Chapter. Oversees the proper conduct of the members, addresses breaches or questions of discipline and, where required, reports and escalates them to the President.'} },
     { en:'Road Captain', el:'Αρχηγός Αποστολής', name:'Panagiotis Floris', road:'',
       rank:{en:'Principal Officer'},
-      term:{en:'Five years · Elected'},
+      term:{en:'Two years · Elected'},
       duties:{en:'Holds the principal responsibility for every organised ride and mission. Plans the route, the stopping points and the progress of the column, organises and controls the formation, and answers for the discipline, the safety and the orderly movement of the group on the road.'} },
     { en:'Road Sergeant', el:'Ομαδάρχης', name:'', road:'',
       rank:{en:'Chapter Officer'},
@@ -342,7 +342,7 @@ var WSDocs = (function(){
                 rows: OFFICERS.map(function(o){
                   return [ office(o.en, o.el), o.duties.en, term(o.term.en) ];
                 }),
-                note:'The President, the Treasurer and the Road Captain serve five-year terms and are elected by the Chapter. The remaining offices are filled by appointment of the President, in accordance with the rules of the Chapter.' } },
+                note:'The President, the Treasurer and the Road Captain are elected by the Chapter: the President for a term of five years, the Treasurer and the Road Captain every two years. The first six offices are the Principal Officers of the Chapter; the remaining offices are optional and are filled by appointment of the President, in accordance with the rules of the Chapter.' } },
       { title:{en:'II. The Officers Appointed', el:'Οι διοριζόμενοι αξιωματικοί'},
         table:{ head:['Office','Brother','Road Name','Rank'], widths:[30,24,20,26],
                 rows: OFFICERS.map(function(o){

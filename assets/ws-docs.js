@@ -34,8 +34,13 @@ var WSDocs = (function(){
   };
 
   /* --- cells in the house style --- */
-  function office(en, gr){
-    return { content:en, _gr:gr, styles:{ font:'WSCinzel', fontStyle:'bold', fontSize:8.8 } };
+  function office(en, el, bg){
+    var under = [el, bg].filter(Boolean).join('\n');
+    return { content:en, _gr:under, styles:{ font:'WSCinzel', fontStyle:'bold', fontSize:8.8 } };
+  }
+  /* A cell whose text is repeated beneath in another language. */
+  function second(en, other, size){
+    return { content:en, _gr:other, styles:{ fontSize: size || 8.8 } };
   }
   function person(n){
     return n ? { content:n, styles:{ fontStyle:'bold' } }
@@ -302,54 +307,125 @@ var WSDocs = (function(){
   /* =================================================================
      6 — Appointment of Officers
      ================================================================= */
+  /* The fifteen offices, as Section 02 carries them. Each office is given
+     in English, Greek and Bulgarian, and so are its duties, the manner in
+     which it is filled and its term, so that the document may be read
+     throughout by the Bulgarian brethren as well. */
   var OFFICERS = [
-    ['President','Πρόεδρος','Dimitrios Skiadopoulos','BuildSmith','Principal Officer','Five years',
-     'Leads the Chapter as a whole and holds the highest responsibility for its operation and its direction. Presides over the assemblies, organises and directs the activities, represents the Chapter officially, and ensures the faithful application of the Charter, the Internal Regulations and the decisions of the Chapter.'],
-    ['Vice President','Αντιπρόεδρος','Dimitrios Panagakos','Developer','Principal Officer','By appointment',
-     'Second in the hierarchy and the immediate associate of the President. Supports the President in the exercise of his duties and stands fully in his place in any absence or impediment. Accompanies the President at official events and assists in coordinating the administration of the Chapter.'],
-    ['Secretary','Γραμματέας','Nikolaos Markopoulos','','Principal Officer','By appointment',
-     'Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Custodian of the seal: every official document of the Chapter bears, at its foot, the seal in the centre, the signature of the Secretary on the left and the signature of the President on the right. The founding documents are signed by the Founding President. The Secretary alone signs the membership cards of the Chapter.'],
-    ['Treasurer','Ταμίας','Panagiotis Vlahos','','Principal Officer','Five years',
-     'Holds responsibility for the financial management of the Chapter. Administers the bank accounts, the subscriptions, the receipts and the payments, keeps the financial books and the supporting records, and presents the prescribed financial statements and reports to the administration.'],
-    ['Sergeant-at-Arms','Υπεύθυνος Τάξης','Marinos Andreas','','Principal Officer','By appointment',
-     'Responsible for internal order, for discipline and for the observance of the Regulations and the decisions of the Chapter. Oversees the proper conduct of the members, addresses breaches or questions of discipline and, where required, reports and escalates them to the President.'],
-    ['Road Captain','Αρχηγός Αποστολής','Panagiotis Floris','','Principal Officer','Five years',
-     'Holds the principal responsibility for every organised ride and mission. Plans the route, the stopping points and the progress of the column, organises and controls the formation, and answers for the discipline, the safety and the orderly movement of the group on the road.'],
-    ['Road Sergeant','Ομαδάρχης','','','Chapter Officer','By appointment',
-     'Directly supports the Road Captain on organised rides and missions. Oversees the section, group or formation assigned to him, maintains communication with the Road Captain, and attends to spacing, discipline, cohesion and the safety of the riders on the road.'],
-    ['Warden','Έφορος Μελών & Συμμόρφωσης','George Dryllis','','Chapter Officer','By appointment',
-     'Follows the matters concerning the members, their standing and their compliance with the Charter, the Internal Regulations and the decisions of the Chapter. Oversees the proper wearing of the vest, the emblems and the insignia, and contributes to the protection of the property and the identity of the Chapter.'],
-    ['Orator','Σύμβουλος','Andreas Tsounakos','','Chapter Officer','By appointment',
-     'Serves as counsellor to the President and to the Chapter. Assists in the forming of positions and official presentations, in communication, at events and in public representation, seeing that the word and the presence of the Chapter answer to its principles and to its standing.'],
-    ['Ambassador','Εκπρόσωπος προς άλλα Motorcycle Clubs','Pantelis Lathiotakis','','Chapter Officer','By appointment',
-     'Represents the Chapter in its relations with other Motorcycle Clubs, Widows Sons Chapters and kindred organisations. Develops and maintains communication, cooperation and fraternal ties, and informs the administration of contacts, invitations and matters of external relations.'],
-    ['Almoner','Ελεονόμος Αγαθοεργίας','Pavlos Sarof','','Chapter Officer','By appointment',
-     'Responsible for the charitable work, the social care and the benevolent action of the Chapter. Follows the cases of brethren, families or other persons in need of help, proposes the means of support, and coordinates the charitable and benevolent works of the Chapter.'],
-    ['Quartermaster','Επιμελητής','','','Chapter Officer','By appointment',
-     'Administers the property, the equipment and the stores of the Chapter. Holds responsibility for the emblems, the patches, the insignia and every object belonging to or used by the Chapter, and attends to their recording, safe keeping, issue, delivery and return.'],
-    ['Master of Ceremonies','Τελετάρχης','Alexandros Epifanis','','Chapter Officer','By appointment',
-     'Responsible for the ceremonial, the protocol and the formal order of the ceremonies and events of the Chapter. Prepares the flow of the programme, guides the participants through the prescribed procedures, and coordinates the smooth and dignified conduct of every official ceremony.'],
-    ['Preparing Brother','Δοκιμαστής','Konstantinos Karmalis','','Chapter Officer','By appointment',
-     'A fundamental office for the admission and the initiation of a new member. Comes to know and prepares the candidate, guides him before his admission, organises and oversees the trial he must pass before he is judged fit to become a Widows Son, and reports to the President and the administration for the completion of his admission.'],
-    ['Event Manager','Υπεύθυνος Εκδηλώσεων','','','Chapter Officer','By appointment',
-     'Responsible for the practical preparation, organisation and support of the events of the Chapter. Coordinates the requirements of place, time, hospitality and operation, and assists in whatever is required before, during and after an event for its smooth conduct.']
+    { en:'President', el:'Πρόεδρος', bg:'Президент',
+      name:'Dimitrios Skiadopoulos', road:'BuildSmith',
+      rank:{en:'Principal Officer', bg:'Главно длъжностно лице'},
+      term:{en:'Five years · Elected', bg:'Пет години · Избиран'},
+      duties:{en:'Leads the Chapter as a whole and holds the highest responsibility for its operation and its direction. Presides over the assemblies, organises and directs the activities, represents the Chapter officially, and ensures the faithful application of the Charter, the Internal Regulations and the decisions of the Chapter.',
+              bg:'Ръководи Chapter-а като цяло и носи най-високата отговорност за неговата дейност и посока. Председателства събранията, организира и насочва дейностите, представлява Chapter-а официално и следи за вярното прилагане на Хартата, Вътрешния правилник и решенията на Chapter-а.'} },
+    { en:'Vice President', el:'Αντιπρόεδρος', bg:'Вицепрезидент',
+      name:'Dimitrios Panagakos', road:'Developer',
+      rank:{en:'Principal Officer', bg:'Главно длъжностно лице'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Second in the hierarchy and the immediate associate of the President. Supports the President in the exercise of his duties and stands fully in his place in any absence or impediment. Accompanies the President at official events and assists in coordinating the administration of the Chapter.',
+              bg:'Втори по йерархия и пряк сътрудник на Президента. Подпомага Президента в изпълнението на неговите задължения и го замества напълно при всяко отсъствие или възпрепятстване. Придружава Президента на официалните събития и подпомага координацията на управлението на Chapter-а.'} },
+    { en:'Secretary', el:'Γραμματέας', bg:'Секретар',
+      name:'Nikolaos Markopoulos', road:'',
+      rank:{en:'Principal Officer', bg:'Главно длъжностно лице'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Custodian of the seal: every official document of the Chapter bears, at its foot, the seal in the centre, the signature of the Secretary on the left and the signature of the President on the right. The founding documents are signed by the Founding President. The Secretary alone signs the membership cards of the Chapter.',
+              bg:'Отговаря за административната дейност на Chapter-а. Води протоколите, регистъра на членовете, административния архив, официалната кореспонденция и предвидените доклади. Пазител на печата: всеки официален документ на Chapter-а носи в края си печата в центъра, подписа на Секретаря вляво и подписа на Президента вдясно. Учредителните документи се подписват от Учредителния президент. Само Секретарят подписва членските карти на Chapter-а.'} },
+    { en:'Treasurer', el:'Ταμίας', bg:'Ковчежник',
+      name:'Panagiotis Vlahos', road:'',
+      rank:{en:'Principal Officer', bg:'Главно длъжностно лице'},
+      term:{en:'Five years · Elected', bg:'Пет години · Избиран'},
+      duties:{en:'Holds responsibility for the financial management of the Chapter. Administers the bank accounts, the subscriptions, the receipts and the payments, keeps the financial books and the supporting records, and presents the prescribed financial statements and reports to the administration.',
+              bg:'Носи отговорност за финансовото управление на Chapter-а. Управлява банковите сметки, вноските, постъпленията и плащанията, води финансовите книги и разходооправдателните документи и представя предвидените финансови отчети и доклади пред управлението.'} },
+    { en:'Sergeant-at-Arms', el:'Υπεύθυνος Τάξης', bg:'Отговорник по реда',
+      name:'Marinos Andreas', road:'',
+      rank:{en:'Principal Officer', bg:'Главно длъжностно лице'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Responsible for internal order, for discipline and for the observance of the Regulations and the decisions of the Chapter. Oversees the proper conduct of the members, addresses breaches or questions of discipline and, where required, reports and escalates them to the President.',
+              bg:'Отговаря за вътрешния ред, дисциплината и спазването на правилниците и решенията на Chapter-а. Следи за доброто поведение на членовете, разглежда нарушенията или въпросите на дисциплината и когато е необходимо, ги докладва и отнася до Президента.'} },
+    { en:'Road Captain', el:'Αρχηγός Αποστολής', bg:'Ръководител на пътуването',
+      name:'Panagiotis Floris', road:'',
+      rank:{en:'Principal Officer', bg:'Главно длъжностно лице'},
+      term:{en:'Five years · Elected', bg:'Пет години · Избиран'},
+      duties:{en:'Holds the principal responsibility for every organised ride and mission. Plans the route, the stopping points and the progress of the column, organises and controls the formation, and answers for the discipline, the safety and the orderly movement of the group on the road.',
+              bg:'Носи основната отговорност за всяко организирано пътуване и мисия. Планира маршрута, местата за спиране и хода на колоната, организира и контролира строя и отговаря за дисциплината, безопасността и правилното движение на групата по пътя.'} },
+    { en:'Road Sergeant', el:'Ομαδάρχης', bg:'Групов ръководител',
+      name:'', road:'',
+      rank:{en:'Chapter Officer', bg:'Длъжностно лице на Chapter-а'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Directly supports the Road Captain on organised rides and missions. Oversees the section, group or formation assigned to him, maintains communication with the Road Captain, and attends to spacing, discipline, cohesion and the safety of the riders on the road.',
+              bg:'Подпомага пряко Road Captain при организираните пътувания и мисии. Наблюдава поверения му участък, група или строй, поддържа връзка с Road Captain и следи за дистанциите, дисциплината, сплотеността и безопасността на ездачите по пътя.'} },
+    { en:'Warden', el:'Έφορος Μελών & Συμμόρφωσης', bg:'Отговорник по членството и съответствието',
+      name:'George Dryllis', road:'',
+      rank:{en:'Chapter Officer', bg:'Длъжностно лице на Chapter-а'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Follows the matters concerning the members, their standing and their compliance with the Charter, the Internal Regulations and the decisions of the Chapter. Oversees the proper wearing of the vest, the emblems and the insignia, and contributes to the protection of the property and the identity of the Chapter.',
+              bg:'Следи въпросите, отнасящи се до членовете, тяхното състояние и съответствието им с Хартата, Вътрешния правилник и решенията на Chapter-а. Наблюдава правилното носене на жилетката, емблемите и отличителните знаци и допринася за опазването на имуществото и идентичността на Chapter-а.'} },
+    { en:'Orator', el:'Σύμβουλος', bg:'Съветник',
+      name:'Andreas Tsounakos', road:'',
+      rank:{en:'Chapter Officer', bg:'Длъжностно лице на Chapter-а'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Serves as counsellor to the President and to the Chapter. Assists in the forming of positions and official presentations, in communication, at events and in public representation, seeing that the word and the presence of the Chapter answer to its principles and to its standing.',
+              bg:'Служи като съветник на Президента и на Chapter-а. Подпомага изготвянето на позиции и официални изказвания, комуникацията, събитията и публичното представяне, като следи словото и присъствието на Chapter-а да отговарят на неговите принципи и достойнство.'} },
+    { en:'Ambassador', el:'Εκπρόσωπος προς άλλα Motorcycle Clubs', bg:'Представител пред други Motorcycle Clubs',
+      name:'Pantelis Lathiotakis', road:'',
+      rank:{en:'Chapter Officer', bg:'Длъжностно лице на Chapter-а'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Represents the Chapter in its relations with other Motorcycle Clubs, Widows Sons Chapters and kindred organisations. Develops and maintains communication, cooperation and fraternal ties, and informs the administration of contacts, invitations and matters of external relations.',
+              bg:'Представлява Chapter-а в отношенията му с други Motorcycle Clubs, Widows Sons Chapters и сродни организации. Развива и поддържа комуникация, сътрудничество и братски връзки и уведомява управлението за контакти, покани и въпроси на външните отношения.'} },
+    { en:'Almoner', el:'Ελεονόμος Αγαθοεργίας', bg:'Отговорник по благотворителността',
+      name:'Pavlos Sarof', road:'',
+      rank:{en:'Chapter Officer', bg:'Длъжностно лице на Chapter-а'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Responsible for the charitable work, the social care and the benevolent action of the Chapter. Follows the cases of brethren, families or other persons in need of help, proposes the means of support, and coordinates the charitable and benevolent works of the Chapter.',
+              bg:'Отговаря за благотворителната дейност, социалната грижа и милосърдието на Chapter-а. Следи случаите на братя, семейства или други лица, нуждаещи се от помощ, предлага начини за подкрепа и координира благотворителните действия на Chapter-а.'} },
+    { en:'Quartermaster', el:'Επιμελητής', bg:'Домакин',
+      name:'', road:'',
+      rank:{en:'Chapter Officer', bg:'Длъжностно лице на Chapter-а'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Administers the property, the equipment and the stores of the Chapter. Holds responsibility for the emblems, the patches, the insignia and every object belonging to or used by the Chapter, and attends to their recording, safe keeping, issue, delivery and return.',
+              bg:'Управлява имуществото, оборудването и материалите на Chapter-а. Носи отговорност за емблемите, patches, отличителните знаци и всеки предмет, принадлежащ на или използван от Chapter-а, и се грижи за тяхното отчитане, съхранение, издаване, предаване и връщане.'} },
+    { en:'Master of Ceremonies', el:'Τελετάρχης', bg:'Церемониалмайстор',
+      name:'Alexandros Epifanis', road:'',
+      rank:{en:'Chapter Officer', bg:'Длъжностно лице на Chapter-а'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Responsible for the ceremonial, the protocol and the formal order of the ceremonies and events of the Chapter. Prepares the flow of the programme, guides the participants through the prescribed procedures, and coordinates the smooth and dignified conduct of every official ceremony.',
+              bg:'Отговаря за церемониала, протокола и официалния ред на тържествата и събитията на Chapter-а. Подготвя хода на програмата, напътства участниците в предвидените процедури и координира гладкото и достойно провеждане на всяка официална церемония.'} },
+    { en:'Preparing Brother', el:'Δοκιμαστής', bg:'Изпитващ брат',
+      name:'Konstantinos Karmalis', road:'',
+      rank:{en:'Chapter Officer', bg:'Длъжностно лице на Chapter-а'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'A fundamental office for the admission and the initiation of a new member. Comes to know and prepares the candidate, guides him before his admission, organises and oversees the trial he must pass before he is judged fit to become a Widows Son, and reports to the President and the administration for the completion of his admission.',
+              bg:'Основна длъжност за приемането и посвещаването на нов член. Опознава и подготвя кандидата, напътства го преди приемането, организира и наблюдава изпитанието, което трябва да премине, преди да бъде признат за годен да стане Widows Son, и докладва на Президента и управлението за завършването на приемането му.'} },
+    { en:'Event Manager', el:'Υπεύθυνος Εκδηλώσεων', bg:'Отговорник по събитията',
+      name:'', road:'',
+      rank:{en:'Chapter Officer', bg:'Длъжностно лице на Chapter-а'},
+      term:{en:'By appointment', bg:'По назначение'},
+      duties:{en:'Responsible for the practical preparation, organisation and support of the events of the Chapter. Coordinates the requirements of place, time, hospitality and operation, and assists in whatever is required before, during and after an event for its smooth conduct.',
+              bg:'Отговаря за практическата подготовка, организация и осигуряване на събитията на Chapter-а. Координира нуждите от място, време, гостоприемство и провеждане и подпомага всичко необходимо преди, по време и след събитието за неговото гладко протичане.'} }
   ];
 
   function officers(){
     return base(6, {en:'Appointment of Officers', el:'Διορισμός Αξιωματικών', bg:'Назначаване на длъжностните лица'}, [
       { title:{en:'I. Offices, Duties and Terms', el:'Αξιώματα, καθήκοντα και θητεία', bg:'Длъжности, задължения и мандат'},
-        table:{ head:['Office','Duties and Responsibilities','Term'], widths:[23,62,15],
-                rows: OFFICERS.map(function(o){ return [ office(o[0],o[1]), o[6], term(o[5]) ]; }),
-                note:'The President, the Treasurer and the Road Captain serve five-year terms. The remaining offices are filled by appointment, in accordance with the rules of the Chapter and the decisions of the President.' } },
+        table:{ head:['Office','Duties and Responsibilities','Term'], widths:[24,58,18],
+                rows: OFFICERS.map(function(o){
+                  return [ office(o.en, o.el, o.bg), second(o.duties.en, o.duties.bg),
+                           second(o.term.en, o.term.bg, 7.9) ];
+                }),
+                note:'The President, the Treasurer and the Road Captain serve five-year terms and are elected by the Chapter. The remaining offices are filled by appointment of the President, in accordance with the rules of the Chapter. — Президентът, Ковчежникът и Road Captain служат петгодишен мандат и се избират от Chapter-а; останалите длъжности се заемат по назначение от Президента.' } },
       { title:{en:'II. The Officers Appointed', el:'Οι διοριζόμενοι αξιωματικοί', bg:'Назначените длъжностни лица'},
-        table:{ head:['Office','Brother','Road Name','Rank'], widths:[28,27,23,22],
-                rows: OFFICERS.map(function(o){ return [ office(o[0],o[1]), person(o[2]), road(o[3]), term(o[4]) ]; }),
-                note:'The first six offices constitute the Principal Officers — Κύριοι Αξιωματικοί — of the Chapter. Road names not yet entered above are to be advised to the Secretary and will be carried in the next issue of this document.' } },
+        table:{ head:['Office','Brother','Road Name','Rank'], widths:[30,24,20,26],
+                rows: OFFICERS.map(function(o){
+                  return [ office(o.en, o.el, o.bg), person(o.name), road(o.road),
+                           second(o.rank.en, o.rank.bg, 7.9) ];
+                }),
+                note:'The first six offices constitute the Principal Officers — Κύριοι Αξιωματικοί · Главни длъжностни лица — of the Chapter. Road names not yet entered above are to be advised to the Secretary and will be carried in the next issue of this document.' } },
       { title:{en:'III. Founding Distinction', el:'Ιδρυτική διάκριση', bg:'Учредително отличие'},
-        table:{ head:['Distinction','Brother','Nature of the Distinction'], widths:[26,24,50],
-                rows:[[ office('Founding President','Ιδρυτικός Πρόεδρος & Οικιστής'),
+        table:{ head:['Distinction','Brother','Nature of the Distinction'], widths:[26,22,52],
+                rows:[[ office('Founding President','Ιδρυτικός Πρόεδρος & Οικιστής','Учредителен президент'),
                         person('Dimitrios Skiadopoulos'),
-                        'A special and permanent founding distinction of the Chapter, held in recognition of its foundation. It does not constitute a sixteenth office and carries no duties beyond those of the office held by the brother who bears it.' ]] } }
+                        second('A special and permanent founding distinction of the Chapter, held in recognition of its foundation. It does not constitute a sixteenth office and carries no duties beyond those of the office held by the brother who bears it.',
+                               'Особено и постоянно учредително отличие на Chapter-а, носено в признание за неговото основаване. То не представлява шестнадесета длъжност и не носи задължения извън тези на длъжността, заемана от брата, който го носи.') ]] } }
     ], {
       lead:[{en:'By this founding act the Chapter constitutes its administration and appoints to each of its fifteen offices the brother who shall hold it, the first six of these offices being the Principal Officers of the Chapter.',
              el:'Με την παρούσα ιδρυτική πράξη το Chapter συγκροτεί τη διοίκησή του και διορίζει σε έκαστο των δεκαπέντε αξιωμάτων τον αδελφό που θα το κατέχει, των πρώτων έξι εξ αυτών όντων των Κυρίων Αξιωματικών του Chapter.',

@@ -228,6 +228,14 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 .btn.ghost:hover{border-color:var(--steel); color:var(--bone); background:transparent;}
 .btn svg{vertical-align:-3px; margin-right:8px;}
 
+.tagchip:hover{border-color:var(--gold); color:var(--bone); background:rgba(173,138,78,.12);}
+/* the vest answers when it is the one asked for */
+#administration .ws-officer-card{scroll-margin-top:96px; border-radius:4px;}
+#administration .ws-officer-card:target{
+  outline:1px solid var(--gold-bright); outline-offset:8px;
+  box-shadow:0 0 0 1px rgba(203,168,103,.25), 0 0 46px rgba(203,168,103,.18);
+}
+
 /* the sign of the physician, over the duties of the Almoner */
 #administration .ws-vest-badge{
   position:relative; z-index:2; width:46px; margin:0 auto 12px; color:var(--gold-bright);
@@ -301,7 +309,8 @@ section + section{border-top:1px solid var(--stitch);}
 .const-offices h3{font-size:20px; color:var(--gold-bright); margin-bottom:6px;}
 .const-offices p{color:var(--bone-dim); font-size:16px; max-width:760px;}
 .tagchips{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px;}
-.tagchip{
+.tagchip{text-decoration:none; cursor:pointer;
+  
   font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase;
   border:1px solid var(--stitch); color:var(--steel); padding:7px 13px; border-radius:20px;
 }
@@ -851,7 +860,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
             <div class="ws-officers-vest-graph">
 <div class="ws-officers-summary"><span>15 Officers</span><span>6 Principal Officers</span></div>
 <div class="ws-leadership-row">
-<article class="ws-officer-card founder lead-card ws-president">
+<article id="office-president" class="ws-officer-card founder lead-card ws-president">
       <div class="ws-office-heading">
         <div class="ws-office-en">President</div>
         <div class="ws-office-gr">Πρόεδρος</div>
@@ -866,7 +875,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Dimitrios Skiadopoulos</div>
     </article>
-<article class="ws-officer-card principal lead-card">
+<article id="office-vice-president" class="ws-officer-card principal lead-card">
       <div class="ws-office-heading">
         <div class="ws-office-en">Vice President</div>
         <div class="ws-office-gr">Αντιπρόεδρος</div>
@@ -884,7 +893,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 </div>
 <div class="ws-group-title"><b>Principal Officers</b><span>The first six offices of the Chapter</span></div>
 <div class="ws-principal-grid">
-<article class="ws-officer-card principal">
+<article id="office-secretary" class="ws-officer-card principal">
       <div class="ws-office-heading">
         <div class="ws-office-en">Secretary</div>
         <div class="ws-office-gr">Γραμματέας</div>
@@ -899,7 +908,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Nikolaos Markopoulos</div>
     </article>
-<article class="ws-officer-card principal">
+<article id="office-treasurer" class="ws-officer-card principal">
       <div class="ws-office-heading">
         <div class="ws-office-en">Treasurer</div>
         <div class="ws-office-gr">Ταμίας</div>
@@ -914,7 +923,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Panagiotis Vlahos</div>
     </article>
-<article class="ws-officer-card principal">
+<article id="office-sergeant-at-arms" class="ws-officer-card principal">
       <div class="ws-office-heading">
         <div class="ws-office-en">Sergeant-at-Arms</div>
         <div class="ws-office-gr">Υπεύθυνος Τάξης</div>
@@ -929,7 +938,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Marinos Andreas</div>
     </article>
-<article class="ws-officer-card principal">
+<article id="office-road-captain" class="ws-officer-card principal">
       <div class="ws-office-heading">
         <div class="ws-office-en">Road Captain</div>
         <div class="ws-office-gr">Αρχηγός Αποστολής</div>
@@ -947,7 +956,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 </div>
 <div class="ws-group-title additional-title"><b>Additional Officers</b><span>Appointed by the President</span></div>
 <div class="ws-additional-grid">
-<article class="ws-officer-card additional">
+<article id="office-road-sergeant" class="ws-officer-card additional">
       <div class="ws-office-heading">
         <div class="ws-office-en">Road Sergeant</div>
         <div class="ws-office-gr">Ομαδάρχης</div>
@@ -962,7 +971,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Christos Diavatis</div>
     </article>
-<article class="ws-officer-card additional">
+<article id="office-warden" class="ws-officer-card additional">
       <div class="ws-office-heading">
         <div class="ws-office-en">Warden</div>
         <div class="ws-office-gr">Έφορος Μελών &amp; Συμμόρφωσης</div>
@@ -977,7 +986,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">George Dryllis</div>
     </article>
-<article class="ws-officer-card additional">
+<article id="office-orator" class="ws-officer-card additional">
       <div class="ws-office-heading">
         <div class="ws-office-en">Orator</div>
         <div class="ws-office-gr">Σύμβουλος</div>
@@ -992,7 +1001,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Andreas Tsounakos</div>
     </article>
-<article class="ws-officer-card additional">
+<article id="office-ambassador" class="ws-officer-card additional">
       <div class="ws-office-heading">
         <div class="ws-office-en">Ambassador</div>
         <div class="ws-office-gr">Εκπρόσωπος προς άλλα Motorcycle Clubs</div>
@@ -1007,7 +1016,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Pantelis Lathiotakis</div>
     </article>
-<article class="ws-officer-card additional">
+<article id="office-almoner" class="ws-officer-card additional">
       <div class="ws-office-heading">
         <div class="ws-office-en">Almoner</div>
         <div class="ws-office-gr">Ελεονόμος Αγαθοεργίας</div>
@@ -1032,7 +1041,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Pavlos Sarof</div>
     </article>
-<article class="ws-officer-card additional">
+<article id="office-quartermaster" class="ws-officer-card additional">
       <div class="ws-office-heading">
         <div class="ws-office-en">Quartermaster</div>
         <div class="ws-office-gr">Επιμελητής</div>
@@ -1047,7 +1056,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base vacancy">To be appointed</div>
     </article>
-<article class="ws-officer-card additional">
+<article id="office-master-of-ceremonies" class="ws-officer-card additional">
       <div class="ws-office-heading">
         <div class="ws-office-en">Master of Ceremonies</div>
         <div class="ws-office-gr">Τελετάρχης</div>
@@ -1062,7 +1071,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Alexandros Epifanis</div>
     </article>
-<article class="ws-officer-card additional">
+<article id="office-preparing-brother" class="ws-officer-card additional">
       <div class="ws-office-heading">
         <div class="ws-office-en">Preparing Brother</div>
         <div class="ws-office-gr">Δοκιμαστής</div>
@@ -1077,7 +1086,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="ws-officer-base">Konstantinos Karmalis</div>
     </article>
-<article class="ws-officer-card additional">
+<article id="office-event-manager" class="ws-officer-card additional">
       <div class="ws-office-heading">
         <div class="ws-office-en">Event Manager</div>
         <div class="ws-office-gr">Υπεύθυνος Εκδηλώσεων</div>
@@ -1095,21 +1104,24 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 </div>
 </div>
 <div class="const-offices">
-      <h3>Offices defined by the Constitution — Article 5</h3>
-      <p>The Chapter's Constitution provides for four elected representatives — President, Vice President, Secretary and Treasurer — elected annually in that order, plus a full slate of appointed officers who serve the Chapter's operations and are named by the President within thirty days of taking office:</p>
+      <h3>Offices defined by the By-Laws — Article V</h3>
+      <p>Article V provides for fifteen offices. The President, the Treasurer and the Road Captain are elected — the President for a term of five years, the other two every two years — and the remaining offices are filled by appointment of the President, who names them within thirty days of taking office. The first six are the Principal Officers of the Chapter; the rest are optional. Follow any office below to the brother who holds it.</p>
       <div class="tagchips">
-        <span class="tagchip">Sergeant-at-Arms</span>
-        <span class="tagchip">Road Captain</span>
-        <span class="tagchip">Ambassador</span>
-        <span class="tagchip">Warden</span>
-        <span class="tagchip">Orator</span>
-        <span class="tagchip">Almoner</span>
-        <span class="tagchip">Guard</span>
-        <span class="tagchip">Quartermaster</span>
-        <span class="tagchip">Master of Ceremonies</span>
-        <span class="tagchip">Steward</span>
-        <span class="tagchip">Assistant</span>
-        <span class="tagchip">Event Manager</span>
+        <a class="tagchip" href="#office-president">President</a>
+        <a class="tagchip" href="#office-vice-president">Vice President</a>
+        <a class="tagchip" href="#office-secretary">Secretary</a>
+        <a class="tagchip" href="#office-treasurer">Treasurer</a>
+        <a class="tagchip" href="#office-sergeant-at-arms">Sergeant-at-Arms</a>
+        <a class="tagchip" href="#office-road-captain">Road Captain</a>
+        <a class="tagchip" href="#office-road-sergeant">Road Sergeant</a>
+        <a class="tagchip" href="#office-warden">Warden</a>
+        <a class="tagchip" href="#office-orator">Orator</a>
+        <a class="tagchip" href="#office-ambassador">Ambassador</a>
+        <a class="tagchip" href="#office-almoner">Almoner</a>
+        <a class="tagchip" href="#office-quartermaster">Quartermaster</a>
+        <a class="tagchip" href="#office-master-of-ceremonies">Master of Ceremonies</a>
+        <a class="tagchip" href="#office-preparing-brother">Preparing Brother</a>
+        <a class="tagchip" href="#office-event-manager">Event Manager</a>
       </div>
     </div>
   </div>

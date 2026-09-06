@@ -163,11 +163,11 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 
 /* ---------- official seal ---------- */
 .official-seal{margin:30px auto 26px; display:flex; flex-direction:column; align-items:center; gap:12px;}
-.official-seal img{width:170px; height:auto; display:block;
+.official-seal img{width:340px; height:auto; display:block;
   filter:drop-shadow(0 10px 22px rgba(0,0,0,.65)) drop-shadow(0 0 1px rgba(203,168,103,.35));}
 .official-seal figcaption{font-family:'Oswald',sans-serif; font-size:11px; letter-spacing:.26em;
   text-transform:uppercase; color:var(--gold-bright); text-align:center;}
-@media(max-width:780px){.official-seal img{width:132px;} .official-seal figcaption{font-size:10px; letter-spacing:.2em;}}
+@media(max-width:780px){.official-seal img{width:264px; max-width:82vw;} .official-seal figcaption{font-size:10px; letter-spacing:.2em;}}
 
 /* ---------- official document actions ---------- */
 .doc-actions{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:26px;}
@@ -553,7 +553,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 <header class="top">
   <div class="navbar">
     <a class="brand" href="#home">
-      <img src="assets/widows-sons-mra-chapter-hellas-emblem.jpg" alt="Chapter Hellas emblem">
+      <img src="assets/official-emblem.webp?v=20260906" alt="Chapter Hellas emblem">
       <span class="brand-text">Widows Sons MRA<b>Chapter Hellas</b></span>
     </a>
     <nav class="links" id="navlinks">
@@ -1304,6 +1304,10 @@ var WSDoc = (function(){
 '  display:flex; align-items:center; justify-content:center; text-align:center;',
 '  font-family:"Oswald",Arial,sans-serif; font-size:6.6pt; letter-spacing:.16em;',
 '  text-transform:uppercase; color:#a5a199; line-height:1.7; flex:none; }',
+'.doc-sign-dual{ align-items:flex-end; gap:6mm; }',
+'.doc-sign-dual .doc-sign-side{ display:flex; align-items:flex-end; gap:5mm; }',
+'.doc-sign-dual .doc-sign-col{ min-width:56mm; }',
+'.doc-sign-dual .doc-seal-art img{ width:31mm; height:31mm; }',
 '.doc-seal-art{ margin:0; flex:none; text-align:center; }',
 '.doc-seal-art img{ width:40mm; height:40mm; object-fit:contain; display:block; }',
 '.doc-seal-art figcaption{ font-family:"Oswald",Arial,sans-serif; font-size:6.4pt;',
@@ -1334,25 +1338,43 @@ var WSDoc = (function(){
              '</div>';
     }).join('');
 
-    var sign = doc.signature || {};
     var sealArt = seal();
     var sealPanel =
-      doc.seal === false ? '<div></div>' :
+      doc.seal === false ? '' :
       sealArt ? '<figure class="doc-seal-art">' +
                   '<img src="' + sealArt + '" alt="">' +
                   '<figcaption>Official Seal of Chapter Hellas</figcaption>' +
                 '</figure>'
               : '<div class="doc-seal">Seal of<br>Chapter Hellas</div>';
-    var signBlock =
-      '<div class="doc-sign">' + sealPanel +
-        '<div class="doc-sign-col">' +
-          '<div class="doc-sign-title">' + esc(sign.title || '') + '</div>' +
-          '<div class="doc-sign-line"></div>' +
-          '<div class="doc-sign-name">' + esc(sign.name || '') + '</div>' +
-          (sign.road ? '<div class="doc-sign-road">&laquo;' + esc(sign.road) + '&raquo;</div>' : '') +
-          (sign.role ? '<div class="doc-sign-role">' + esc(sign.role) + '</div>' : '') +
-        '</div>' +
-      '</div>';
+
+    /* One signatory column: the office, the rule to sign upon, the brother. */
+    function signCol(sig, cls){
+      if(!sig){ return ''; }
+      return '<div class="doc-sign-col' + (cls ? ' ' + cls : '') + '">' +
+               '<div class="doc-sign-title">' + esc(sig.title || '') + '</div>' +
+               '<div class="doc-sign-line"></div>' +
+               '<div class="doc-sign-name">' + esc(sig.name || '') + '</div>' +
+               (sig.road ? '<div class="doc-sign-road">&laquo;' + esc(sig.road) + '&raquo;</div>' : '') +
+               (sig.role ? '<div class="doc-sign-role">' + esc(sig.role) + '</div>' : '') +
+             '</div>';
+    }
+
+    /* A founding document is signed by the Founding President alone. Every
+       document issued thereafter bears the seal and the signature of the
+       Secretary on the left, and that of the President on the right. */
+    var signBlock;
+    if(doc.signatures){
+      signBlock = '<div class="doc-sign doc-sign-dual">' +
+                    '<div class="doc-sign-side">' + sealPanel +
+                      signCol(doc.signatures.left) +
+                    '</div>' +
+                    signCol(doc.signatures.right) +
+                  '</div>';
+    } else {
+      signBlock = '<div class="doc-sign">' + (sealPanel || '<div></div>') +
+                    signCol(doc.signature || {}) +
+                  '</div>';
+    }
 
     return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
       '<title>' + esc(CHAPTER + ' — ' + (doc.subject || 'Document')) + '</title>' +
@@ -1439,6 +1461,29 @@ var WSDocs = (function(){
   var PLACE = 'Athens, Greece';
   var DATE  = '1 September 2026';
 
+  /* How the Chapter executes its documents.
+
+     FOUNDING — the founding documents of the Chapter are signed by the
+     Founding President, already a Widows Son at the foundation.
+
+     EXECUTED — every official document issued thereafter bears the seal
+     and the signature of the Secretary on the left at its end, and the
+     signature of the President on the right.
+
+     Pass one of the two as the signature of a document:
+       signature:  FOUNDING          — a founding document
+       signatures: EXECUTED          — every other document          */
+  var FOUNDING = {
+    title:'The Founding President', name:'Dimitrios Skiadopoulos', road:'Build Smith',
+    role:'Ιδρυτικός Πρόεδρος & Οικιστής · Chapter Hellas'
+  };
+  var EXECUTED = {
+    left:  { title:'The Secretary', name:'Nikolaos Markopoulos',
+             role:'Γραμματέας · Chapter Hellas' },
+    right: { title:'The President', name:'Dimitrios Skiadopoulos', road:'Build Smith',
+             role:'Πρόεδρος · Chapter Hellas' }
+  };
+
   /* The fifteen offices of the Chapter, as carried in Section 02.
      [ office, Greek title, brother, road name, rank, term, duties ] */
   var OFFICERS = [
@@ -1447,7 +1492,7 @@ var WSDocs = (function(){
     ['Vice President','Αντιπρόεδρος','Dimitrios Panagakos','Developer','Principal Officer','By appointment',
      'Second in the hierarchy and the immediate associate of the President. Supports the President in the exercise of his duties and stands fully in his place in any absence or impediment. Accompanies the President at official events and assists in coordinating the administration of the Chapter.'],
     ['Secretary','Γραμματέας','Nikolaos Markopoulos','','Principal Officer','By appointment',
-     'Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Every official document of the Chapter bears the seal and, exclusively, the signature of the Secretary. The Secretary alone signs the membership cards of the Chapter.'],
+     'Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Custodian of the seal: every official document of the Chapter bears the seal and the signature of the Secretary at its foot on the left, and the signature of the President on the right. The founding documents of the Chapter are signed by the Founding President. The Secretary alone signs the membership cards of the Chapter.'],
     ['Treasurer','Ταμίας','Panagiotis Vlahos','','Principal Officer','Five years',
      'Holds responsibility for the financial management of the Chapter. Administers the bank accounts, the subscriptions, the receipts and the payments, keeps the financial books and the supporting records, and presents the prescribed financial statements and reports to the administration.'],
     ['Sergeant-at-Arms','Υπεύθυνος Τάξης','Marinos Andreas','','Principal Officer','By appointment',
@@ -1535,13 +1580,12 @@ var WSDocs = (function(){
         '<p>Issued by order of the Chapter and entered in its records. All emblems, patches and insignia ' +
         'of office remain the property of Widows Sons MRA and are returned to the Chapter upon a ' +
         'brother’s departure from office or from the Chapter.</p>',
-      signature: { title:'The Founding President', name:'Dimitrios Skiadopoulos',
-                    road:'Build Smith', role:'Ιδρυτικός Πρόεδρος & Οικιστής · Chapter Hellas' },
+      signature: FOUNDING,
       seal: true
     };
   }
 
-  return { officers:officers };
+  return { officers:officers, FOUNDING:FOUNDING, EXECUTED:EXECUTED };
 })();
 
 var btnOfficers = document.getElementById('btnOfficersPdf');

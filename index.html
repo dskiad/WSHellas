@@ -313,6 +313,22 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
   .download-panel{flex-direction:column; align-items:flex-start;}
   .hero .script{font-size:52px;}
 }
+
+/* section-numbering-gallery:start */
+.section-head .index-no{display:none!important;}
+.section-head h2 .section-prefix{display:block;margin:0 0 9px;font-family:'Oswald',sans-serif;font-size:12px;line-height:1.2;font-weight:600;letter-spacing:.24em;color:var(--gold-bright);text-transform:uppercase;}
+.chapter-hellas-gallery{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(260px,.78fr);grid-template-rows:auto minmax(0,1fr) minmax(0,1fr);gap:14px;margin:-22px 0 58px;}
+.chapter-gallery-kicker{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-family:'Oswald',sans-serif;font-size:11.5px;line-height:1;letter-spacing:.24em;color:var(--steel);text-transform:uppercase;padding:0 2px 4px;}
+.chapter-gallery-kicker span{color:var(--gold-bright);}
+.chapter-hellas-gallery figure{position:relative;margin:0;min-height:218px;overflow:hidden;background:#080808;border:1px solid rgba(203,168,103,.38);box-shadow:0 18px 42px rgba(0,0,0,.34);}
+.chapter-hellas-gallery .chapter-gallery-feature{grid-row:2 / span 2;min-height:450px;}
+.chapter-hellas-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease,filter .45s ease;}
+.chapter-hellas-gallery figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.70) 100%);pointer-events:none;}
+.chapter-hellas-gallery figcaption{position:absolute;left:18px;bottom:14px;z-index:2;font-family:'Oswald',sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.88);text-shadow:0 2px 8px #000;}
+.chapter-hellas-gallery figure:hover img{transform:scale(1.025);filter:brightness(1.05);}
+@media(max-width:780px){.section-head h2 .section-prefix{font-size:11px;letter-spacing:.20em;}.chapter-hellas-gallery{grid-template-columns:1fr;grid-template-rows:auto;margin:-10px 0 42px;gap:11px;}.chapter-gallery-kicker{grid-column:1;}.chapter-hellas-gallery .chapter-gallery-feature{grid-row:auto;min-height:300px;}.chapter-hellas-gallery figure{min-height:245px;}}
+/* section-numbering-gallery:end */
+
 </style>
 
 
@@ -493,9 +509,28 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <div class="section-head">
       <div class="eyebrow gr">Οργάνωση</div>
       <div class="eyebrow">01 — Organization</div>
-      <h2>What is Widows Sons?</h2>
+      <h2><span class="section-prefix">SECTION 01 — </span>What is Widows Sons?</h2>
       <p class="lead">An international fraternal riding association for Master Masons — men who are Freemasons first, and motorcyclists second.</p>
     </div>
+
+    <!-- chapter-hellas-gallery:start -->
+    <div class="chapter-hellas-gallery" aria-label="Chapter Hellas on the road">
+      <div class="chapter-gallery-kicker">CHAPTER HELLAS <span>•</span> GREECE</div>
+      <figure class="chapter-gallery-feature">
+        <img src="assets/chapter-hellas-road-1.jpg?v=20260906" alt="Widows Sons MRA Chapter Hellas riders on the road in Greece" loading="lazy">
+        <figcaption>Brotherhood on the road</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/chapter-hellas-road-2.jpg?v=20260906" alt="Widows Sons MRA Chapter Hellas riders in Athens" loading="lazy">
+        <figcaption>Athens</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/chapter-hellas-road-3.jpg?v=20260906" alt="Widows Sons MRA Chapter Hellas riders in the Greek islands" loading="lazy">
+        <figcaption>Hellas</figcaption>
+      </figure>
+    </div>
+    <!-- chapter-hellas-gallery:end -->
+
 
     <div class="two-col">
       <div>
@@ -555,7 +590,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <div class="section-head">
       <div class="eyebrow gr">Διοίκηση</div>
       <div class="eyebrow">02 — Administration</div>
-      <h2>Officers of the Chapter <span style="color:var(--steel);font-size:.7em;">/ Αξιωματικοί του Chapter</span></h2>
+      <h2><span class="section-prefix">SECTION 02 — </span>Officers of the Chapter <span style="color:var(--steel);font-size:.7em;">/ Αξιωματικοί του Chapter</span></h2>
       <p class="lead">The Chapter is administered by <b>15 officers</b>. The first six positions constitute the <b>Principal Officers — Κύριοι Αξιωματικοί</b>. The President, Treasurer and Road Captain serve five-year terms.</p>
       <p class="lead" style="margin-top:10px; font-size:16px;">The President, Treasurer and Road Captain serve five-year terms. The remaining appointments are made in accordance with the Chapter rules and decisions of the President.</p>
     </div>
@@ -823,7 +858,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <div class="section-head">
       <div class="eyebrow gr">Έμβλημα</div>
       <div class="eyebrow">03 — Emblem</div>
-      <h2>The Chapter Hellas Emblem</h2>
+      <h2><span class="section-prefix">SECTION 03 — </span>The Chapter Hellas Emblem</h2>
       <p class="lead">Every element of the patch carries meaning — worn only by members in good standing, and always remaining the property of Widows Sons MRA.</p>
     </div>
 
@@ -870,7 +905,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <div class="section-head">
       <div class="eyebrow gr">Καταστατικό</div>
       <div class="eyebrow">04 — Constitution</div>
-      <h2>Constitution of Chapter Hellas</h2>
+      <h2><span class="section-prefix">SECTION 04 — </span>Constitution of Chapter Hellas</h2>
       <p class="lead">Articles 1–4 establish who the Chapter is, why it exists, and who may belong to it.</p>
     </div>
 
@@ -906,7 +941,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <div class="section-head">
       <div class="eyebrow gr">Κανονισμοί</div>
       <div class="eyebrow">05 — By-Laws</div>
-      <h2>Regulations &amp; Operating Rules</h2>
+      <h2><span class="section-prefix">SECTION 05 — </span>Regulations &amp; Operating Rules</h2>
       <p class="lead">Articles 5–13 govern how the Chapter is run day to day: officers, elections, meetings, motorcycles, finances and discipline.</p>
     </div>
 

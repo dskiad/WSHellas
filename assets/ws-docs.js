@@ -145,8 +145,8 @@ var WSDocs = (function(){
         paragraphs:[
           {en:'The Chapter is a brotherhood of Master Masons who ride. It is not a Lodge and holds no masonic labour; it meets upon the level as brethren and rides as a club.',
            el:'Το Chapter είναι αδελφότητα Διδασκάλων Τεκτόνων που ιππεύουν. Δεν είναι Στοά και δεν τελεί τεκτονική εργασία· συνέρχεται επί του αλφαδίου ως αδελφοί και ιππεύει ως club.'},
-          {en:'Its purposes are the relief of the widow and the orphan, the support of brethren in need, the practice of charity, and the fellowship of the road under the discipline of the Craft.',
-           el:'Σκοποί του είναι η αρωγή της χήρας και του ορφανού, η υποστήριξη αδελφών εν ανάγκη, η άσκηση της αγαθοεργίας και η συντροφικότητα του δρόμου υπό την πειθαρχία της Τεκτονικής.'}
+          {en:'Its purposes are the relief of the widow and the orphan, the support of brethren in need, the practice of charity, and the fellowship of the common rides and excursions upon the motorcycle, under the discipline of the Craft.',
+           el:'Σκοποί του είναι η αρωγή της χήρας και του ορφανού, η υποστήριξη αδελφών εν ανάγκη, η άσκηση της αγαθοεργίας και η συντροφικότητα στις κοινές πορείες και εκδρομές με τις μοτοσικλέτες, υπό την πειθαρχία της Τεκτονικής.'}
         ] },
       { title:{en:'Article III — Membership', el:'Άρθρο Γ΄ — Μέλη'},
         paragraphs:[

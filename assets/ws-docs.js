@@ -30,7 +30,7 @@ var WSDocs = (function(){
     left:  { title:'The Secretary', name:'Nikolaos Markopoulos',
              role:'Γραμματέας · Chapter Hellas' },
     right: { title:'The President', name:'Dimitrios Skiadopoulos', road:'Build Smith',
-             role:'Πρόεδρος · Chapter Hellas' }
+             role:'Πρόεδρος · Chapter Hellas', autograph:true }
   };
 
   /* --- cells in the house style --- */
@@ -144,8 +144,8 @@ var WSDocs = (function(){
     return base(3, {en:'Charter', el:'Καταστατικός Χάρτης'}, [
       { title:{en:'Article I — Name and Seat', el:'Άρθρο Α΄ — Επωνυμία και έδρα'},
         paragraphs:[
-          {en:'The Chapter is named Widows Sons Masonic Riders Association — Chapter Hellas. Its seat is at the Masonic Hall of Piraeus, 24 Konstantinoupoleos Street, Piraeus, postal code …………, Greece, and its field is the whole of the Hellenic territory.',
-           el:'Το Chapter φέρει την επωνυμία Widows Sons Masonic Riders Association — Chapter Hellas. Έδρα του είναι το Τεκτονικό Μέγαρο Πειραιώς, Κωνσταντινουπόλεως 24, Πειραιάς, Τ.Κ. …………, Ελλάδα, και πεδίο δράσεώς του το σύνολο της Ελληνικής επικράτειας.'}
+          {en:'The Chapter is named Widows Sons Masonic Riders Association — Chapter Hellas. Its seat is at the Masonic Hall of Piraeus, 24 Konstantinoupoleos Street, Piraeus 185 40, Greece, and its field is the whole of the Hellenic territory.',
+           el:'Το Chapter φέρει την επωνυμία Widows Sons Masonic Riders Association — Chapter Hellas. Έδρα του είναι το Τεκτονικό Μέγαρο Πειραιώς, Κωνσταντινουπόλεως 24, Πειραιάς, Τ.Κ. 185 40, Ελλάδα, και πεδίο δράσεώς του το σύνολο της Ελληνικής επικράτειας.'}
         ] },
       { title:{en:'Article II — Nature and Purpose', el:'Άρθρο Β΄ — Φύση και σκοπός'},
         paragraphs:[
@@ -308,8 +308,8 @@ var WSDocs = (function(){
     return base(5, {en:'Application for Foundation', el:'Αίτηση Ιδρύσεως'}, [
       { title:{en:'I. The Petition', el:'Η αίτηση'},
         paragraphs:[
-          {en:'The undersigned brethren, Master Masons in good standing of regular Lodges and riders of motorcycles, respectfully pray Widows Sons MRA to grant them a charter for the establishment of a Chapter in Greece, to be named Chapter Hellas, with its seat at Piraeus.',
-           el:'Οι υπογράφοντες αδελφοί, Διδάσκαλοι Τέκτονες εν καλή καταστάσει κανονικών Στοών και αναβάτες μοτοσικλέτας, παρακαλούν ευσεβάστως τη Widows Sons MRA όπως τους χορηγήσει χάρτη προς ίδρυση Chapter εν Ελλάδι, υπό την επωνυμία Chapter Hellas, με έδρα τον Πειραιά.'}
+          {en:'The undersigned brethren, Master Masons in good standing of regular Lodges and riders of motorcycles, respectfully pray Widows Sons MRA to grant them a charter for the establishment of a Chapter in Greece, to be named Chapter Hellas, with its seat at the Masonic Hall of Piraeus, 24 Konstantinoupoleos Street, Piraeus 185 40.',
+           el:'Οι υπογράφοντες αδελφοί, Διδάσκαλοι Τέκτονες εν καλή καταστάσει κανονικών Στοών και αναβάτες μοτοσικλέτας, παρακαλούν ευσεβάστως τη Widows Sons MRA όπως τους χορηγήσει χάρτη προς ίδρυση Chapter εν Ελλάδι, υπό την επωνυμία Chapter Hellas, με έδρα το Τεκτονικό Μέγαρο Πειραιώς, Κωνσταντινουπόλεως 24, Πειραιάς 185 40.'}
         ] },
       { title:{en:'II. The Founding Brethren', el:'Οι ιδρυτές αδελφοί'},
         table:{ head:['Office','Brother','Road Name','Lodge','Grand Lodge','Signature'],

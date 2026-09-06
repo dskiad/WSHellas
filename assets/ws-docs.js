@@ -138,8 +138,8 @@ var WSDocs = (function(){
     return base(3, {en:'Charter', el:'Καταστατικός Χάρτης'}, [
       { title:{en:'Article I — Name and Seat', el:'Άρθρο Α΄ — Επωνυμία και έδρα'},
         paragraphs:[
-          {en:'The Chapter is named Widows Sons Masonic Riders Association — Chapter Hellas. Its seat is at Athens, Greece, and its field is the whole of the Hellenic territory.',
-           el:'Το Chapter φέρει την επωνυμία Widows Sons Masonic Riders Association — Chapter Hellas. Έδρα του είναι η Αθήνα, Ελλάδα, και πεδίο δράσεώς του το σύνολο της Ελληνικής επικράτειας.'}
+          {en:'The Chapter is named Widows Sons Masonic Riders Association — Chapter Hellas. Its seat is at the Masonic Hall of Piraeus, 24 Konstantinoupoleos Street, Piraeus, postal code …………, Greece, and its field is the whole of the Hellenic territory.',
+           el:'Το Chapter φέρει την επωνυμία Widows Sons Masonic Riders Association — Chapter Hellas. Έδρα του είναι το Τεκτονικό Μέγαρο Πειραιώς, Κωνσταντινουπόλεως 24, Πειραιάς, Τ.Κ. …………, Ελλάδα, και πεδίο δράσεώς του το σύνολο της Ελληνικής επικράτειας.'}
         ] },
       { title:{en:'Article II — Nature and Purpose', el:'Άρθρο Β΄ — Φύση και σκοπός'},
         paragraphs:[

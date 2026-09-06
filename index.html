@@ -129,12 +129,31 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
   pointer-events:none;
 }
 .hero-emblem{
-  width:min(593px, 96vw); margin:0 auto 30px;
-  background:#fff; padding:22px 22px 18px;
-  border:1px solid var(--stitch);
-  box-shadow:0 0 0 6px rgba(173,138,78,.08), 0 24px 60px rgba(0,0,0,.55);
+  width:min(593px, 96vw); margin:0 auto 30px; position:relative;
+  padding:22px 22px 18px;
+  /* brushed metal: a raking highlight across a steel ground, with the grain of the mill */
+  background:
+    repeating-linear-gradient(96deg, rgba(255,255,255,.055) 0 1px, rgba(0,0,0,.05) 1px 3px),
+    linear-gradient(103deg,
+      #5c6167 0%, #9aa1a9 9%, #d7dce1 19%, #f2f5f7 27%, #b9c0c7 38%,
+      #7d838a 49%, #aeb5bc 60%, #e6eaee 71%, #c2c8cf 82%, #868c93 92%, #4e5359 100%);
+  border:1px solid #3a3e44;
+  border-radius:3px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.65),
+    inset 0 -1px 0 rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.18),
+    0 0 0 1px rgba(0,0,0,.6),
+    0 24px 60px rgba(0,0,0,.62);
 }
-.hero-emblem img{width:100%; height:auto; display:block;}
+/* the bevel that catches the light at the edge of the plate */
+.hero-emblem:before{
+  content:''; position:absolute; inset:6px; border-radius:2px; pointer-events:none;
+  border:1px solid rgba(255,255,255,.30);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.35);
+}
+.hero-emblem img{width:100%; height:auto; display:block; position:relative; z-index:1;
+  box-shadow:0 0 0 1px rgba(0,0,0,.55), 0 6px 18px rgba(0,0,0,.45);}
 .hero h1{font-size:15px; font-family:'Oswald',sans-serif; letter-spacing:.32em; text-transform:uppercase; color:var(--steel);}
 .hero .script{
   font-family:'Mrs Saint Delafield', cursive; color:var(--crimson-bright);
@@ -172,6 +191,8 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 .documents-note{margin-top:24px; font-size:16px; color:var(--bone-dim); max-width:560px;}
 .documents-note a{color:var(--gold-bright); text-decoration:none; border-bottom:1px solid rgba(203,168,103,.45);}
 .documents-note a:hover{color:var(--bone);}
+
+.members-only{font-weight:700; color:var(--gold-bright);}
 
 /* the Bulgarian brethren, named in gold wherever they stand */
 .ws-bulgaria{font-weight:700; color:var(--gold-bright); letter-spacing:.005em;}
@@ -656,9 +677,10 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         </div>
         <div class="pillar-block">
           <h3>Membership</h3>
-          <p>Widows Sons runs on Motorcycle Club custom. The Chapter is composed of Master Masons — Third Degree — recognized by the Grand Lodge of Greece or another regularly recognized Grand Lodge who present a Certificate of Good Standing. A brother who has not yet reached the Third Degree rides as a <b>prospect</b>: welcome in the Chapter, but not yet entitled to wear the full patch. Every candidate serves a minimum six-month petition period before being proposed for the Center Patch, followed by a further one-year probation before becoming eligible for full colors. Sponsors must present a candidate's case thirty days before any vote, and the award of the Center Patch requires a unanimous vote of those present.</p>
+          <p>Widows Sons runs on Motorcycle Club custom. The Chapter is composed of Master Masons — Third Degree — recognized by the National Lodge of Greece or another regularly recognized Grand Lodge who present a Certificate of Good Standing. A regular Grand Lodge must be recognized as regular by at least one of the Mother Grand Lodges — the United Grand Lodge of England, the Grand Lodge of Scotland or the Grand Lodge of Ireland. A brother who has not yet reached the Third Degree rides as a <b>prospect</b>: welcome in the Chapter, but not yet entitled to wear the full patch. Every candidate serves a minimum six-month petition period before being proposed for the Center Patch, followed by a further one-year probation before becoming eligible for full colors. Sponsors must present a candidate's case thirty days before any vote, and the award of the Center Patch requires a unanimous vote of those present.</p>
           <p>Alongside full membership, an associated outreach initiative — <b>Masonic Riders Hellas</b> — welcomes recognized brethren who do not yet meet the requirements for full membership but share the association's values, so that they may take part in nearly all of the Chapter's activities without distinction.</p>
-          <p>The partners of members are known as <b>Widows Sons Ladies</b>. They are not Freemasons, and they do not join Widows Sons or wear its patches — but they're very welcome to ride and take part in the Chapter's social activities. Rituals and Widows Sons meetings remain for members only.</p>
+          <p>The partners of members are known as <b>Widows Sons Ladies</b>. They are not Freemasons, and they do not join Widows Sons or wear its patches — but they're very welcome to ride and take part in the Chapter's social activities.</p>
+          <p class="members-only">Rituals and Widows Sons meetings remain for members only.</p>
           <ul class="rule-list" style="margin-top:22px;">
             <li><b>Full Patch Member:</b> a Master Mason (3°) in good standing who has completed petition and probation; wears the complete Widows Sons patch set.</li>
             <li><b>Prospect:</b> a 1° or 2° brother; rides and takes part in Chapter life, but does not wear the full patch.</li>

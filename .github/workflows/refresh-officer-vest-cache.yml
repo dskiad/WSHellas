@@ -1,0 +1,39 @@
+name: Refresh officer vest background cache
+on:
+  push:
+    paths:
+      - '.github/workflows/refresh-officer-vest-cache.yml'
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Refresh stylesheet reference
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          for fn in ('index.html','officers.html'):
+              p=Path(fn)
+              if not p.exists():
+                  continue
+              s=p.read_text(encoding='utf-8')
+              href='assets/officer-vest-background.css?v=202609060405'
+              if 'assets/officer-vest-background.css' in s:
+                  s=re.sub(r'assets/officer-vest-background\.css(?:\?v=[^"\']*)?',href,s)
+              else:
+                  s=s.replace('</head>',f'<link rel="stylesheet" href="{href}">\n</head>',1)
+              p.write_text(s,encoding='utf-8')
+          Path('.github/workflows/refresh-officer-vest-cache.yml').unlink(missing_ok=True)
+          PY
+      - name: Commit refreshed references
+        run: |
+          git config user.name "Dimitrios Skiadopoulos"
+          git config user.email "grand.chancellor@nglgreece.gr"
+          git add -A
+          git commit -m "Refresh real officer vest background asset"
+          git push origin HEAD:claude/repo-push-vfylka

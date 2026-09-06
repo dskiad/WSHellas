@@ -169,12 +169,9 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
   text-transform:uppercase; color:var(--gold-bright); text-align:center;}
 @media(max-width:780px){.official-seal img{width:264px; max-width:82vw;} .official-seal figcaption{font-size:10px; letter-spacing:.2em;}}
 
-/* ---------- official document actions ---------- */
-.doc-actions{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:26px;}
-.doc-actions .btn{font-family:'Oswald',sans-serif; cursor:pointer; line-height:1;}
-.doc-actions-hint{font-size:15px; color:var(--bone-dim); max-width:430px;}
-.doc-actions-hint b{color:var(--steel); font-weight:600;}
-@media print{.doc-actions{display:none;}}
+.documents-note{margin-top:24px; font-size:16px; color:var(--bone-dim); max-width:560px;}
+.documents-note a{color:var(--gold-bright); text-decoration:none; border-bottom:1px solid rgba(203,168,103,.45);}
+.documents-note a:hover{color:var(--bone);}
 
 /* ---------- section shell ---------- */
 section{padding:96px 0;}
@@ -375,43 +372,40 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 
 /* officer-vest-sizing-2026:start */
 #administration .ws-vest-shell{
-  min-height:700px !important;
-  height:700px !important;
-  padding:84px 28px 44px !important;
+  min-height:600px !important;
+  height:600px !important;
+  padding:112px 28px 44px !important;
   box-sizing:border-box !important;
 }
 #administration .ws-vest-duty{
   width:90% !important;
   max-width:348px !important;
   padding:13px 15px !important;
-  font-size:13.6px !important;
-  line-height:1.42 !important;
+  font-size:15px !important;
+  line-height:1.45 !important;
   box-sizing:border-box !important;
 }
-/* the English reads first, the Greek beneath it */
-#administration .duty-en{display:block; font-weight:600; color:#f4f1ea;}
-#administration .duty-gr{display:block; margin-top:9px; padding-top:9px;
-  border-top:1px solid rgba(220,222,224,.16); color:#cfcabf; font-size:13px;}
+
 #administration .ws-officer-card.ws-president .ws-vest-shell{
-  min-height:730px !important;
-  height:730px !important;
+  min-height:630px !important;
+  height:630px !important;
 }
 #administration .ws-officer-card.ws-president .ws-vest-duty{
   width:92% !important;
   max-width:360px !important;
-  font-size:14px !important;
-  line-height:1.42 !important;
+  font-size:15.5px !important;
+  line-height:1.45 !important;
 }
 @media(max-width:820px){
   #administration .ws-vest-shell{
-    min-height:700px !important;
-    height:700px !important;
-    padding:80px 20px 40px !important;
+    min-height:600px !important;
+    height:600px !important;
+    padding:106px 20px 40px !important;
   }
   #administration .ws-vest-duty{
     width:90% !important;
     max-width:340px !important;
-    font-size:13.4px !important;
+    font-size:14.6px !important;
   }
   #administration .ws-officer-card.ws-president .ws-vest-shell{
     min-height:600px !important;
@@ -588,7 +582,6 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 
     <div class="rockertext">Meet on the Level &amp; Part upon the Square</div>
     <div class="motto">
-      <span class="gr">«Τέκτονες, Διδάσκαλοι, Αδελφοί στην ψυχή, Widows Sons στην άσφαλτο.»</span>
       Masons. Master Masons. Brothers for life — Widows Sons on the blacktop.
     </div>
     <div class="hero-cta">
@@ -599,7 +592,6 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 
       <div class="vest-configurator-cta">
         <a class="vest-configurator-button" href="https://dskiad.github.io/wsvest/" target="_blank" rel="noopener noreferrer">
-          <span class="vest-configurator-button-gr">Φτιάξε το γιλέκο σου</span>
           <span class="vest-configurator-button-en">Build Your Vest</span>
         </a>
       </div>
@@ -624,7 +616,6 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 
 <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow gr">Οργάνωση</div>
       <div class="eyebrow">01 — Organization</div>
       <h2><span class="section-prefix">SECTION 01 — </span>What is Widows Sons?</h2>
       <p class="lead">An international fraternal riding association for Master Masons — men who are Freemasons first, and motorcyclists second.</p>
@@ -662,7 +653,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         </div>
         <div class="pillar-block">
           <h3>Membership</h3>
-          <p>Widows Sons runs on Motorcycle Club custom. The Chapter is composed of Master Masons — Third Degree — recognized by the Grand Lodge of Greece (Μεγάλη Στοά της Ελλάδος) or another regularly recognized Grand Lodge who present a Certificate of Good Standing. A brother who has not yet reached the Third Degree rides as a <b>prospect</b>: welcome in the Chapter, but not yet entitled to wear the full patch. Every candidate serves a minimum six-month petition period before being proposed for the Center Patch, followed by a further one-year probation before becoming eligible for full colors. Sponsors must present a candidate's case thirty days before any vote, and the award of the Center Patch requires a unanimous vote of those present.</p>
+          <p>Widows Sons runs on Motorcycle Club custom. The Chapter is composed of Master Masons — Third Degree — recognized by the Grand Lodge of Greece or another regularly recognized Grand Lodge who present a Certificate of Good Standing. A brother who has not yet reached the Third Degree rides as a <b>prospect</b>: welcome in the Chapter, but not yet entitled to wear the full patch. Every candidate serves a minimum six-month petition period before being proposed for the Center Patch, followed by a further one-year probation before becoming eligible for full colors. Sponsors must present a candidate's case thirty days before any vote, and the award of the Center Patch requires a unanimous vote of those present.</p>
           <p>Alongside full membership, an associated outreach initiative — <b>Masonic Riders Hellas</b> — welcomes recognized brethren who do not yet meet the requirements for full membership but share the association's values, so that they may take part in nearly all of the Chapter's activities without distinction.</p>
           <p>The partners of members are known as <b>Widows Sons Ladies</b>. They are not Freemasons, and they do not join Widows Sons or wear its patches — but they're very welcome to ride and take part in the Chapter's social activities. Rituals and Widows Sons meetings remain for members only.</p>
           <ul class="rule-list" style="margin-top:22px;">
@@ -702,19 +693,13 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 <section id="administration">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow gr">Διοίκηση</div>
       <div class="eyebrow">02 — Administration</div>
-      <h2><span class="section-prefix">SECTION 02 — </span>Officers of the Chapter <span style="color:var(--steel);font-size:.7em;">/ Αξιωματικοί του Chapter</span></h2>
-      <p class="lead">The Chapter is administered by <b>15 officers</b>. The first six positions constitute the <b>Principal Officers — Κύριοι Αξιωματικοί</b>. The President, Treasurer and Road Captain serve five-year terms.</p>
+      <h2><span class="section-prefix">SECTION 02 — </span>Officers of the Chapter</h2>
+      <p class="lead">The Chapter is administered by <b>15 officers</b>. The first six positions constitute the <b>Principal Officers</b>. The President, Treasurer and Road Captain serve five-year terms.</p>
       <p class="lead" style="margin-top:10px; font-size:16px;">The President, Treasurer and Road Captain serve five-year terms. The remaining appointments are made in accordance with the Chapter rules and decisions of the President.</p>
 
-      <div class="doc-actions">
-        <button type="button" class="btn solid" id="btnOfficersPdf">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
-          Officers PDF
-        </button>
-        <span class="doc-actions-hint">Το επίσημο έγγραφο των Αξιωματικών · the PDF opens with the security code <b>1966</b>. Every document of the Chapter is on the <a href="secretary.html" style="color:var(--gold-bright)">Secretary</a> page.</span>
-      </div>
+      <p class="documents-note">The official documents of the Chapter — its founding documents and the
+        documents of the Secretariat — are issued from the <a href="secretary.html">Secretary</a>.</p>
     </div>
 
             <div class="ws-officers-vest-graph">
@@ -730,8 +715,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Leads the Chapter as a whole and holds the highest responsibility for its operation and its direction. Presides over the assemblies, organises and directs the activities, represents the Chapter officially, and ensures the faithful application of the Charter, the Internal Regulations and the decisions of the Chapter.</b><span class="duty-gr">Ηγείται συνολικά του Chapter και έχει την ανώτατη ευθύνη για τη λειτουργία και την κατεύθυνσή του. Προεδρεύει των συνεδριάσεων, οργανώνει και κατευθύνει τις δραστηριότητες, εκπροσωπεί επίσημα το Chapter και μεριμνά για την πιστή εφαρμογή του Καταστατικού, του Εσωτερικού Κανονισμού και των αποφάσεων του Chapter.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Leads the Chapter as a whole and holds the highest responsibility for its operation and its direction. Presides over the assemblies, organises and directs the activities, represents the Chapter officially, and ensures the faithful application of the Charter, the Internal Regulations and the decisions of the Chapter.</div>
       </div>
       <div class="ws-officer-base">Dimitrios Skiadopoulos</div>
     </article>
@@ -745,13 +730,13 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Second in the hierarchy and the immediate associate of the President. Supports the President in the exercise of his duties and stands fully in his place in any absence or impediment. Accompanies the President at official events and assists in coordinating the administration of the Chapter.</b><span class="duty-gr">Είναι ο δεύτερος στην ιεραρχία και ο άμεσος συνεργάτης του Προέδρου. Υποστηρίζει τον Πρόεδρο στην άσκηση των καθηκόντων του και τον αναπληρώνει πλήρως σε κάθε απουσία ή κώλυμά του. Συνοδεύει τον Πρόεδρο στις επίσημες εκδηλώσεις και συνδράμει στον συντονισμό της διοίκησης του Chapter.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Second in the hierarchy and the immediate associate of the President. Supports the President in the exercise of his duties and stands fully in his place in any absence or impediment. Accompanies the President at official events and assists in coordinating the administration of the Chapter.</div>
       </div>
       <div class="ws-officer-base">Dimitrios Panagakos</div>
     </article>
 </div>
-<div class="ws-group-title"><b>Κύριοι Αξιωματικοί</b><span>Principal Officers</span></div>
+<div class="ws-group-title"><b>Principal Officers</b><span>The first six offices of the Chapter</span></div>
 <div class="ws-principal-grid">
 <article class="ws-officer-card principal">
       <div class="ws-office-heading">
@@ -763,8 +748,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Custodian of the seal: every official document of the Chapter bears, at its foot, the seal in the centre, the signature of the Secretary on the left and the signature of the President on the right. The founding documents are signed by the Founding President. The Secretary alone signs the membership cards of the Chapter.</b><span class="duty-gr">Είναι υπεύθυνος για τη διοικητική λειτουργία του Chapter. Τηρεί τα πρακτικά, το μητρώο των μελών, το διοικητικό αρχείο, την επίσημη αλληλογραφία και τις προβλεπόμενες αναφορές. Είναι θεματοφύλακας της σφραγίδας. Κάθε επίσημο έγγραφο του Chapter φέρει στο τέλος του τη σφραγίδα στο κέντρο, την υπογραφή του Γραμματέα αριστερά και την υπογραφή του Προέδρου δεξιά· τα ιδρυτικά έγγραφα υπογράφονται από τον Ιδρυτικό Πρόεδρο. Μόνο ο Γραμματέας υπογράφει τις κάρτες μελών του Chapter.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Responsible for the administrative operation of the Chapter. Keeps the minutes, the roll of members, the administrative archive, the official correspondence and the prescribed reports. Custodian of the seal: every official document of the Chapter bears, at its foot, the seal in the centre, the signature of the Secretary on the left and the signature of the President on the right. The founding documents are signed by the Founding President. The Secretary alone signs the membership cards of the Chapter.</div>
       </div>
       <div class="ws-officer-base">Nikolaos Markopoulos</div>
     </article>
@@ -778,8 +763,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Holds responsibility for the financial management of the Chapter. Administers the bank accounts, the subscriptions, the receipts and the payments, keeps the financial books and the supporting records, and presents the prescribed financial statements and reports to the administration.</b><span class="duty-gr">Έχει την ευθύνη της οικονομικής διαχείρισης του Chapter. Διαχειρίζεται τους τραπεζικούς λογαριασμούς, τις συνδρομές, τις εισπράξεις και τις πληρωμές, τηρεί τα οικονομικά βιβλία και τα σχετικά παραστατικά και παρουσιάζει τα προβλεπόμενα οικονομικά στοιχεία και τις αναφορές προς τη διοίκηση.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Holds responsibility for the financial management of the Chapter. Administers the bank accounts, the subscriptions, the receipts and the payments, keeps the financial books and the supporting records, and presents the prescribed financial statements and reports to the administration.</div>
       </div>
       <div class="ws-officer-base">Panagiotis Vlahos</div>
     </article>
@@ -793,8 +778,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Responsible for internal order, for discipline and for the observance of the Regulations and the decisions of the Chapter. Oversees the proper conduct of the members, addresses breaches or questions of discipline and, where required, reports and escalates them to the President.</b><span class="duty-gr">Είναι υπεύθυνος για την εσωτερική τάξη, την πειθαρχία και την τήρηση των Κανονισμών και των αποφάσεων του Chapter. Επιβλέπει την ορθή συμπεριφορά των μελών, αντιμετωπίζει παραβάσεις ή ζητήματα πειθαρχίας και, όταν απαιτείται, τα αναφέρει και τα κλιμακώνει προς τον Πρόεδρο.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Responsible for internal order, for discipline and for the observance of the Regulations and the decisions of the Chapter. Oversees the proper conduct of the members, addresses breaches or questions of discipline and, where required, reports and escalates them to the President.</div>
       </div>
       <div class="ws-officer-base">Marinos Andreas</div>
     </article>
@@ -808,13 +793,13 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Holds the principal responsibility for every organised ride and mission. Plans the route, the stopping points and the progress of the column, organises and controls the formation, and answers for the discipline, the safety and the orderly movement of the group on the road.</b><span class="duty-gr">Έχει την κύρια ευθύνη για όλες τις οργανωμένες μοτοσικλετιστικές διαδρομές και αποστολές. Σχεδιάζει τη διαδρομή, τα σημεία στάσης και την πορεία, οργανώνει και ελέγχει τον σχηματισμό και τη μοτοσικλετιστική στήλη και μεριμνά για την πειθαρχία, την ασφάλεια και την ομαλή κίνηση της ομάδας στον δρόμο.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Holds the principal responsibility for every organised ride and mission. Plans the route, the stopping points and the progress of the column, organises and controls the formation, and answers for the discipline, the safety and the orderly movement of the group on the road.</div>
       </div>
       <div class="ws-officer-base">Panagiotis Floris</div>
     </article>
 </div>
-<div class="ws-group-title additional-title"><b>Λοιποί Αξιωματικοί</b><span>Additional Officers</span></div>
+<div class="ws-group-title additional-title"><b>Additional Officers</b><span>Appointed by the President</span></div>
 <div class="ws-additional-grid">
 <article class="ws-officer-card additional">
       <div class="ws-office-heading">
@@ -826,10 +811,10 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Directly supports the Road Captain on organised rides and missions. Oversees the section, group or formation assigned to him, maintains communication with the Road Captain, and attends to spacing, discipline, cohesion and the safety of the riders on the road.</b><span class="duty-gr">Υποστηρίζει άμεσα τον Road Captain κατά τις οργανωμένες διαδρομές και αποστολές. Επιβλέπει το τμήμα, την ομάδα ή τον σχηματισμό που του ανατίθεται, διατηρεί την επικοινωνία με τον Road Captain και μεριμνά για τις αποστάσεις, την πειθαρχία, τη συνοχή και την ασφάλεια των αναβατών στον δρόμο.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Directly supports the Road Captain on organised rides and missions. Oversees the section, group or formation assigned to him, maintains communication with the Road Captain, and attends to spacing, discipline, cohesion and the safety of the riders on the road.</div>
       </div>
-      <div class="ws-officer-base vacancy">Προς ορισμό</div>
+      <div class="ws-officer-base vacancy">To be appointed</div>
     </article>
 <article class="ws-officer-card additional">
       <div class="ws-office-heading">
@@ -841,8 +826,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Follows the matters concerning the members, their standing and their compliance with the Charter, the Internal Regulations and the decisions of the Chapter. Oversees the proper wearing of the vest, the emblems and the insignia, and contributes to the protection of the property and the identity of the Chapter.</b><span class="duty-gr">Παρακολουθεί τα θέματα που αφορούν τα μέλη, την ιδιότητά τους και τη συμμόρφωσή τους προς το Καταστατικό, τον Εσωτερικό Κανονισμό και τις αποφάσεις του Chapter. Επιβλέπει την ορθή χρήση του γιλέκου, των εμβλημάτων και των διακριτικών και συμβάλλει στην προστασία της περιουσίας και της ταυτότητας του Chapter.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Follows the matters concerning the members, their standing and their compliance with the Charter, the Internal Regulations and the decisions of the Chapter. Oversees the proper wearing of the vest, the emblems and the insignia, and contributes to the protection of the property and the identity of the Chapter.</div>
       </div>
       <div class="ws-officer-base">George Dryllis</div>
     </article>
@@ -856,8 +841,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Serves as counsellor to the President and to the Chapter. Assists in the forming of positions and official presentations, in communication, at events and in public representation, seeing that the word and the presence of the Chapter answer to its principles and to its standing.</b><span class="duty-gr">Λειτουργεί ως σύμβουλος του Προέδρου και του Chapter. Συνδράμει στη διαμόρφωση θέσεων και επίσημων παρουσιάσεων, στην επικοινωνία, στις εκδηλώσεις και στη δημόσια εκπροσώπηση, μεριμνώντας ώστε ο λόγος και η παρουσία του Chapter να ανταποκρίνονται στις αρχές και στο κύρος του.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Serves as counsellor to the President and to the Chapter. Assists in the forming of positions and official presentations, in communication, at events and in public representation, seeing that the word and the presence of the Chapter answer to its principles and to its standing.</div>
       </div>
       <div class="ws-officer-base">Andreas Tsounakos</div>
     </article>
@@ -871,8 +856,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Represents the Chapter in its relations with other Motorcycle Clubs, Widows Sons Chapters and kindred organisations. Develops and maintains communication, cooperation and fraternal ties, and informs the administration of contacts, invitations and matters of external relations.</b><span class="duty-gr">Εκπροσωπεί το Chapter στις σχέσεις του με άλλα Motorcycle Clubs, Widows Sons Chapters και συναφείς οργανώσεις. Αναπτύσσει και διατηρεί επικοινωνία, συνεργασίες και αδελφικούς δεσμούς και ενημερώνει τη διοίκηση για επαφές, προσκλήσεις και θέματα εξωτερικών σχέσεων.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Represents the Chapter in its relations with other Motorcycle Clubs, Widows Sons Chapters and kindred organisations. Develops and maintains communication, cooperation and fraternal ties, and informs the administration of contacts, invitations and matters of external relations.</div>
       </div>
       <div class="ws-officer-base">Pantelis Lathiotakis</div>
     </article>
@@ -886,8 +871,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Responsible for the charitable work, the social care and the benevolent action of the Chapter. Follows the cases of brethren, families or other persons in need of help, proposes the means of support, and coordinates the charitable and benevolent works of the Chapter.</b><span class="duty-gr">Είναι υπεύθυνος για την αγαθοεργία, την κοινωνική μέριμνα και τη φιλανθρωπική δράση του Chapter. Παρακολουθεί περιπτώσεις αδελφών, οικογενειών ή άλλων προσώπων που χρειάζονται βοήθεια, εισηγείται τρόπους υποστήριξης και συντονίζει τις σχετικές αγαθοεργές και φιλανθρωπικές ενέργειες.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Responsible for the charitable work, the social care and the benevolent action of the Chapter. Follows the cases of brethren, families or other persons in need of help, proposes the means of support, and coordinates the charitable and benevolent works of the Chapter.</div>
       </div>
       <div class="ws-officer-base">Pavlos Sarof</div>
     </article>
@@ -901,10 +886,10 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Administers the property, the equipment and the stores of the Chapter. Holds responsibility for the emblems, the patches, the insignia and every object belonging to or used by the Chapter, and attends to their recording, safe keeping, issue, delivery and return.</b><span class="duty-gr">Διαχειρίζεται την περιουσία, τον εξοπλισμό και τα υλικά του Chapter. Τηρεί την ευθύνη για τα εμβλήματα, τα patches, τα διακριτικά και κάθε αντικείμενο που ανήκει ή χρησιμοποιείται από το Chapter και μεριμνά για την καταγραφή, την ορθή φύλαξη, τη διάθεση, την παράδοση και την επιστροφή τους.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Administers the property, the equipment and the stores of the Chapter. Holds responsibility for the emblems, the patches, the insignia and every object belonging to or used by the Chapter, and attends to their recording, safe keeping, issue, delivery and return.</div>
       </div>
-      <div class="ws-officer-base vacancy">Προς ορισμό</div>
+      <div class="ws-officer-base vacancy">To be appointed</div>
     </article>
 <article class="ws-officer-card additional">
       <div class="ws-office-heading">
@@ -916,8 +901,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Responsible for the ceremonial, the protocol and the formal order of the ceremonies and events of the Chapter. Prepares the flow of the programme, guides the participants through the prescribed procedures, and coordinates the smooth and dignified conduct of every official ceremony.</b><span class="duty-gr">Είναι υπεύθυνος για το τελετουργικό, το πρωτόκολλο και την επίσημη τάξη των τελετών και εκδηλώσεων του Chapter. Προετοιμάζει τη ροή του προγράμματος, καθοδηγεί τους συμμετέχοντες στις προβλεπόμενες διαδικασίες και συντονίζει την ομαλή και αξιοπρεπή διεξαγωγή κάθε επίσημης τελετής.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Responsible for the ceremonial, the protocol and the formal order of the ceremonies and events of the Chapter. Prepares the flow of the programme, guides the participants through the prescribed procedures, and coordinates the smooth and dignified conduct of every official ceremony.</div>
       </div>
       <div class="ws-officer-base">Alexandros Epifanis</div>
     </article>
@@ -931,8 +916,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">A fundamental office for the admission and the initiation of a new member. Comes to know and prepares the candidate, guides him before his admission, organises and oversees the trial he must pass before he is judged fit to become a Widows Son, and reports to the President and the administration for the completion of his admission.</b><span class="duty-gr">Αποτελεί βασικό αξίωμα για την εισδοχή και τη μύηση νέου μέλους. Γνωρίζει και προετοιμάζει τον υποψήφιο, τον καθοδηγεί πριν από την εισδοχή, οργανώνει και επιβλέπει τη δοκιμασία που πρέπει να περάσει πριν κριθεί κατάλληλος να γίνει Widows Son και εισηγείται προς τον Πρόεδρο και τη διοίκηση για την ολοκλήρωση της εισδοχής του.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">A fundamental office for the admission and the initiation of a new member. Comes to know and prepares the candidate, guides him before his admission, organises and oversees the trial he must pass before he is judged fit to become a Widows Son, and reports to the President and the administration for the completion of his admission.</div>
       </div>
       <div class="ws-officer-base">Konstantinos Karmalis</div>
     </article>
@@ -946,10 +931,10 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <div class="ws-vest-collar"></div>
         <div class="ws-vest-seam ws-vest-seam-left"></div>
         <div class="ws-vest-seam ws-vest-seam-right"></div>
-        <div class="ws-vest-yoke">ΚΑΘΗΚΟΝΤΑ &amp; ΑΡΜΟΔΙΟΤΗΤΕΣ</div>
-        <div class="ws-vest-duty"><b class="duty-en">Responsible for the practical preparation, organisation and support of the events of the Chapter. Coordinates the requirements of place, time, hospitality and operation, and assists in whatever is required before, during and after an event for its smooth conduct.</b><span class="duty-gr">Έχει την ευθύνη για την πρακτική προετοιμασία, οργάνωση και υποστήριξη των εκδηλώσεων του Chapter. Συντονίζει τις ανάγκες χώρου, χρόνου, φιλοξενίας και λειτουργίας της εκδήλωσης και συνδράμει σε οτιδήποτε απαιτηθεί πριν, κατά τη διάρκεια και μετά την εκδήλωση για την ομαλή διεξαγωγή της.</span></div>
+        <div class="ws-vest-yoke">DUTIES &amp; RESPONSIBILITIES</div>
+        <div class="ws-vest-duty">Responsible for the practical preparation, organisation and support of the events of the Chapter. Coordinates the requirements of place, time, hospitality and operation, and assists in whatever is required before, during and after an event for its smooth conduct.</div>
       </div>
-      <div class="ws-officer-base vacancy">Προς ορισμό</div>
+      <div class="ws-officer-base vacancy">To be appointed</div>
     </article>
 </div>
 </div>
@@ -978,7 +963,6 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 <section id="emblem">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow gr">Έμβλημα</div>
       <div class="eyebrow">03 — Emblem</div>
       <h2><span class="section-prefix">SECTION 03 — </span>The Chapter Hellas Emblem</h2>
       <p class="lead">Every element of the patch carries meaning — worn only by members in good standing, and always remaining the property of Widows Sons MRA.</p>
@@ -1025,7 +1009,6 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 <section id="constitution">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow gr">Καταστατικό</div>
       <div class="eyebrow">04 — Constitution</div>
       <h2><span class="section-prefix">SECTION 04 — </span>Constitution of Chapter Hellas</h2>
       <p class="lead">Articles 1–4 establish who the Chapter is, why it exists, and who may belong to it.</p>
@@ -1061,7 +1044,6 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 <section id="bylaws">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow gr">Κανονισμοί</div>
       <div class="eyebrow">05 — By-Laws</div>
       <h2><span class="section-prefix">SECTION 05 — </span>Regulations &amp; Operating Rules</h2>
       <p class="lead">Articles 5–13 govern how the Chapter is run day to day: officers, elections, meetings, motorcycles, finances and discipline.</p>
@@ -1087,7 +1069,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       </div>
       <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
         <div class="num">VIII</div><h4>Motorcycles</h4>
-        <p>Minimum engine displacement, a valid roadworthiness certificate (ΚΤΕΟ), liability insurance and a Category A motorcycle license for every member.</p>
+        <p>Minimum engine displacement, a valid roadworthiness certificate, liability insurance and a Category A motorcycle license for every member.</p>
       </div>
       <div class="article-card patch"><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
         <div class="num">IX</div><h4>Funerals</h4>
@@ -1175,26 +1157,6 @@ document.querySelectorAll('nav.links a').forEach(function(a){
     if(window.innerWidth <= 920){ document.getElementById('navlinks').style.display='none'; }
   });
 });
-</script>
-<script src="assets/ws-office.js"></script>
-<script src="assets/ws-docs.js"></script>
-<script>
-/* The Officers document, issued from the Administration section. The whole
-   register of the Chapter's documents is on the Secretary's page. */
-var btnOfficers = document.getElementById('btnOfficersPdf');
-if(btnOfficers){
-  btnOfficers.addEventListener('click', function(){
-    var label = btnOfficers.innerHTML;
-    btnOfficers.disabled = true;
-    btnOfficers.textContent = 'Preparing…';
-    WSDoc.pdf(WSDocs.officers()).catch(function(err){
-      window.alert('The document could not be issued. ' + err.message);
-    }).then(function(){
-      btnOfficers.disabled = false;
-      btnOfficers.innerHTML = label;
-    });
-  });
-}
 </script>
 </body>
 </html>

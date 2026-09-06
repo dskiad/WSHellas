@@ -1,0 +1,70 @@
+name: Rebuild Chapter Hellas gallery v2
+on:
+  push:
+    paths:
+      - '.github/workflows/rebuild-gallery-v2.yml'
+permissions:
+  contents: write
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Rebuild and validate gallery JPEGs
+        run: |
+          set -euo pipefail
+          base64 -d .tmp/galleryfix-road1.b64 > assets/chapter-hellas-road-1-v2.jpg
+          cat .tmp/galleryfix-road2a.b64 .tmp/galleryfix-road2b.b64 | base64 -d > assets/chapter-hellas-road-2-v2.jpg
+          cat .tmp/galleryfix-road3a.b64 .tmp/galleryfix-road3b.b64 | base64 -d > assets/chapter-hellas-road-3-v2.jpg
+          python - <<'PY'
+          from pathlib import Path
+          files = [
+              Path('assets/chapter-hellas-road-1-v2.jpg'),
+              Path('assets/chapter-hellas-road-2-v2.jpg'),
+              Path('assets/chapter-hellas-road-3-v2.jpg'),
+          ]
+          for p in files:
+              b = p.read_bytes()
+              if len(b) < 5000:
+                  raise SystemExit(f'{p} is unexpectedly small: {len(b)} bytes')
+              if not (b.startswith(b'\xff\xd8') and b.endswith(b'\xff\xd9')):
+                  raise SystemExit(f'{p} is not a complete JPEG')
+              print(p, len(b), 'JPEG OK')
+          PY
+          file assets/chapter-hellas-road-1-v2.jpg assets/chapter-hellas-road-2-v2.jpg assets/chapter-hellas-road-3-v2.jpg
+      - name: Point the website to the validated images
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          replacements = {
+              'assets/chapter-hellas-road-1.jpg?v=20260906':'assets/chapter-hellas-road-1-v2.jpg?v=20260906b',
+              'assets/chapter-hellas-road-2.jpg?v=20260906':'assets/chapter-hellas-road-2-v2.jpg?v=20260906b',
+              'assets/chapter-hellas-road-3.jpg?v=20260906':'assets/chapter-hellas-road-3-v2.jpg?v=20260906b',
+          }
+          for old, new in replacements.items():
+              if old not in s:
+                  raise SystemExit(f'Missing gallery reference: {old}')
+              s = s.replace(old, new)
+          # The gallery is near the top of Section 01, so load it immediately.
+          start = s.find('<!-- chapter-hellas-gallery:start -->')
+          end = s.find('<!-- chapter-hellas-gallery:end -->', start)
+          if start < 0 or end < 0:
+              raise SystemExit('Gallery block not found')
+          block = s[start:end]
+          block = block.replace(' loading="lazy"', ' loading="eager"')
+          s = s[:start] + block + s[end:]
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit validated gallery
+        run: |
+          rm -f .github/workflows/rebuild-gallery-v2.yml
+          rm -rf .tmp
+          git config user.name 'Dimitrios Skiadopoulos'
+          git config user.email 'grand.chancellor@nglgreece.gr'
+          git add -A
+          git commit -m 'Rebuild and publish validated Chapter Hellas gallery photos'
+          git push origin HEAD:claude/repo-push-vfylka

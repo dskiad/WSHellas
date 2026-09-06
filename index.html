@@ -318,6 +318,49 @@ section + section{border-top:1px solid var(--stitch);}
   border:1px solid var(--stitch); box-shadow:0 30px 70px rgba(0,0,0,.5);
 }
 .emblem-frame img{border-radius:2px;}
+/* ---------- the emblem, at the head of the section, in a silver plate ---------- */
+.emblem-plate{
+  margin:0 auto 52px; width:min(820px, 100%); padding:26px 26px 22px; position:relative;
+  background:
+    repeating-linear-gradient(96deg, rgba(255,255,255,.05) 0 1px, rgba(0,0,0,.05) 1px 3px),
+    linear-gradient(103deg,
+      #5c6167 0%, #9aa1a9 9%, #d7dce1 19%, #f2f5f7 27%, #b9c0c7 38%,
+      #7d838a 49%, #aeb5bc 60%, #e6eaee 71%, #c2c8cf 82%, #868c93 92%, #4e5359 100%);
+  border:1px solid #3a3e44; border-radius:3px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.65),
+    inset 0 -1px 0 rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.18),
+    0 0 0 1px rgba(0,0,0,.6),
+    0 30px 70px rgba(0,0,0,.6);
+}
+.emblem-plate:before{
+  content:''; position:absolute; inset:7px; border-radius:2px; pointer-events:none;
+  border:1px solid rgba(255,255,255,.30); box-shadow:inset 0 0 0 1px rgba(0,0,0,.35);
+}
+.emblem-plate img{
+  position:relative; z-index:1; display:block; width:100%; height:auto; border-radius:2px;
+  box-shadow:0 0 0 1px rgba(0,0,0,.55), 0 8px 22px rgba(0,0,0,.45);
+}
+.emblem-plate figcaption{
+  position:relative; z-index:1; margin-top:16px; text-align:center;
+  font-family:'Oswald',sans-serif; font-size:10.5px; letter-spacing:.28em;
+  text-transform:uppercase; color:#31353a;
+}
+/* the reading of the emblem, set out beneath it in two columns */
+.emblem-reading .symbol-list{
+  margin-top:0; display:grid; grid-template-columns:1fr 1fr; gap:0 56px; align-items:start;
+}
+.emblem-reading .symbol-list li{margin:0;}
+/* the rule sits between the entries, not above the first of either column */
+.emblem-reading .symbol-list li:nth-child(-n+2){border-top:none;}
+@media(max-width:860px){
+  .emblem-reading .symbol-list{grid-template-columns:1fr; gap:0;}
+  .emblem-reading .symbol-list li:nth-child(2){border-top:1px solid var(--stitch);}
+  .emblem-plate{margin-bottom:38px; padding:16px 16px 14px;}
+  .emblem-plate figcaption{font-size:9.5px; letter-spacing:.2em;}
+}
+
 .symbol-list{list-style:none; margin:26px 0 0; padding:0;}
 .symbol-list li{display:grid; grid-template-columns:120px 1fr; gap:18px; padding:14px 0; border-top:1px solid var(--stitch);}
 .symbol-list li:first-child{border-top:none;}
@@ -1050,8 +1093,12 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       <p class="lead">Every element of the patch carries meaning — worn only by members in good standing, and always remaining the property of Widows Sons MRA.</p>
     </div>
 
-    <div class="emblem-section">
-      <div class="emblem-frame"><img id="wsEmblem" src="assets/official-emblem.webp?v=20260906" alt="Widows Sons MRA Chapter Hellas Official Emblem"></div>
+    <figure class="emblem-plate">
+      <img id="wsEmblem" src="assets/official-emblem.webp?v=20260906" alt="Widows Sons MRA Chapter Hellas Official Emblem">
+      <figcaption>The Official Emblem of Chapter Hellas</figcaption>
+    </figure>
+
+    <div class="emblem-reading">
       <div>
         <ul class="symbol-list">
           <li>

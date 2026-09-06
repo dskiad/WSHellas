@@ -1,0 +1,61 @@
+name: Insert real vest image into officer cards
+on:
+  push:
+    paths:
+      - '.github/workflows/insert-real-vest-images.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/repo-push-vfylka
+      - name: Insert actual vest image elements
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          img = '<img class="ws-real-vest-image" src="assets/officers-vest-bg.jpg?v=202609060420" alt="Black leather officer vest">'
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('assets/officer-vest-background.css?v=202609060415','assets/officer-vest-background.css?v=202609060420')
+          marker = '<div class="ws-vest-shell">'
+          parts = s.split(marker)
+          if len(parts) > 1:
+              rebuilt = [parts[0]]
+              for chunk in parts[1:]:
+                  rebuilt.append(marker)
+                  if not chunk.lstrip().startswith('<img class="ws-real-vest-image"'):
+                      rebuilt.append(img)
+                  rebuilt.append(chunk)
+              s = ''.join(rebuilt)
+          p.write_text(s,encoding='utf-8')
+
+          p = Path('officers.html')
+          if p.exists():
+              s = p.read_text(encoding='utf-8')
+              s = s.replace('assets/officer-vest-background.css?v=202609060415','assets/officer-vest-background.css?v=202609060420')
+              marker = '<div class="vest">'
+              parts = s.split(marker)
+              if len(parts) > 1:
+                  rebuilt = [parts[0]]
+                  for chunk in parts[1:]:
+                      rebuilt.append(marker)
+                      if not chunk.lstrip().startswith('<img class="ws-real-vest-image"'):
+                          rebuilt.append(img)
+                      rebuilt.append(chunk)
+                  s = ''.join(rebuilt)
+              p.write_text(s,encoding='utf-8')
+
+          Path('.github/workflows/insert-real-vest-images.yml').unlink(missing_ok=True)
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "Dimitrios Skiadopoulos"
+          git config user.email "grand.chancellor@nglgreece.gr"
+          git add -A
+          git commit -m "Insert real vest image behind every officer description"
+          git push origin HEAD:claude/repo-push-vfylka

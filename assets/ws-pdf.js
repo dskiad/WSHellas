@@ -264,6 +264,136 @@
     return y;
   }
 
+  /* ---------- graphics ----------
+     Two forms only, and each is chosen by the job its numbers do.
+
+     A count that is a headline in itself — fifteen offices, two vacant —
+     is not a chart: it is set as a tile and read at a glance. A set of
+     counts to be compared against one another is set as bars, laid
+     horizontally so the labels read as words rather than as turned type.
+
+     The two series colours were not chosen by eye. Crimson #9E1B1F with
+     goldenrod #B8860B clear the colourblind separation (ΔE 20.0 deutan,
+     20.3 tritan), the chroma floor and 3:1 against the paper. An empty
+     seat is not a third colour: it is drawn hollow, which is what it is.
+     Every bar carries its own number, so the reading never rests on
+     colour alone. */
+  var SERIES = [[158,27,31], [184,134,11]];
+  var TRACK  = [237,234,227];
+
+  /* A row of tiles: one number apiece, and what it counts beneath it. */
+  function tiles(doc, list, y){
+    var n = list.length, gap = 3.4;
+    var w = (CW - gap * (n - 1)) / n, h = 19.5;
+    if(y + h + 6 > PH - MB){ doc.addPage(); y = MT + 4; }
+    for(var i = 0; i < n; i++){
+      var x = ML + i * (w + gap), t = list[i];
+      doc.setFillColor(252, 251, 248);
+      doc.setDrawColor.apply(doc, BORDER); doc.setLineWidth(0.2);
+      doc.rect(x, y, w, h, 'FD');
+      /* a gold rule along the head of the tile */
+      doc.setFillColor.apply(doc, GOLD);
+      doc.rect(x, y, w, 0.8, 'F');
+      var big = String(t.value);
+      doc.setFont(DISPLAY, 'bold'); doc.setFontSize(19);
+      doc.setTextColor.apply(doc, t.quiet ? GREY : INK);
+      doc.text(big, x + w / 2 - doc.getTextWidth(big) / 2, y + 11.4);
+      var cap = String(t.label).toUpperCase();
+      /* measured in the face it is drawn in, not in the numeral's */
+      doc.setFont(DISPLAY, 'bold'); doc.setFontSize(6.4);
+      line(doc, cap, {font:DISPLAY, style:'bold', size:6.4, spacing:0.34, colour:GREY,
+                      x: x + w / 2 - widthOf(doc, cap, 0.34) / 2, y: y + 16.2});
+    }
+    return y + h + 2;
+  }
+
+  /* Horizontal bars, one to a row, each carrying its own number. */
+  function bars(doc, chart, y){
+    var rows = chart.rows || [], labelW = chart.labelW || 52, valueW = 11;
+    var rowH = 7.4, barH = 4.6, trackX = ML + labelW, trackW = CW - labelW - valueW;
+    var max = 0, i;
+    for(i = 0; i < rows.length; i++){
+      if(!rows[i].spacer){ max = Math.max(max, rows[i].value); }
+    }
+    if(!max){ max = 1; }
+    var need = rows.length * rowH + (chart.legend ? 7 : 0) + 6;
+    if(y + need > PH - MB){ doc.addPage(); y = MT + 4; }
+
+    var cy = y;
+    for(i = 0; i < rows.length; i++){
+      var r = rows[i];
+      if(r.spacer){ cy += rowH * 0.45; continue; }
+      line(doc, r.label, {size:8.6, colour:INK, x:ML, y:cy + barH - 0.6});
+      if(r.el){ line(doc, r.el, {size:6.8, style:'italic', colour:GREY, x:ML, y:cy + barH + 2.6}); }
+      doc.setFillColor.apply(doc, TRACK);
+      doc.roundedRect(trackX, cy, trackW, barH, 1.2, 1.2, 'F');
+      var w = trackW * (r.value / max);
+      if(w > 0.1){
+        doc.setFillColor.apply(doc, SERIES[(r.series || 0) % SERIES.length]);
+        doc.roundedRect(trackX, cy, Math.max(w, 2.4), barH, 1.2, 1.2, 'F');
+      }
+      var v = String(r.value);
+      doc.setFont(DISPLAY, 'bold'); doc.setFontSize(9);
+      doc.setTextColor.apply(doc, INK);
+      doc.text(v, PW - MR - doc.getTextWidth(v), cy + barH - 0.6);
+      cy += rowH;
+    }
+    y = cy + 1.4;
+
+    if(chart.legend){
+      y += 1.2;
+      var lx = trackX;
+      for(i = 0; i < chart.legend.length; i++){
+        var g = chart.legend[i];
+        if(g.hollow){
+          doc.setFillColor.apply(doc, TRACK);
+          doc.setDrawColor.apply(doc, BORDER); doc.setLineWidth(0.2);
+          doc.roundedRect(lx, y - 2.4, 4.4, 3, 0.7, 0.7, 'FD');
+        } else {
+          doc.setFillColor.apply(doc, SERIES[i % SERIES.length]);
+          doc.roundedRect(lx, y - 2.4, 4.4, 3, 0.7, 0.7, 'F');
+        }
+        line(doc, g.label, {size:7.4, colour:GREY, x:lx + 6, y:y});
+        lx += 6 + doc.getTextWidth(g.label) + 8;
+      }
+      y += 3;
+    }
+    return y + 1.6;
+  }
+
+  /* One bar carrying the whole of something, divided into its parts.
+     A hollow tail is what is not yet filled. */
+  function split(doc, chart, y){
+    var h = 7, total = 0, i;
+    for(i = 0; i < chart.parts.length; i++){ total += chart.parts[i].value; }
+    total += (chart.empty || 0);
+    if(!total){ return y; }
+    if(y + h + 12 > PH - MB){ doc.addPage(); y = MT + 4; }
+
+    var x = ML, gap = 0.7;
+    doc.setFillColor.apply(doc, TRACK);
+    doc.roundedRect(ML, y, CW, h, 1.6, 1.6, 'F');
+    for(i = 0; i < chart.parts.length; i++){
+      var p = chart.parts[i], w = CW * (p.value / total) - (i ? gap : 0);
+      doc.setFillColor.apply(doc, SERIES[i % SERIES.length]);
+      doc.roundedRect(x + (i ? gap : 0), y, Math.max(w, 3), h, 1.6, 1.6, 'F');
+      var t = p.label + '  ' + p.value;
+      doc.setFont(DISPLAY, 'bold'); doc.setFontSize(7.6);
+      doc.setTextColor(255, 255, 255);
+      if(w > doc.getTextWidth(t) + 6){
+        doc.text(t, x + (i ? gap : 0) + 3.2, y + h / 2 + 1.4);
+      }
+      x += CW * (p.value / total);
+    }
+    if(chart.empty){
+      doc.setDrawColor.apply(doc, BORDER); doc.setLineWidth(0.25);
+      doc.roundedRect(x + gap, y, Math.max(CW * (chart.empty / total) - gap, 3), h, 1.6, 1.6, 'S');
+    }
+    y += h + 3.6;
+    if(chart.note){ y = paragraph(doc, chart.note, y, {size:8, style:'italic', colour:GREY}); }
+    return y + 1;
+  }
+
   /* ---------- the foot: a signature to each side of the seal ---------- */
   function foot(doc, spec, art, y){
     var COL = 56, SEAL = 34, capH = 3.2;
@@ -366,6 +496,9 @@
       doc.line(ML, y, PW - MR, y);
       y += 4.4;
       if(s.image){ y = plate(doc, s, art, y); }
+      if(s.tiles){ y = tiles(doc, s.tiles, y); }
+      if(s.split){ y = split(doc, s.split, y); }
+      if(s.bars){  y = bars(doc, s.bars, y); }
       if(s.table){ y = table(doc, s.table, y); }
       (s.paragraphs || []).forEach(function(p){ y = block(doc, p, y, {}) + 1.6; });
     });

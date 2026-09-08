@@ -496,6 +496,92 @@ var WSDocs = (function(){
     ]);
   }
 
+  /* -----------------------------------------------------------------
+     The Report of the Officers and the Members.
+
+     It is drawn from the same OFFICERS the site is drawn from, so it can
+     never disagree with the page: count the array and you have the
+     report. The counts at its head and the bars beneath them are
+     computed here, not written down, and they move the moment a brother
+     is appointed.
+     ----------------------------------------------------------------- */
+  function principals(){ return OFFICERS.filter(function(o){ return o.rank.en === 'Principal Officer'; }); }
+  function chapterOff(){ return OFFICERS.filter(function(o){ return o.rank.en !== 'Principal Officer'; }); }
+  function filled(){ return OFFICERS.filter(function(o){ return !!o.name; }); }
+  function elected(){ return OFFICERS.filter(function(o){ return /Elected/.test(o.term.en); }); }
+
+  function rollRows(list, from){
+    return list.map(function(o, i){
+      return [ { content:String(from + i), styles:{ halign:'center', fontStyle:'bold',
+                                                    textColor:[158,27,31], fontSize:8.6 } },
+               office(o.en, o.el), person(o.name), road(o.road), term(o.term.en) ];
+    });
+  }
+  var ROLL_HEAD = ['No.','Office','Brother','Road Name','Term'];
+  var ROLL_W    = [6, 30, 28, 18, 18];
+
+  function roster(){
+    var P = principals(), C = chapterOff(), F = filled().length;
+    return secretariat(4, {en:'Report of the Officers and the Members',
+                           el:'Έκθεση Αξιωματικών και Μελών'}, [
+
+      { title:{en:'I. The Chapter at a Glance', el:'Το Chapter με μια ματιά'},
+        tiles:[ { value:OFFICERS.length,  label:'Offices' },
+                { value:F,                label:'Filled' },
+                { value:OFFICERS.length - F, label:'Vacant', quiet:true },
+                { value:P.length,         label:'Principal' },
+                { value:elected().length, label:'Elected' } ],
+        paragraphs:[
+          {en:'The Chapter provides for ' + OFFICERS.length + ' offices under Article V of the By-Laws. Of these, ' + F +
+              ' are held at the date of this report and ' + (OFFICERS.length - F) + ' stand vacant. The first ' + P.length +
+              ' are the Principal Officers; the remainder are filled by appointment of the President.',
+           el:'Το Chapter προβλέπει ' + OFFICERS.length + ' αξιώματα κατά το Άρθρο V του Κανονισμού. Εξ αυτών, ' + F +
+              ' κατέχονται κατά την ημερομηνία της παρούσης και ' + (OFFICERS.length - F) + ' παραμένουν κενά. Τα πρώτα ' + P.length +
+              ' είναι οι Κύριοι Αξιωματικοί· τα λοιπά πληρούνται με διορισμό του Προέδρου.'} ] },
+
+      { title:{en:'II. The Strength of the Administration', el:'Η δύναμη της διοικήσεως'},
+        split:{ parts:[ { label:'FILLED', value:F } ], empty: OFFICERS.length - F,
+                note:'The whole bar is the ' + OFFICERS.length + ' offices of Article V. The filled part is what the Chapter holds today; the hollow tail is what it does not — the Quartermaster and the Event Manager.' },
+        bars:{ labelW:56,
+               rows:[ { label:'Principal Officers', el:'Κύριοι Αξιωματικοί', value:P.length, series:0 },
+                      { label:'Chapter Officers',   el:'Αξιωματικοί του Chapter', value:C.length, series:1 },
+                      { spacer:true },
+                      { label:'Elected to office',  el:'Εκλεγόμενα αξιώματα', value:elected().length, series:0 },
+                      { label:'Held by appointment',el:'Διοριζόμενα αξιώματα', value:OFFICERS.length - elected().length, series:1 } ],
+               legend:[ { label:'Principal · elected' }, { label:'Chapter · appointed' } ] } },
+
+      { title:{en:'III. The Principal Officers', el:'Οι Κύριοι Αξιωματικοί'},
+        table:{ head:ROLL_HEAD, widths:ROLL_W, rows:rollRows(P, 1),
+                note:'The first six offices of the Chapter. The President is elected for five years; the Treasurer and the Road Captain every two. The rest are held by appointment of the President.' } },
+
+      { title:{en:'IV. The Officers of the Chapter', el:'Οι Αξιωματικοί του Chapter'},
+        table:{ head:ROLL_HEAD, widths:ROLL_W, rows:rollRows(C, P.length + 1),
+                note:'Filled by appointment of the President within thirty days of his taking office. An office shown as to be appointed is vacant at the date of this report.' } },
+
+      { title:{en:'V. The Founding Distinction', el:'Η ιδρυτική διάκριση'},
+        table:{ head:['Distinction','Brother','Road Name','Lodge'], widths:[32,27,18,23],
+                rows:[[ office('Founding President', 'Ιδρυτικός Πρόεδρος & Οικιστής'),
+                        person('Dimitrios Skiadopoulos'), road('BuildSmith'),
+                        { content:'Themistocles No. 96', styles:{ fontSize:8.4 } } ]],
+                note:'A permanent founding distinction, not a sixteenth office. It carries no duties beyond those of the office its holder holds.' } },
+
+      { title:{en:'VI. The Roll of Members', el:'Το μητρώο μελών'},
+        paragraphs:[
+          {en:'The roll of members is kept by the Secretary, and this report is drawn from it. At the date of this report the members of Chapter Hellas are the ' + F +
+              ' brethren named above — the founding brethren of the Chapter, each a Master Mason in good standing of a regularly recognised Grand Lodge. No brother stands upon the roll who is not named in this report.',
+           el:'Το μητρώο μελών τηρείται από τον Γραμματέα και η παρούσα έκθεση συντάσσεται εξ αυτού. Κατά την ημερομηνία της παρούσης, μέλη του Chapter Hellas είναι οι ' + F +
+              ' ανωτέρω αναφερόμενοι αδελφοί — οι ιδρυτικοί αδελφοί του Chapter, έκαστος Διδάσκαλος Τέκτων εν καλή καταστάσει κανονικώς αναγνωρισμένης Μεγάλης Στοάς. Ουδείς αδελφός ευρίσκεται επί του μητρώου που δεν κατονομάζεται στην παρούσα έκθεση.'},
+          {en:'Brethren received hereafter — whether as prospects, as full patch members, or upon the Masonic Riders Hellas outreach — are entered upon the roll by the Secretary and will be carried in the next issue of this report.',
+           el:'Αδελφοί γενόμενοι δεκτοί εφεξής — είτε ως δόκιμοι, είτε ως μέλη πλήρους σήματος, είτε επί της προσεγγίσεως Masonic Riders Hellas — καταχωρούνται στο μητρώο από τον Γραμματέα και θα περιληφθούν στην επόμενη έκδοση της παρούσης εκθέσεως.'} ] }
+
+    ], {
+      lead:[ {en:'This report sets out the officers of Widows Sons MRA — Chapter Hellas as they stand at the date below: every office of Article V, the brother who holds it, the road name by which he is known and the term for which he holds it — together with the roll of the members of the Chapter.',
+              el:'Η παρούσα έκθεση παραθέτει τους αξιωματικούς της Widows Sons MRA — Chapter Hellas ως έχουν κατά την κατωτέρω ημερομηνία: έκαστο αξίωμα του Άρθρου V, τον αδελφό που το κατέχει, το όνομα του δρόμου με το οποίο είναι γνωστός και τη θητεία για την οποία το κατέχει — ομού μετά του μητρώου των μελών του Chapter.'} ],
+      closing:[ {en:'Issued from the roll of the Chapter and entered in its records. It speaks as at its date and is superseded by the next issue.',
+                 el:'Εκδίδεται εκ του μητρώου του Chapter και καταχωρείται στα αρχεία του. Ισχύει ως προς την ημερομηνία της και αντικαθίσταται από την επόμενη έκδοση.'} ]
+    });
+  }
+
   /* =================================================================
      The catalogue, as the Secretary's page shows it.
      ================================================================= */
@@ -530,7 +616,10 @@ var WSDocs = (function(){
       note:'Commends a brother to other Chapters and kindred clubs.' },
     { no:3, category:'secretariat', build:minutes,
       title:{en:'Minutes of the Assembly', el:'Πρακτικό Συνεδρίασης'},
-      note:'The record of an assembly, its attendance and its decisions.' }
+      note:'The record of an assembly, its attendance and its decisions.' },
+    { no:4, category:'secretariat', build:roster,
+      title:{en:'Report of the Officers and the Members', el:'Έκθεση Αξιωματικών και Μελών'},
+      note:'Every office of Article V, the brother who holds it and his term, with the roll of members — counted and drawn at the head.' }
   ];
 
   function list(category){

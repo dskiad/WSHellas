@@ -44,6 +44,24 @@ fetched only when a document is called for.
 
 Both are declared once in `ws-docs.js` as `FOUNDING` and `EXECUTED`.
 
+### Graphics in a document
+
+`ws-pdf.js` draws two forms, and a section chooses one by the job its numbers
+do. `tiles` is a row of headline counts — a number that is the answer in itself
+is not a chart. `bars` compares counts against one another, laid horizontally so
+the labels read as words; `split` is one bar carrying a whole, its unfilled part
+drawn hollow rather than in a third colour. Every bar carries its own number, so
+no reading rests on colour alone, and a `{spacer:true}` row parts one reading
+from the next.
+
+The two series colours are crimson `#9E1B1F` and goldenrod `#B8860B`. They were
+not chosen by eye: they clear colourblind separation (ΔE 20.0 deutan, 20.3
+tritan), the chroma floor and 3:1 against the paper. Do not substitute the
+Chapter's softer gold `#AD8A4E` — it fails the chroma floor and reads grey.
+
+**Table widths are hundredths of the measure and must sum to 100**, not
+millimetres; a set that sums past 100 runs off the right margin.
+
 ### Other rules of the documents
 
 - Founding documents are set in English first, then Greek and Bulgarian. Words

@@ -784,12 +784,22 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 #dresscode .downloads li{padding:15px 16px;background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.09);border-top:2px solid var(--gold);border-radius:6px}
 #dresscode .downloads b{display:block;margin-bottom:5px;font:700 14px/1.2 'Cinzel',serif;color:#f2e7c5;letter-spacing:.04em}
 #dresscode .downloads span{font:400 14.5px/1.5 'EB Garamond',Georgia,serif;color:#c9c4bb}
+#dresscode .build-single{display:grid;grid-template-columns:minmax(0,252px) minmax(0,1fr);gap:22px;align-items:center;margin:22px 0 0;padding:16px 20px;background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.09);border-radius:8px}
+#dresscode .build-single img{display:block;width:100%;height:auto;border-radius:5px;background:#050506}
+#dresscode .build-single figcaption{margin:0;font:400 16px/1.62 'EB Garamond',Georgia,serif;color:#c9c4bb;text-align:justify}
+#dresscode .build-single figcaption b{color:#f2e7c5;font-weight:600}
+#dresscode .build-single figcaption i{font-style:normal;color:var(--gold-bright)}
 #dresscode .build .vest-configurator-cta{margin:24px 0 4px}
 
 @media(max-width:900px){
   #dresscode .vest-face,#dresscode .vest-face.flip{grid-template-columns:1fr;gap:24px}
   #dresscode .vest-face.flip .vest-shot,#dresscode .vest-face.flip .vest-read{order:0}
   #dresscode .downloads{grid-template-columns:1fr}
+  #dresscode .build-single{grid-template-columns:1fr;text-align:center}
+  #dresscode .build-single img{max-width:280px;margin:0 auto}
+  /* a justified line combs badly in a narrow column */
+  #dresscode .build-single figcaption{text-align:left}
+  #dresscode .vest-read>p,#dresscode .build p{text-align:left}
   #dresscode .patch-row{flex-direction:column;text-align:center}
   #dresscode .vest-example{grid-template-columns:1fr;text-align:center}
   #dresscode .vest-example img{max-width:220px;margin:0 auto}
@@ -983,7 +993,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
           <div class="vest-side-head"><b>Left side</b> <span>The brother himself</span></div>
           <ol>
             <li><b>The national flag</b> &mdash; the flag of Greece, at the top of the column, for the country the Chapter rides in.</li>
-            <li><b>The office</b> &mdash; the office he holds in the Chapter, as the Constitution names it: <i>President, Secretary, Road Captain</i>, and so through the fifteen.</li>
+            <li><b>The office, or the standing</b> &mdash; the office he holds in the Chapter, as the Constitution names it: <i>President, Secretary, Road Captain</i>, and so through the fifteen; a brother who holds no office wears <i>Member</i>.</li>
             <li><b>The road name</b> &mdash; the name he is known by among the brothers, set larger than the rest: <i>&laquo;Build Smith&raquo;, &laquo;Developer&raquo;</i>.</li>
             <li><b>The distinction</b> &mdash; where one is held: <i>Honorary</i>, and the like. A brother who holds none wears no plate here.</li>
           </ol>
@@ -1049,6 +1059,17 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
         <li><b>Back side</b><span>The back alone &mdash; the two rockers and the winged oval, at full size.</span></li>
         <li><b>Both sides</b><span>The two together in one image, front beside back, for the whole vest at a glance.</span></li>
       </ul>
+      <figure class="build-single">
+        <img src="assets/vest-build-member.jpg?v=20260908" alt="A member's front as the configurator draws it: the Greek flag, the plates Member, Rokas and Honorary, the Chapter roundel, the small colours and the plate Founder" loading="lazy">
+        <figcaption><b>A single side, downloaded on its own.</b>
+          Here the front of a member of the Chapter, read by the rule of Part 02.1:
+          on the left the flag of Greece and the three plates &mdash; <i>Member</i> for
+          the standing he holds, <i>Rokas</i> for the name he is known by on the road,
+          <i>Honorary</i> for the distinction; on the right the roundel of the Chapter,
+          the colours in miniature beneath it, and the standing plate.
+          Nothing moves from vest to vest but the words. This is the file that goes to
+          the embroiderer.</figcaption>
+      </figure>
       <p class="vest-rule">What the configurator draws is a proposal, not an issue of colours. The colours themselves are issued by the Chapter: the Quartermaster keeps them, and they are given out and taken back by the Chapter alone.</p>
       <div class="vest-configurator-cta">
         <a class="vest-configurator-button" href="https://dskiad.github.io/wsvest/" target="_blank" rel="noopener noreferrer">

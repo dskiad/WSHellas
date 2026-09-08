@@ -77,6 +77,25 @@ The sections of `index.html` are numbered in one run — the eyebrow and the
 `.section-prefix` of each. Insert a section and every later number moves with
 it, in the page and wherever the register refers to one.
 
+## The three tongues
+
+The page is written in English. `assets/ws-lang.js` carries the same page in
+Greek and in Spanish and puts a row of three flags at the head of every section
+and in the bar; the reader's choice is kept in `localStorage`.
+
+It translates by **block**, not by word: it walks for the innermost block that
+holds text — a paragraph, a heading, an item of a list — and uses that block's
+own markup as the key, so a sentence keeps its bold and its italics and each
+tongue may order its words as it orders them. A block whose key is not in the
+register stays English. That is deliberate for the names of the brethren, for
+the offices in their English–Greek pair, and for the words proper to the
+brotherhood — Widows Sons, Chapter, MRA, and the motto as it is embroidered.
+
+**So: change a line of English on the page and its Greek and Spanish must be
+changed here under the new wording, or that line quietly reverts to English.**
+`officers.html` and `secretary.html` are not yet translated; the file is written
+to be loaded by any page that wants it.
+
 ## Working on this repository
 
 - Develop and push on `claude/repo-push-vfylka`. A push deploys the site

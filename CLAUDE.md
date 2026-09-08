@@ -67,9 +67,16 @@ millimetres; a set that sums past 100 runs off the right margin.
 - Founding documents are set in English first, then Greek and Bulgarian. Words
   proper to the brotherhood are left as they stand: Widows Sons, Chapter, MRA,
   patch, and the office names used as titles.
-- Every PDF is issued under the Chapter's security code, set in
-  `assets/ws-office.js`. The Word export carries no code, so a document can be
-  perfected before it is issued.
+- **No document carries a password.** Neither the PDF nor the Word export is
+  encrypted; a brother opens either in any reader without being asked for
+  anything. What makes a file the Chapter's is the letterhead, the seal and the
+  hands at its foot — not a lock. (The code on the Secretary's page is a
+  separate thing: it guards the door to the office, not the documents that come
+  out of it.)
+- `spec.subject` is a pair of tongues, not a string, so anything handing it to
+  jsPDF must take its `.en` — the file properties do. While the documents were
+  encrypted this went unnoticed, because that path never escaped the value; it
+  threw the moment the password came off.
 - **The edition stamp.** `EDITION` in `assets/ws-office.js` is appended to every
   part the office fetches, and the same stamp is written on the scripts and the
   art in `secretary.html`. Raise it in both places whenever a document, the
@@ -121,6 +128,7 @@ to be loaded by any page that wants it.
 - Uploaded artwork often arrives with its transparency painted into the pixels
   as a grey checkerboard. Cut it out before committing — a colour key alone
   punches holes in silver lettering; flood-fill from the borders instead.
-- After changing a document, build it and check it before pushing: that it is
-  encrypted, that it opens only with the code, and that the Greek and Bulgarian
-  text survive into the file.
+- After changing a document, build it and check it before pushing: that it
+  opens with no password and carries no `/Encrypt`, that the Greek and Bulgarian
+  text survive into the file, and that the Application keeps its 39 fillable
+  cells.

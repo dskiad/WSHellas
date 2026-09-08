@@ -3,16 +3,13 @@
    WSDoc — the office that issues the documents of the Chapter.
 
    It hands a document specification to the renderer in ws-pdf.js and
-   returns a PDF sealed with the Chapter's security code, or a Word file
-   for a document still being perfected.
+   returns it as a PDF or as a Word file. Neither carries a password:
+   the documents are issued open, to be read and printed by any brother.
 
    jsPDF, the letterhead faces and the renderer are fetched only when a
    document is actually called for, so no visitor pays for them.
    ===================================================================== */
 var WSDoc = (function(){
-
-  /* The security code every document of the Chapter is issued under. */
-  var CODE = '1966';
 
   var ORG = 'Widows Sons Masonic Riders Association', CHAPTER = 'Chapter Hellas';
 
@@ -21,7 +18,7 @@ var WSDoc = (function(){
      renderer older than the register it is asked to draw. Raise it
      whenever a document, the renderer or the register changes, and raise
      it in the same breath on the pages that carry the art. */
-  var EDITION = '20260908';
+  var EDITION = '20260909';
   var PARTS = ['assets/vendor/jspdf.umd.min.js',
                'assets/vendor/jspdf.plugin.autotable.min.js',
                'assets/vendor/ws-fonts.js',
@@ -95,11 +92,11 @@ var WSDoc = (function(){
     return n.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.' + ext;
   }
 
-  /* --- issue as a PDF, sealed with the code --- */
+  /* --- issue as a PDF --- */
   function pdf(spec){
     return press().then(art).then(function(plates){
       var ctor = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
-      window.WSPdf.build(ctor, spec, plates, window.WSFonts, CODE).save(fileName(spec, 'pdf'));
+      window.WSPdf.build(ctor, spec, plates, window.WSFonts).save(fileName(spec, 'pdf'));
     });
   }
 
@@ -225,5 +222,5 @@ var WSDoc = (function(){
     });
   }
 
-  return { pdf:pdf, word:word, issue:pdf, CODE:CODE };
+  return { pdf:pdf, word:word, issue:pdf };
 })();

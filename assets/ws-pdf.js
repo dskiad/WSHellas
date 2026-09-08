@@ -5,8 +5,9 @@
    It takes the specification of a document (see WSDocs in the page) and
    draws it on A4: the letterhead, the subject block, the body with its
    tables, and the foot bearing the seal in the centre with a signature
-   to each side. The document is issued under the Chapter's security
-   code, so it cannot be opened without it.
+   to each side. The document is issued open — it carries no password —
+   and what makes it the Chapter's is the letterhead, the seal and the
+   hands at its foot.
 
    The renderer holds no knowledge of any particular document — every
    report, regulation, letter and certificate of the Chapter is drawn by
@@ -469,17 +470,21 @@
   }
 
   /* ---------- draw the whole document ---------- */
-  function build(jsPDFCtor, spec, art, fonts, code){
+  function build(jsPDFCtor, spec, art, fonts){
+    /* The documents are issued open: no password is set upon them, and a
+       brother opens one in any reader without being asked for anything. */
     var doc = new jsPDFCtor({
-      unit: 'mm', format: 'a4', compress: !carriesFields(spec),
-      encryption: { userPassword: code, ownerPassword: code,
-                    /* printing, copying, and the filling of the fields */
-                    userPermissions: ['print', 'copy', 'modify', 'annot-forms'] }
+      unit: 'mm', format: 'a4', compress: !carriesFields(spec)
     });
     fonts.register(doc);
+    /* The subject of a document is a pair of tongues, not a string; the
+       properties of the file take the English of it. (While the documents
+       were encrypted this passed unnoticed — that path never escaped the
+       value — and it threw the moment the password was taken off.) */
+    var sj = spec.subject, sname = (typeof sj === 'string') ? sj : ((sj && sj.en) || 'Document');
     doc.setProperties({
-      title: CHAPTER + ' — ' + (spec.subject || 'Document'),
-      subject: spec.subject || '', author: ORG + ' — ' + CHAPTER,
+      title: CHAPTER + ' — ' + sname,
+      subject: sname, author: ORG + ' — ' + CHAPTER,
       creator: ORG + ' — ' + CHAPTER
     });
 

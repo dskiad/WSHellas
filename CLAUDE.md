@@ -19,7 +19,7 @@ When the work touched another page, give that page's link too —
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The main site: organization, administration, emblem, constitution, by-laws. Self-contained but for `assets/`. |
+| `index.html` | The main site: organization, dress code, administration, emblem, constitution, by-laws. Self-contained but for `assets/`. |
 | `officers.html` | The fifteen officers, their titles and duties. |
 | `secretary.html` | The document office: the founding documents and the documents of the Secretariat. |
 
@@ -63,6 +63,19 @@ Both are declared once in `ws-docs.js` as `FOUNDING` and `EXECUTED`.
   cut away) and `assets/chapter-hellas-official-seal.png`. Both are read off the
   page by id — `#wsLetterhead` and `#wsSeal` — so a page that issues documents
   must carry them.
+
+## The vest
+
+Section 02 sets out the dress of the Chapter — the front read side by side
+(the brother on the left, the Association and the Chapter on the right), the
+back read as its three pieces, and the configurator at
+`https://dskiad.github.io/wsvest/`, which draws a vest and hands it back as an
+image: the front, the back, or both together. That configurator lives in its
+own repository, `dskiad/wsvest`, not this one.
+
+The sections of `index.html` are numbered in one run — the eyebrow and the
+`.section-prefix` of each. Insert a section and every later number moves with
+it, in the page and wherever the register refers to one.
 
 ## Working on this repository
 

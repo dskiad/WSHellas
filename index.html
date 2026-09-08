@@ -619,11 +619,46 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 
 
     <style id="vest-configurator-button-style">
-    .vest-configurator-cta{display:flex;justify-content:center;margin:34px 0 10px}
-    .vest-configurator-button{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:270px;padding:15px 28px 13px;border:1px solid rgba(210,174,94,.78);border-radius:5px;background:linear-gradient(180deg,#1a1b1d,#090a0b);box-shadow:0 10px 22px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.08);text-decoration:none!important;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
-    .vest-configurator-button:hover{transform:translateY(-2px);border-color:#e0bd72;box-shadow:0 14px 26px rgba(0,0,0,.48),0 0 16px rgba(198,160,80,.14)}
-    .vest-configurator-button-gr{font:700 18px/1.15 'Cinzel',serif;color:#e4c47c;letter-spacing:.03em}
-    .vest-configurator-button-en{margin-top:4px;font:600 10px/1.1 'Oswald',sans-serif;color:#b9bec5;letter-spacing:.14em;text-transform:uppercase}
+    /* The call to the configurator: a brass press in a gold frame, at twice
+       the size the plain button was. */
+    .vest-configurator-cta{display:flex;justify-content:center;margin:40px 0 12px}
+    .vest-configurator-button{
+      display:inline-flex; align-items:center; gap:26px;
+      min-width:540px; padding:24px 44px 24px 30px;
+      border:2px solid #c9a24a; border-radius:11px;
+      background:linear-gradient(180deg,#1d1b16,#0a0a09);
+      box-shadow:0 18px 36px rgba(0,0,0,.52),
+                 0 0 22px rgba(198,160,80,.13),
+                 inset 0 0 0 1px rgba(228,198,126,.30),
+                 inset 0 1px rgba(255,238,196,.16);
+      text-decoration:none!important;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .vest-configurator-button:hover{transform:translateY(-3px);border-color:#eccd88;
+      box-shadow:0 22px 42px rgba(0,0,0,.56),0 0 30px rgba(214,176,94,.24),
+                 inset 0 0 0 1px rgba(240,214,150,.44),inset 0 1px rgba(255,240,204,.20)}
+    .vest-configurator-button:active{transform:translateY(2px);
+      box-shadow:0 8px 18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(228,198,126,.30)}
+    /* the press itself, cut from its ground so it sits on the plate */
+    .vest-configurator-press{flex:none;display:block;width:136px;height:auto;
+      filter:drop-shadow(0 9px 15px rgba(0,0,0,.58));
+      transition:transform .18s ease}
+    .vest-configurator-button:hover .vest-configurator-press{transform:scale(1.05)}
+    .vest-configurator-button:active .vest-configurator-press{transform:scale(.93)}
+    .vest-configurator-button-text{display:flex;flex-direction:column;align-items:flex-start}
+    .vest-configurator-button-gr{font:700 30px/1.12 'Cinzel',serif;color:#eccd88;letter-spacing:.03em;
+      text-shadow:0 1px 0 rgba(0,0,0,.6)}
+    .vest-configurator-button-en{margin-top:9px;font:600 13px/1.1 'Oswald',sans-serif;color:#b9bec5;
+      letter-spacing:.20em;text-transform:uppercase}
+    @media(max-width:640px){
+      .vest-configurator-button{flex-direction:column;gap:16px;min-width:0;width:100%;
+        padding:24px 22px;text-align:center}
+      .vest-configurator-button-text{align-items:center}
+      .vest-configurator-press{width:112px}
+      .vest-configurator-button-gr{font-size:24px}
+      /* the three downloads stay on one line in a phone's width */
+      .vest-configurator-button-en{font-size:11.5px;letter-spacing:.12em}
+    }
     </style>
     
 
@@ -865,7 +900,11 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 
       <div class="vest-configurator-cta">
         <a class="vest-configurator-button" href="https://dskiad.github.io/wsvest/" target="_blank" rel="noopener noreferrer">
-          <span class="vest-configurator-button-en">Build Your Vest</span>
+          <img class="vest-configurator-press" src="assets/press-button.webp?v=20260908" alt="" aria-hidden="true">
+          <span class="vest-configurator-button-text">
+            <span class="vest-configurator-button-gr">Build Your WS Vest</span>
+            <span class="vest-configurator-button-en">Front &middot; Back &middot; Both sides</span>
+          </span>
         </a>
       </div>
     
@@ -1073,8 +1112,11 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       <p class="vest-rule">What the configurator draws is a proposal, not an issue of colours. The colours themselves are issued by the Chapter: the Quartermaster keeps them, and they are given out and taken back by the Chapter alone.</p>
       <div class="vest-configurator-cta">
         <a class="vest-configurator-button" href="https://dskiad.github.io/wsvest/" target="_blank" rel="noopener noreferrer">
-          <span class="vest-configurator-button-gr">Build Your WS Vest</span>
-          <span class="vest-configurator-button-en">Front &middot; Back &middot; Both sides</span>
+          <img class="vest-configurator-press" src="assets/press-button.webp?v=20260908" alt="" aria-hidden="true">
+          <span class="vest-configurator-button-text">
+            <span class="vest-configurator-button-gr">Build Your WS Vest</span>
+            <span class="vest-configurator-button-en">Front &middot; Back &middot; Both sides</span>
+          </span>
         </a>
       </div>
     </div>

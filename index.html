@@ -157,11 +157,16 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 }
 .hero-emblem img{width:100%; height:auto; display:block; position:relative; z-index:1;
   box-shadow:0 0 0 1px rgba(0,0,0,.55), 0 6px 18px rgba(0,0,0,.45);}
-/* ---------- the motto of the Chapter, cut in metal ---------- */
-.chapter-motto{margin:30px auto 34px; max-width:940px; text-align:center; padding:0 14px;}
+/* ---------- the motto of the Chapter, inked on a parchment ----------
+   A scroll unrolled from a rod at each end: the sheet between them is
+   drawn in gradients — the fibres of the papyrus, the stains of its age,
+   the light that falls across the middle and the darkening where it
+   curls into the rolls. Nothing here is an image; it costs nothing to
+   load and stays sharp at any size. */
+.chapter-motto{margin:34px auto 40px; max-width:760px; text-align:center; padding:0 14px;}
 .chapter-motto figcaption{
   font-family:'Oswald',sans-serif; font-size:11px; letter-spacing:.34em; text-transform:uppercase;
-  color:var(--gold); margin-bottom:18px; position:relative; display:inline-block; padding:0 22px;
+  color:var(--gold); margin-bottom:20px; position:relative; display:inline-block; padding:0 22px;
 }
 /* a hairline of gold to either side of the label */
 .chapter-motto figcaption:before,
@@ -171,37 +176,97 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 }
 .chapter-motto figcaption:before{right:100%;}
 .chapter-motto figcaption:after{left:100%; transform:scaleX(-1);}
+
+.scroll{position:relative; filter:drop-shadow(0 22px 34px rgba(0,0,0,.62));}
+
+/* the rod at each end, with the parchment rolled upon it */
+.scroll-rod{
+  position:relative; height:30px; margin:0 -14px; border-radius:15px;
+  background:
+    linear-gradient(180deg,
+      #8d7346 0%, #c8ae7c 14%, #f2e6c8 34%, #fffbf0 44%,
+      #ead9b4 60%, #c2a877 78%, #8a7043 94%, #6d5732 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,252,240,.75),
+    inset 0 -1px 0 rgba(70,52,24,.55),
+    0 2px 5px rgba(0,0,0,.45);
+}
+/* the seam where the sheet passes into the roll */
+.scroll-rod:after{
+  content:''; position:absolute; left:28px; right:28px; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(92,68,32,.55) 12%, rgba(92,68,32,.55) 88%, transparent);
+}
+.scroll-rod.top:after{bottom:5px;}
+.scroll-rod.bottom:after{top:5px;}
+/* the wooden knobs the roll turns upon */
+.scroll-rod i{
+  position:absolute; top:50%; width:19px; height:19px; margin-top:-9.5px; border-radius:50%;
+  background:radial-gradient(circle at 34% 30%, #7a5a33, #4a3419 62%, #2c1f0e);
+  box-shadow:0 1px 3px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,226,178,.28);
+}
+.scroll-rod i:first-child{left:-9px;}
+.scroll-rod i:last-child{right:-9px;}
+
+/* the sheet itself */
+.scroll-sheet{
+  position:relative; padding:38px 40px 32px;
+  background-color:#e7d9b8;
+  background-image:
+    /* the stains of its age */
+    radial-gradient(ellipse 34% 26% at 14% 22%, rgba(140,100,44,.30), transparent 72%),
+    radial-gradient(ellipse 30% 24% at 86% 76%, rgba(132,92,40,.28), transparent 72%),
+    radial-gradient(ellipse 22% 18% at 64% 10%, rgba(116,80,34,.22), transparent 72%),
+    radial-gradient(ellipse 20% 16% at 28% 90%, rgba(116,80,34,.20), transparent 72%),
+    radial-gradient(ellipse 12% 30% at 47% 55%, rgba(126,90,40,.14), transparent 74%),
+    radial-gradient(ellipse 16% 12% at 92% 30%, rgba(110,76,32,.18), transparent 72%),
+    radial-gradient(ellipse 14% 11% at  7% 66%, rgba(110,76,32,.16), transparent 72%),
+    /* the fibres, laid across and along as papyrus is */
+    repeating-linear-gradient(0deg,  rgba(116,86,44,.055) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(116,86,44,.05)  0 1px, transparent 1px 4px),
+    /* the light across the middle, the curl darkening at either end */
+    linear-gradient(180deg,
+      rgba(74,52,22,.62) 0, rgba(80,58,26,.34) 3%, rgba(86,62,28,.06) 9%,
+      rgba(255,251,238,.36) 34%, rgba(255,251,238,.36) 62%,
+      rgba(86,62,28,.06) 91%, rgba(80,58,26,.34) 97%, rgba(74,52,22,.62) 100%);
+  box-shadow:
+    inset 6px 0 12px -6px rgba(92,66,30,.55),
+    inset -6px 0 12px -6px rgba(92,66,30,.55);
+}
+/* the deckle of the two long edges */
+.scroll-sheet:before, .scroll-sheet:after{
+  content:''; position:absolute; top:0; bottom:0; width:3px;
+  background:linear-gradient(180deg, rgba(120,90,44,.45), rgba(120,90,44,.16), rgba(120,90,44,.45));
+}
+.scroll-sheet:before{left:0;}
+.scroll-sheet:after{right:0;}
+
+/* the hand that wrote it */
 .chapter-motto blockquote{
   margin:0; font-family:'Cinzel',serif; font-weight:700;
-  font-size:clamp(19px, 3.05vw, 37px); line-height:1.38; letter-spacing:.07em;
-  color:#eef1f4;
-  /* the letters stand up from the plate: a light on the top edge, the body
-     of the letter falling away beneath it, and the shadow it throws */
-  text-shadow:
-    0 -1px 0 rgba(255,255,255,.55),
-    0 1px 0 #a7adb5,
-    0 2px 0 #8b9198,
-    0 3px 0 #71767d,
-    0 4px 0 #585d64,
-    0 5px 0 #3c4046,
-    0 6px 5px rgba(0,0,0,.5),
-    0 13px 22px rgba(0,0,0,.5);
+  font-size:clamp(18px, 2.7vw, 31px); line-height:1.42; letter-spacing:.055em;
+  color:#43301a;
+  text-shadow:0 1px 0 rgba(255,250,235,.55);
 }
 .chapter-motto blockquote span{display:block;}
-.chapter-motto blockquote span + span{color:var(--gold-bright); margin-top:4px;
-  text-shadow:
-    0 -1px 0 rgba(255,238,205,.5),
-    0 1px 0 #8a6d35, 0 2px 0 #775d2c, 0 3px 0 #614b23,
-    0 4px 0 #4b3a1b, 0 5px 0 #35290f,
-    0 6px 5px rgba(0,0,0,.5), 0 13px 22px rgba(0,0,0,.5);}
+.chapter-motto blockquote span + span{color:#8d2b23; margin-top:6px;
+  text-shadow:0 1px 0 rgba(255,250,235,.5);}
 .chapter-motto p{
-  margin:20px auto 0; max-width:520px; font-style:italic; font-size:16px;
-  color:var(--bone-dim); line-height:1.6;
+  margin:18px auto 0; max-width:480px; font-family:'EB Garamond',Georgia,serif;
+  font-style:italic; font-size:16px; color:#6b5433; line-height:1.62;
+}
+/* a rule of ink between the motto and the line beneath it */
+.chapter-motto p:before{
+  content:''; display:block; width:74px; height:1px; margin:0 auto 15px;
+  background:linear-gradient(90deg, transparent, rgba(96,68,30,.6), transparent);
 }
 @media(max-width:640px){
-  .chapter-motto{margin:24px auto 26px;}
+  .chapter-motto{margin:26px auto 30px;}
   .chapter-motto figcaption{letter-spacing:.24em; font-size:10px;}
   .chapter-motto figcaption:before,.chapter-motto figcaption:after{width:24px;}
+  .scroll-rod{height:22px; border-radius:11px; margin:0 -8px;}
+  .scroll-rod i{width:15px; height:15px; margin-top:-7.5px;}
+  .scroll-rod i:first-child{left:-6px;} .scroll-rod i:last-child{right:-6px;}
+  .scroll-sheet{padding:26px 22px 24px;}
   .chapter-motto p{font-size:15px;}
 }
 
@@ -857,11 +922,17 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 
     <figure class="chapter-motto">
       <figcaption>The Motto of Chapter Hellas</figcaption>
-      <blockquote>
-        <span>The motorcycle carries us;</span>
-        <span>our principles direct us.</span>
-      </blockquote>
-      <p>Spoken among brothers — and kept upon every road we ride.</p>
+      <div class="scroll">
+        <div class="scroll-rod top" aria-hidden="true"><i></i><i></i></div>
+        <div class="scroll-sheet">
+          <blockquote>
+            <span>The motorcycle carries us;</span>
+            <span>our principles direct us.</span>
+          </blockquote>
+          <p>Spoken among brothers — and kept upon every road we ride.</p>
+        </div>
+        <div class="scroll-rod bottom" aria-hidden="true"><i></i><i></i></div>
+      </div>
     </figure>
 
     <img id="wsLetterhead" src="assets/chapter-hellas-letterhead-emblem.png?v=20260906" alt=""

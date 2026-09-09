@@ -487,7 +487,7 @@
     '.section-head{position:relative}' +
     '.section-head .lang-pick{position:absolute;right:0;top:0}' +
     '.navbar .lang-pick{margin-left:14px;flex:none}' +
-    '@media(max-width:1120px){.navbar .lang-pick{display:none}}' +
+    '@media(max-width:1200px){.navbar .lang-pick{display:none}}' +
     '@media(max-width:820px){.section-head .lang-pick{position:static;display:inline-flex;margin-bottom:14px}}';
 
   function picker(){

@@ -109,15 +109,21 @@ English.
 ## The pin
 
 Section 03 sets out the extra regalia: one pin in two borders. The **braided
-silver** is the President's and the one presented to a Grand Master; the
-**twisted rope with a fine gold line** is worn by every member. The centre and
-the wings are identical — the border is the whole distinction. Both are cut out
-of their white ground and carried as WebP.
+silver** is the President's and the one presented to a Grand Master; the **plain
+gold edge**, with no silver on the triangle at all, is worn by every member. The
+centre and the wings are identical — the border is the whole distinction. Both
+are cut out of their white ground and carried as WebP.
+
+The technical part sits behind a `<details>` button and opens on demand: a
+native disclosure, no script, and its summary is translated like any other
+block.
 
 The measurements on the page (50 × 32 mm, 2.5–3.0 mm thick, N52 magnet) are
-taken from `assets/pin-spec-sheet.jpg`, which is the sheet shown. A second sheet
-exists, `assets/pin-spec-sheet-2.jpg`, and it disagrees — 29 mm tall, 4.5 mm
-thick, magnet Ø10 × 3 mm. Settle which governs before anything is struck.
+taken from `assets/pin-spec-sheet.jpg`, which is the sheet shown — **and that
+sheet is drawn for the braided border**, so it governs the Chair's pin; the
+members' differs only in its edge, as the caption says. A second sheet exists,
+`assets/pin-spec-sheet-2.jpg`, and it disagrees — 29 mm tall, 4.5 mm thick,
+magnet Ø10 × 3 mm. Settle which governs before anything is struck.
 
 ## The three tongues
 

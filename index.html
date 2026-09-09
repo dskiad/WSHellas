@@ -966,6 +966,27 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
   letter-spacing:.06em;color:#f2e7c5}
 
 /* how it is made */
+/* the technical sheet, opened only when it is asked for */
+#regalia .tech{margin-top:0;border:1px solid rgba(203,168,103,.30);border-radius:10px;
+  background:linear-gradient(145deg,rgba(20,21,23,.9),rgba(7,8,9,.95));overflow:hidden}
+#regalia .tech summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;
+  padding:18px 22px;font:600 12px/1.3 'Oswald',sans-serif;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold-bright);transition:background .18s ease,color .18s ease}
+#regalia .tech summary::-webkit-details-marker{display:none}
+#regalia .tech summary:before{content:'';flex:none;width:26px;height:26px;border-radius:50%;
+  border:1px solid rgba(203,168,103,.55);background:rgba(0,0,0,.45);
+  background-image:linear-gradient(currentColor,currentColor),linear-gradient(currentColor,currentColor);
+  background-size:11px 1.5px,1.5px 11px;background-position:center,center;background-repeat:no-repeat;
+  transition:transform .22s ease}
+#regalia .tech[open] summary:before{transform:rotate(135deg)}
+#regalia .tech summary:hover{background:rgba(203,168,103,.07);color:#f0d69b}
+#regalia .tech summary:focus-visible{outline:2px solid var(--gold-bright);outline-offset:-3px}
+#regalia .tech-body{padding:4px 22px 22px}
+#regalia .tech .spec-grid{margin-top:6px}
+@media(max-width:560px){
+  #regalia .tech summary{padding:16px 16px;font-size:11px;letter-spacing:.12em}
+  #regalia .tech-body{padding:4px 16px 18px}
+}
 #regalia .spec-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 22px;padding:0;list-style:none}
 #regalia .spec-grid li{padding:14px 16px;background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.09);
   border-top:2px solid var(--gold);border-radius:6px}
@@ -1303,22 +1324,25 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 
       <article class="pin second">
         <span class="pin-rank">The Brethren</span>
-        <figure><img src="assets/pin-member.webp?v=20260909" alt="The Chapter pin with the twisted rope border and gold inner line, worn by the members" loading="lazy"></figure>
-        <h3>The Twisted Rope</h3>
+        <figure><img src="assets/pin-member.webp?v=20260909b" alt="The Chapter pin with the plain gold edge, worn by the members of the Chapter" loading="lazy"></figure>
+        <h3>The Gold Edge</h3>
         <p class="pin-who">Members of the Chapter</p>
-        <p>The plainer of the two, and the one most brethren wear. The triangle is bound by a <b>single twisted cord</b> rather than a braid, and a <b>fine gold line</b> runs inside it, setting the silver off from the golden field.</p>
+        <p>The plainer of the two, and the one most brethren wear. The triangle carries <b>no silver upon it at all</b>: it is bound by its own <b>raised gold rim</b>, with a fine gold line set within, and the textured gold field between them.</p>
         <p>It is worn by every <b>member in good standing</b>, whatever office he holds or does not hold. Nothing upon it names a rank.</p>
-        <div class="tell"><b>How it is told</b>One cord twisted upon itself, narrower than the braid, with a thin gold rule between it and the field.</div>
+        <div class="tell"><b>How it is told</b>A plain gold edge and no braid. If there is silver anywhere but the roundel at the centre, it is not this pin.</div>
       </article>
 
     </div>
 
     <p class="pin-rule">Both pins carry the same centre &mdash; the Spartan helm between two wheels, <b>Widows Sons &middot; Chapter Hellas &middot; Masonic Riders Association &middot; est. 2026</b> &mdash; and the same golden wings. Only the border changes, and the border is what says which is which. Like the colours, the pin is the property of the Association: it is issued by the Chapter and returned to it.</p>
 
-    <!-- ---------- how it is made ---------- -->
+    <!-- ---------- how it is made: opened on demand ---------- -->
     <div class="part-locator">PART 03.2 — HOW IT IS MADE</div>
-    <ul class="spec-grid">
-      <li><b>Total width</b><span>50 mm</span></li>
+    <details class="tech">
+      <summary>Technical specifications &mdash; how the pin is made</summary>
+      <div class="tech-body">
+      <ul class="spec-grid">
+        <li><b>Total width</b><span>50 mm</span></li>
       <li><b>Total height</b><span>32 mm</span></li>
       <li><b>Central circle</b><span>30 mm diameter</span></li>
       <li><b>Wing overhang</b><span>10 mm each side</span></li>
@@ -1328,11 +1352,13 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       <li><b>Fastening</b><span>One centred neodymium magnet, N52</span></li>
       <li><b>Pull</b><span>1.5 – 2.0 kg minimum</span></li>
     </ul>
-    <figure class="sheet">
-      <img src="assets/pin-spec-sheet.jpg?v=20260909" alt="Manufacturing specification of the Chapter pin: front, side and back views with dimensions, colours, finishes and the magnetic fastening" loading="lazy">
-      <figcaption>The sheet the maker works from &mdash; front, side and back, with the dimensions, the finishes and the magnet</figcaption>
-    </figure>
-    <p class="pin-rule">A magnet, not a pin post: it holds through leather and cloth without piercing either, which is why it may be worn on a jacket that must not be punctured. <b>A sample is approved by the Chapter before any quantity is struck.</b></p>
+      <figure class="sheet">
+        <img src="assets/pin-spec-sheet.jpg?v=20260909" alt="Manufacturing specification of the Chapter pin: front, side and back views with dimensions, colours, finishes and the magnetic fastening" loading="lazy">
+        <figcaption>The sheet the maker works from. It is drawn for the braided border of the Chair; the members&rsquo; pin is the same in every measure and differs only in its edge.</figcaption>
+      </figure>
+      <p class="pin-rule">A magnet, not a pin post: it holds through leather and cloth without piercing either, which is why it may be worn on a jacket that must not be punctured. <b>A sample is approved by the Chapter before any quantity is struck.</b></p>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1752,7 +1778,7 @@ document.getElementById('navlinks').addEventListener('click', function(e){
   if(e.target.closest('a') && window.innerWidth <= 920){ this.style.display = 'none'; }
 });
 document.head.appendChild(Object.assign(document.createElement('script'),
-  { src:'assets/ws-lang.js?v=20260909', defer:true }));
+  { src:'assets/ws-lang.js?v=20260909b', defer:true }));
 </script>
 </body>
 </html>

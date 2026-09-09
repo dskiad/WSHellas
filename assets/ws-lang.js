@@ -218,7 +218,8 @@
     "The plainer of the two, and the one most brethren wear. The triangle carries <b>no silver upon it at all</b>: it is bound by its own <b>raised gold rim</b>, with a fine gold line set within, and the textured gold field between them.": "Το απλούστερο εκ των δύο, και εκείνο που φέρουν οι περισσότεροι αδελφοί. Το τρίγωνο δεν φέρει <b>ουδόλως άργυρο</b>: περιβάλλεται από το ίδιο του το <b>ανάγλυφο χρυσό χείλος</b>, με λεπτή χρυσή γραμμή εντός αυτού και το ανάγλυφο χρυσό πεδίο ανάμεσά τους.",
     "<b>How it is told</b>A plain gold edge and no braid. If there is silver anywhere but the roundel at the centre, it is not this pin.": "<b>Πώς αναγνωρίζεται</b>Απλή χρυσή ακμή και καμία πλεξίδα. Αν υπάρχει άργυρος οπουδήποτε πλην του κεντρικού δίσκου, δεν είναι αυτό το σήμα.",
     "Technical specifications — how the pin is made": "Τεχνικές προδιαγραφές — πώς κατασκευάζεται το σήμα",
-    "The sheet the maker works from. It is drawn for the braided border of the Chair; the members’ pin is the same in every measure and differs only in its edge.": "Το φύλλο από το οποίο εργάζεται ο κατασκευαστής. Είναι σχεδιασμένο για το πλεκτό περίγραμμα της Προεδρίας· το σήμα των μελών είναι το ίδιο σε κάθε διάσταση και διαφέρει μόνο ως προς την ακμή του."
+    "The sheet the maker works from. It is drawn for the braided border of the Chair; the members’ pin is the same in every measure and differs only in its edge.": "Το φύλλο από το οποίο εργάζεται ο κατασκευαστής. Είναι σχεδιασμένο για το πλεκτό περίγραμμα της Προεδρίας· το σήμα των μελών είναι το ίδιο σε κάθε διάσταση και διαφέρει μόνο ως προς την ακμή του.",
+    "Ph.3 — The Colours upon the Coast Road": "Φωτ.3 — Τα χρώματα στον παραλιακό δρόμο"
    },
    "es": {
     "<a href=\"#organization\">Organization</a> <a href=\"#dresscode\">Dress Code</a> <a href=\"#administration\">Administration</a> <a href=\"#emblem\">Emblem</a> <a href=\"#constitution\">Constitution</a> <a href=\"#bylaws\">By-Laws</a><a href=\"officers.html\">Officers</a><a href=\"secretary.html\">Secretary</a>": "<a href=\"#organization\">Organización</a> <a href=\"#dresscode\">Indumentaria</a> <a href=\"#administration\">Administración</a> <a href=\"#emblem\">Emblema</a> <a href=\"#constitution\">Constitución</a> <a href=\"#bylaws\">Reglamento</a><a href=\"officers.html\">Oficiales</a><a href=\"secretary.html\">Secretaría</a>",
@@ -403,7 +404,8 @@
     "The plainer of the two, and the one most brethren wear. The triangle carries <b>no silver upon it at all</b>: it is bound by its own <b>raised gold rim</b>, with a fine gold line set within, and the textured gold field between them.": "El más sencillo de los dos, y el que llevan la mayoría de los hermanos. El triángulo <b>no lleva plata alguna</b>: va ceñido por su propio <b>reborde dorado en relieve</b>, con una fina línea de oro por dentro y el campo de oro texturado entre ambos.",
     "<b>How it is told</b>A plain gold edge and no braid. If there is silver anywhere but the roundel at the centre, it is not this pin.": "<b>Cómo se reconoce</b>Un filo dorado liso y ninguna trenza. Si hay plata en cualquier parte que no sea el disco central, no es este pin.",
     "Technical specifications — how the pin is made": "Especificaciones técnicas — cómo se fabrica el pin",
-    "The sheet the maker works from. It is drawn for the braided border of the Chair; the members’ pin is the same in every measure and differs only in its edge.": "La hoja con la que trabaja el fabricante. Está dibujada para el borde trenzado de la Presidencia; el pin de los miembros es idéntico en todas sus medidas y solo difiere en su filo."
+    "The sheet the maker works from. It is drawn for the braided border of the Chair; the members’ pin is the same in every measure and differs only in its edge.": "La hoja con la que trabaja el fabricante. Está dibujada para el borde trenzado de la Presidencia; el pin de los miembros es idéntico en todas sus medidas y solo difiere en su filo.",
+    "Ph.3 — The Colours upon the Coast Road": "Foto 3 — Los colores en la carretera de la costa"
    }
   };
 
@@ -485,7 +487,7 @@
     '.section-head{position:relative}' +
     '.section-head .lang-pick{position:absolute;right:0;top:0}' +
     '.navbar .lang-pick{margin-left:14px;flex:none}' +
-    '@media(max-width:1010px){.navbar .lang-pick{display:none}}' +
+    '@media(max-width:1120px){.navbar .lang-pick{display:none}}' +
     '@media(max-width:820px){.section-head .lang-pick{position:static;display:inline-flex;margin-bottom:14px}}';
 
   function picker(){

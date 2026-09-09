@@ -233,7 +233,7 @@ var WSDocs = (function(){
     });
   }
 
-  /* The fifteen offices, as Section 03 carries them. Each office is given
+  /* The fifteen offices, as Section 04 carries them. Each office is given
      in English, Greek and Bulgarian, and so are its duties, the manner in
      which it is filled and its term, so that the document may be read
      throughout by the Bulgarian brethren as well. */

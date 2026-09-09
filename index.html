@@ -931,6 +931,65 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 }
 </style>
 
+<style id="regalia-pin-2026">
+/* ---------- SECTION 03 — Extra Regalia · The Pin ---------- */
+#regalia .part-locator{font:600 11.5px/1.2 'Oswald',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-bright);margin:48px 0 18px;padding-bottom:10px;border-bottom:1px solid rgba(203,168,103,.32)}
+#regalia .part-locator:first-of-type{margin-top:32px}
+
+/* the two pins, side by side */
+#regalia .pins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:start}
+#regalia .pin{position:relative;padding:26px 24px 24px;border-radius:12px;
+  background:radial-gradient(ellipse 120% 90% at 50% 0%, rgba(38,34,26,.95), rgba(7,7,8,.97));
+  border:1px solid rgba(255,255,255,.10);box-shadow:0 18px 40px rgba(0,0,0,.44)}
+#regalia .pin.first{border-color:rgba(212,214,220,.34);
+  box-shadow:0 18px 40px rgba(0,0,0,.48),inset 0 0 0 1px rgba(226,229,234,.12)}
+#regalia .pin.second{border-color:rgba(203,168,103,.30);
+  box-shadow:0 18px 40px rgba(0,0,0,.48),inset 0 0 0 1px rgba(203,168,103,.10)}
+#regalia .pin-rank{display:inline-block;margin-bottom:16px;padding:5px 13px;border-radius:3px;
+  font:600 10px/1.2 'Oswald',sans-serif;letter-spacing:.2em;text-transform:uppercase}
+#regalia .pin.first .pin-rank{color:#0b0b0c;background:linear-gradient(180deg,#eef0f4,#b9bec7)}
+#regalia .pin.second .pin-rank{color:#0b0b0c;background:linear-gradient(180deg,#e6cd92,#ad8a4e)}
+#regalia .pin figure{margin:0}
+#regalia .pin img{display:block;width:100%;height:auto;
+  filter:drop-shadow(0 14px 22px rgba(0,0,0,.62)) drop-shadow(0 3px 4px rgba(0,0,0,.5))}
+#regalia .pin h3{margin:18px 0 6px;font:700 23px/1.16 'Cinzel',serif;color:#f1eee5}
+#regalia .pin .pin-who{margin:0 0 12px;font:600 10.5px/1.4 'Oswald',sans-serif;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold-bright)}
+#regalia .pin p{margin:0 0 11px;font:400 16px/1.6 'EB Garamond',Georgia,serif;color:#d7d2c9}
+#regalia .pin p:last-child{margin-bottom:0}
+#regalia .pin b{color:#f2e7c5;font-weight:600}
+/* what tells one from the other */
+#regalia .pin .tell{margin-top:14px;padding:12px 14px;border-radius:7px;
+  background:rgba(0,0,0,.42);border-left:3px solid var(--gold);
+  font:400 15px/1.55 'EB Garamond',Georgia,serif;color:#c9c4bb}
+#regalia .pin .tell b{display:block;margin-bottom:3px;font:700 12px/1.2 'Cinzel',serif;
+  letter-spacing:.06em;color:#f2e7c5}
+
+/* how it is made */
+#regalia .spec-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 22px;padding:0;list-style:none}
+#regalia .spec-grid li{padding:14px 16px;background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.09);
+  border-top:2px solid var(--gold);border-radius:6px}
+#regalia .spec-grid b{display:block;margin-bottom:4px;font:600 9.5px/1.2 'Oswald',sans-serif;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--steel-dim)}
+#regalia .spec-grid span{font:400 16px/1.4 'EB Garamond',Georgia,serif;color:#eae5da}
+#regalia .sheet{margin:0;padding:14px;background:#0a0a0b;border:1px solid rgba(255,255,255,.09);border-radius:9px}
+#regalia .sheet img{display:block;width:100%;height:auto;border-radius:5px}
+#regalia .sheet figcaption{margin-top:11px;font:600 10.5px/1.5 'Oswald',sans-serif;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--bone-dim);text-align:center}
+#regalia .pin-rule{margin:22px 0 0;padding:16px 20px;border:1px dashed rgba(203,168,103,.42);border-radius:8px;
+  background:rgba(158,27,31,.06);font:400 15.5px/1.6 'EB Garamond',Georgia,serif;color:#d9d4ca}
+#regalia .pin-rule b{color:#f2e7c5;font-weight:600}
+
+@media(max-width:900px){
+  #regalia .pins{grid-template-columns:1fr;gap:22px}
+  #regalia .spec-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  #regalia .spec-grid{grid-template-columns:1fr}
+  #regalia .pin p,#regalia .pin .tell{font-size:15px}
+}
+</style>
+
 <link rel="stylesheet" href="assets/officer-vest-background.css?v=202609060420">
 </head>
 <body>
@@ -944,6 +1003,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <nav class="links" id="navlinks">
       <a href="#organization">Organization</a>
       <a href="#dresscode">Dress Code</a>
+      <a href="#regalia">Regalia</a>
       <a href="#administration">Administration</a>
       <a href="#emblem">Emblem</a>
       <a href="#constitution">Constitution</a>
@@ -1218,12 +1278,70 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
   </div>
 </section>
 
+<!-- ================= EXTRA REGALIA — THE PIN ================= -->
+<section id="regalia">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">03 — Extra Regalia</div>
+      <h2><span class="section-prefix">SECTION 03 — </span>Extra Regalia &middot; The Pin</h2>
+      <p class="lead">Beside the colours the Chapter issues one further piece: a pin, struck in antique gold and antique silver with the emblem at its centre. It is worn where the vest is not &mdash; on a jacket, a lapel, a cap &mdash; and it is made in two borders, one for the chair and one for the brethren.</p>
+    </div>
+
+    <!-- ---------- the two borders ---------- -->
+    <div class="part-locator">PART 03.1 — THE TWO BORDERS</div>
+    <div class="pins">
+
+      <article class="pin first">
+        <span class="pin-rank">The Chair</span>
+        <figure><img src="assets/pin-president.webp?v=20260909" alt="The Chapter pin with the braided silver border, worn by the President and by a Grand Master" loading="lazy"></figure>
+        <h3>The Braided Silver</h3>
+        <p class="pin-who">President &middot; Grand Master</p>
+        <p>The higher of the two. The triangle is bound by a <b>plaited silver rope</b>, laid as a single continuous braid of even width along all three sides, and the triangle within it is filled with textured gold to the very edge of that braid.</p>
+        <p>It is worn by the <b>President of the Chapter</b>, and it is the pin presented to a <b>Grand Master</b> or to a visiting dignitary of like standing.</p>
+        <div class="tell"><b>How it is told</b>Three strands plaited over one another, broad and unbroken, with no gold line between the braid and the field.</div>
+      </article>
+
+      <article class="pin second">
+        <span class="pin-rank">The Brethren</span>
+        <figure><img src="assets/pin-member.webp?v=20260909" alt="The Chapter pin with the twisted rope border and gold inner line, worn by the members" loading="lazy"></figure>
+        <h3>The Twisted Rope</h3>
+        <p class="pin-who">Members of the Chapter</p>
+        <p>The plainer of the two, and the one most brethren wear. The triangle is bound by a <b>single twisted cord</b> rather than a braid, and a <b>fine gold line</b> runs inside it, setting the silver off from the golden field.</p>
+        <p>It is worn by every <b>member in good standing</b>, whatever office he holds or does not hold. Nothing upon it names a rank.</p>
+        <div class="tell"><b>How it is told</b>One cord twisted upon itself, narrower than the braid, with a thin gold rule between it and the field.</div>
+      </article>
+
+    </div>
+
+    <p class="pin-rule">Both pins carry the same centre &mdash; the Spartan helm between two wheels, <b>Widows Sons &middot; Chapter Hellas &middot; Masonic Riders Association &middot; est. 2026</b> &mdash; and the same golden wings. Only the border changes, and the border is what says which is which. Like the colours, the pin is the property of the Association: it is issued by the Chapter and returned to it.</p>
+
+    <!-- ---------- how it is made ---------- -->
+    <div class="part-locator">PART 03.2 — HOW IT IS MADE</div>
+    <ul class="spec-grid">
+      <li><b>Total width</b><span>50 mm</span></li>
+      <li><b>Total height</b><span>32 mm</span></li>
+      <li><b>Central circle</b><span>30 mm diameter</span></li>
+      <li><b>Wing overhang</b><span>10 mm each side</span></li>
+      <li><b>Thickness</b><span>2.5 – 3.0 mm</span></li>
+      <li><b>Material</b><span>Zinc alloy or brass</span></li>
+      <li><b>Finish</b><span>Antique gold &amp; antique silver, hard enamel</span></li>
+      <li><b>Fastening</b><span>One centred neodymium magnet, N52</span></li>
+      <li><b>Pull</b><span>1.5 – 2.0 kg minimum</span></li>
+    </ul>
+    <figure class="sheet">
+      <img src="assets/pin-spec-sheet.jpg?v=20260909" alt="Manufacturing specification of the Chapter pin: front, side and back views with dimensions, colours, finishes and the magnetic fastening" loading="lazy">
+      <figcaption>The sheet the maker works from &mdash; front, side and back, with the dimensions, the finishes and the magnet</figcaption>
+    </figure>
+    <p class="pin-rule">A magnet, not a pin post: it holds through leather and cloth without piercing either, which is why it may be worn on a jacket that must not be punctured. <b>A sample is approved by the Chapter before any quantity is struck.</b></p>
+  </div>
+</section>
+
 <!-- ================= ADMINISTRATION ================= -->
 <section id="administration">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">03 — Administration</div>
-      <h2><span class="section-prefix">SECTION 03 — </span>Officers of the Chapter</h2>
+      <div class="eyebrow">04 — Administration</div>
+      <h2><span class="section-prefix">SECTION 04 — </span>Officers of the Chapter</h2>
       <p class="lead">The Chapter is administered by <b>15 officers</b>. The first six positions constitute the <b>Principal Officers</b>; the remaining offices are optional.</p>
       <p class="lead" style="margin-top:10px; font-size:16px;">The President, the Treasurer and the Road Captain are elected: the President for a term of <b>five years</b>, the Treasurer and the Road Captain every <b>two years</b>. The remaining appointments are made in accordance with the Chapter rules and the decisions of the President.</p>
 
@@ -1497,8 +1615,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 <section id="emblem">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">04 — Emblem</div>
-      <h2><span class="section-prefix">SECTION 04 — </span>The Chapter Hellas Emblem</h2>
+      <div class="eyebrow">05 — Emblem</div>
+      <h2><span class="section-prefix">SECTION 05 — </span>The Chapter Hellas Emblem</h2>
       <p class="lead">Every element of the patch carries meaning — worn only by members in good standing, and always remaining the property of Widows Sons MRA.</p>
     </div>
 
@@ -1547,8 +1665,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 <section id="constitution">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">05 — Constitution</div>
-      <h2><span class="section-prefix">SECTION 05 — </span>Constitution of Chapter Hellas</h2>
+      <div class="eyebrow">06 — Constitution</div>
+      <h2><span class="section-prefix">SECTION 06 — </span>Constitution of Chapter Hellas</h2>
       <p class="lead">Four articles establish who the Chapter is, why it exists, and who may belong to it.</p>
     </div>
 
@@ -1567,8 +1685,8 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 <section id="bylaws">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">06 — By-Laws</div>
-      <h2><span class="section-prefix">SECTION 06 — </span>Regulations &amp; Operating Rules</h2>
+      <div class="eyebrow">07 — By-Laws</div>
+      <h2><span class="section-prefix">SECTION 07 — </span>Regulations &amp; Operating Rules</h2>
       <p class="lead">Nine articles govern how the Chapter is run day to day: officers, elections, meetings, motorcycles, finances and discipline.</p>
     </div>
 
@@ -1634,7 +1752,7 @@ document.getElementById('navlinks').addEventListener('click', function(e){
   if(e.target.closest('a') && window.innerWidth <= 920){ this.style.display = 'none'; }
 });
 document.head.appendChild(Object.assign(document.createElement('script'),
-  { src:'assets/ws-lang.js?v=20260908', defer:true }));
+  { src:'assets/ws-lang.js?v=20260909', defer:true }));
 </script>
 </body>
 </html>

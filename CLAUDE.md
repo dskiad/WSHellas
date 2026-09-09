@@ -100,7 +100,24 @@ own repository, `dskiad/wsvest`, not this one.
 
 The sections of `index.html` are numbered in one run — the eyebrow and the
 `.section-prefix` of each. Insert a section and every later number moves with
-it, in the page and wherever the register refers to one.
+it, in the page and wherever the register refers to one. **It moves in
+`assets/ws-lang.js` too**: the number is part of the English key *and* part of
+the Greek and Spanish text, so a renumbering must re-key those entries and bump
+the number inside each translation, or the moved sections quietly revert to
+English.
+
+## The pin
+
+Section 03 sets out the extra regalia: one pin in two borders. The **braided
+silver** is the President's and the one presented to a Grand Master; the
+**twisted rope with a fine gold line** is worn by every member. The centre and
+the wings are identical — the border is the whole distinction. Both are cut out
+of their white ground and carried as WebP.
+
+The measurements on the page (50 × 32 mm, 2.5–3.0 mm thick, N52 magnet) are
+taken from `assets/pin-spec-sheet.jpg`, which is the sheet shown. A second sheet
+exists, `assets/pin-spec-sheet-2.jpg`, and it disagrees — 29 mm tall, 4.5 mm
+thick, magnet Ø10 × 3 mm. Settle which governs before anything is struck.
 
 ## The three tongues
 

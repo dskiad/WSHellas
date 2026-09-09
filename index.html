@@ -163,7 +163,8 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
    the light that falls across the middle and the darkening where it
    curls into the rolls. Nothing here is an image; it costs nothing to
    load and stays sharp at any size. */
-.chapter-motto{margin:34px auto 40px; max-width:760px; text-align:center; padding:0 14px;}
+/* the padding leaves room for the coils to stand outside the sheet */
+.chapter-motto{margin:34px auto 40px; max-width:790px; text-align:center; padding:0 30px;}
 .chapter-motto figcaption{
   font-family:'Oswald',sans-serif; font-size:11px; letter-spacing:.34em; text-transform:uppercase;
   color:var(--gold); margin-bottom:20px; position:relative; display:inline-block; padding:0 22px;
@@ -177,19 +178,23 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 .chapter-motto figcaption:before{right:100%;}
 .chapter-motto figcaption:after{left:100%; transform:scaleX(-1);}
 
-.scroll{position:relative; filter:drop-shadow(0 22px 34px rgba(0,0,0,.62));}
+.scroll{position:relative; perspective:1500px;
+  filter:drop-shadow(0 26px 40px rgba(0,0,0,.66)) drop-shadow(0 4px 6px rgba(0,0,0,.5));}
 
 /* the rod at each end, with the parchment rolled upon it */
 .scroll-rod{
-  position:relative; height:30px; margin:0 -14px; border-radius:15px;
+  position:relative; z-index:2; height:34px; margin:0 -18px; border-radius:17px;
+  /* a cylinder: the terminator dark, a hot specular band where the light
+     strikes, and the far side falling into shadow again */
   background:
     linear-gradient(180deg,
-      #8d7346 0%, #c8ae7c 14%, #f2e6c8 34%, #fffbf0 44%,
-      #ead9b4 60%, #c2a877 78%, #8a7043 94%, #6d5732 100%);
+      #5f4a29 0%, #8a6f42 6%, #bda067 16%, #e6d5ae 27%,
+      #fffdf6 37%, #fff9e9 43%, #e9d8b2 55%, #c7ac75 68%,
+      #9a7f4c 80%, #6e5732 91%, #4a3a20 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255,252,240,.75),
-    inset 0 -1px 0 rgba(70,52,24,.55),
-    0 2px 5px rgba(0,0,0,.45);
+    inset 0 1px 0 rgba(255,253,246,.8),
+    inset 0 -2px 3px rgba(52,38,16,.6),
+    0 3px 7px rgba(0,0,0,.55);
 }
 /* the seam where the sheet passes into the roll */
 .scroll-rod:after{
@@ -199,13 +204,20 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 .scroll-rod.top:after{bottom:5px;}
 .scroll-rod.bottom:after{top:5px;}
 /* the wooden knobs the roll turns upon */
+/* the end of the roll, seen face on: the sheet coiled upon itself */
 .scroll-rod i{
-  position:absolute; top:50%; width:19px; height:19px; margin-top:-9.5px; border-radius:50%;
-  background:radial-gradient(circle at 34% 30%, #7a5a33, #4a3419 62%, #2c1f0e);
-  box-shadow:0 1px 3px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,226,178,.28);
+  position:absolute; top:50%; width:38px; height:38px; margin-top:-19px; border-radius:50%;
+  background:
+    repeating-radial-gradient(circle at 50% 50%,
+      rgba(94,68,32,.55) 0 1px, rgba(94,68,32,0) 1px 3.2px),
+    radial-gradient(circle at 36% 30%, #fff6e2 0%, #e4d1a6 34%, #b89a63 62%, #7d6438 84%, #4e3d20 100%);
+  box-shadow:
+    0 3px 7px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(74,54,24,.55),
+    inset 0 2px 4px rgba(255,250,235,.35);
 }
-.scroll-rod i:first-child{left:-9px;}
-.scroll-rod i:last-child{right:-9px;}
+.scroll-rod i:first-child{left:-19px;}
+.scroll-rod i:last-child{right:-19px;}
 
 /* the sheet itself */
 .scroll-sheet{
@@ -227,10 +239,19 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
     linear-gradient(180deg,
       rgba(74,52,22,.62) 0, rgba(80,58,26,.34) 3%, rgba(86,62,28,.06) 9%,
       rgba(255,251,238,.36) 34%, rgba(255,251,238,.36) 62%,
-      rgba(86,62,28,.06) 91%, rgba(80,58,26,.34) 97%, rgba(74,52,22,.62) 100%);
+      rgba(86,62,28,.06) 91%, rgba(80,58,26,.34) 97%, rgba(74,52,22,.62) 100%),
+    /* the barrel: the sheet bows toward the reader, so its long edges
+       fall away and the middle catches the light */
+    linear-gradient(90deg,
+      rgba(74,52,22,.34) 0, rgba(74,52,22,.10) 6%, rgba(255,252,242,.16) 26%,
+      rgba(255,252,242,.20) 50%, rgba(255,252,242,.16) 74%,
+      rgba(74,52,22,.10) 94%, rgba(74,52,22,.34) 100%);
   box-shadow:
-    inset 6px 0 12px -6px rgba(92,66,30,.55),
-    inset -6px 0 12px -6px rgba(92,66,30,.55);
+    /* the shadow each rod throws down onto the sheet */
+    inset 0 16px 20px -14px rgba(52,36,14,.85),
+    inset 0 -16px 20px -14px rgba(52,36,14,.85),
+    inset 9px 0 18px -10px rgba(92,66,30,.6),
+    inset -9px 0 18px -10px rgba(92,66,30,.6);
 }
 /* the deckle of the two long edges */
 .scroll-sheet:before, .scroll-sheet:after{
@@ -241,15 +262,34 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 .scroll-sheet:after{right:0;}
 
 /* the hand that wrote it */
+/* The letters stand off the parchment: a light caught on the top edge,
+   the body of the letter falling away beneath it in five steps, and the
+   shadow it throws upon the sheet. */
 .chapter-motto blockquote{
   margin:0; font-family:'Cinzel',serif; font-weight:700;
-  font-size:clamp(18px, 2.7vw, 31px); line-height:1.42; letter-spacing:.055em;
-  color:#43301a;
-  text-shadow:0 1px 0 rgba(255,250,235,.55);
+  font-size:clamp(18px, 2.7vw, 31px); line-height:1.46; letter-spacing:.055em;
+  color:#4a3419;
+  text-shadow:
+    0 -1px 0 rgba(255,253,246,.95),
+    0 1px 0 #7c5f34,
+    0 2px 0 #6d5330,
+    0 3px 0 #5d472a,
+    0 4px 0 #4c3a23,
+    0 5px 1px rgba(52,36,14,.5),
+    0 7px 9px rgba(52,36,14,.34),
+    0 12px 18px rgba(52,36,14,.22);
 }
 .chapter-motto blockquote span{display:block;}
-.chapter-motto blockquote span + span{color:#8d2b23; margin-top:6px;
-  text-shadow:0 1px 0 rgba(255,250,235,.5);}
+.chapter-motto blockquote span + span{color:#8d2b23; margin-top:8px;
+  text-shadow:
+    0 -1px 0 rgba(255,246,232,.9),
+    0 1px 0 #6f2019,
+    0 2px 0 #601c16,
+    0 3px 0 #511812,
+    0 4px 0 #41130e,
+    0 5px 1px rgba(52,20,12,.5),
+    0 7px 9px rgba(52,28,14,.34),
+    0 12px 18px rgba(52,28,14,.22);}
 .chapter-motto p{
   margin:18px auto 0; max-width:480px; font-family:'EB Garamond',Georgia,serif;
   font-style:italic; font-size:16px; color:#6b5433; line-height:1.62;
@@ -263,9 +303,10 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
   .chapter-motto{margin:26px auto 30px;}
   .chapter-motto figcaption{letter-spacing:.24em; font-size:10px;}
   .chapter-motto figcaption:before,.chapter-motto figcaption:after{width:24px;}
-  .scroll-rod{height:22px; border-radius:11px; margin:0 -8px;}
-  .scroll-rod i{width:15px; height:15px; margin-top:-7.5px;}
-  .scroll-rod i:first-child{left:-6px;} .scroll-rod i:last-child{right:-6px;}
+  .chapter-motto{padding:0 22px;}
+  .scroll-rod{height:24px; border-radius:12px; margin:0 -10px;}
+  .scroll-rod i{width:26px; height:26px; margin-top:-13px;}
+  .scroll-rod i:first-child{left:-13px;} .scroll-rod i:last-child{right:-13px;}
   .scroll-sheet{padding:26px 22px 24px;}
   .chapter-motto p{font-size:15px;}
 }

@@ -7,7 +7,7 @@
 <meta name="description" content="Widows Sons Masonic Riders Association, Chapter Hellas — organization, administration, emblem, constitution, by-laws and dress code.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=GFS+Didot:ital@0;1&family=Oswald:wght@400;500;600;700&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Oswald:wght@400;500;600;700&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0a0b;
@@ -165,56 +165,6 @@ nav.links a:hover{color:var(--bone); border-color:var(--gold);}
 }
 .hero-emblem img{width:100%; height:auto; display:block; position:relative; z-index:1;
   box-shadow:0 0 0 1px rgba(0,0,0,.55), 0 6px 18px rgba(0,0,0,.45);}
-/* ---------- the Rider, cut into marble beneath the Chapter ----------
-   An inscription rather than a sign: a slab of marble with the letters
-   chiselled into it. The stone is gradients — the body of the marble,
-   two veins across it, and the light falling from above. The cut is the
-   inverse of a relief: shadow along the upper edge of each stroke where
-   the chisel went in, and a lit lower lip where the stone was left.
-
-   Set in GFS Didot, a Greek face, with EB Garamond behind it: Cinzel
-   carries no Greek at all and the name would have broken face mid-line.
-   Wide tracking and no lowercase, as the ancients cut it. */
-.rider-plinth{margin:20px 0 0; display:flex; justify-content:center; padding:0 14px;}
-.rider-title{
-  display:inline-block; margin:0; padding:16px 40px 17px;
-  font-family:'GFS Didot', 'EB Garamond', 'Palatino Linotype', Palatino, Georgia, serif;
-  font-weight:400; font-size:24px; line-height:1.32;
-  /* The capitals are written out rather than transformed: Greek drops its
-     accents in all-caps, and the browser only knows to do that when the
-     element is marked Greek — the page is marked English, so ΔΗΜΟΣΘΈΝΗΣ
-     kept its tonos. Written plainly, it is right whatever the lang says. */
-  letter-spacing:.22em; text-transform:uppercase;
-  border-radius:3px;
-  /* the marble */
-  background-color:#e6e2d9;
-  background-image:
-    linear-gradient(107deg, transparent 27%, rgba(116,120,136,.26) 28.6%, rgba(116,120,136,.08) 31%, transparent 33%),
-    linear-gradient(96deg,  transparent 56%, rgba(100,105,120,.22) 57.4%, rgba(100,105,120,.06) 60%, transparent 62%),
-    linear-gradient(122deg, transparent 71%, rgba(128,124,112,.20) 72.6%, transparent 76%),
-    linear-gradient(88deg,  transparent 13%, rgba(120,124,138,.13) 14.2%, transparent 16%),
-    radial-gradient(ellipse 60% 120% at 22% 0%, rgba(255,255,255,.65), transparent 70%),
-    linear-gradient(180deg, #f7f5f0 0%, #e9e5dc 46%, #d6d1c5 82%, #c6c0b2 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.9),
-    inset 0 -2px 4px rgba(92,86,74,.28),
-    inset 0 0 0 1px rgba(255,255,255,.35),
-    0 2px 0 rgba(120,113,99,.55),
-    0 4px 0 rgba(96,90,78,.45),
-    0 22px 34px rgba(0,0,0,.6);
-  /* the letters, cut in */
-  color:#736d5e;
-  text-shadow:
-    0 -1px 0 rgba(46,42,34,.80),
-    0 -2px 2px rgba(46,42,34,.38),
-    0 1px 0 rgba(255,255,255,.96),
-    0 2px 2px rgba(255,255,255,.58);
-}
-@media(max-width:640px){
-  .rider-plinth{margin-top:14px;}
-  .rider-title{font-size:17px; letter-spacing:.14em; padding:12px 18px 13px;}
-}
-
 /* ---------- the motto of the Chapter, inked on a parchment ----------
    A scroll unrolled from a rod at each end: the sheet between them is
    drawn in gradients — the fibres of the papyrus, the stains of its age,
@@ -1159,7 +1109,6 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <h1>Masonic Riders Association</h1>
     <span class="script">Widows Sons</span>
     <h2>CHAPTER HELLAS</h2>
-    <div class="rider-plinth"><div class="rider-title">ΔΗΜΟΣΘΕΝΗΣ ΤΖΗΜΟΣ &mdash; THE RIDER</div></div>
 
     <figure class="chapter-motto">
       <figcaption>The Motto of Chapter Hellas</figcaption>

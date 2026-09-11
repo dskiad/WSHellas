@@ -125,6 +125,21 @@ members' differs only in its edge, as the caption says. A second sheet exists,
 `assets/pin-spec-sheet-2.jpg`, and it disagrees — 29 mm tall, 4.5 mm thick,
 magnet Ø10 × 3 mm. Settle which governs before anything is struck.
 
+## The visitors' memo
+
+Section 08 is the Chapter's register of its meetings with Widows Sons abroad:
+what was given, what was received, and from whose hand. Each entry is a card —
+the chapter's flag and name, the token photographed on both faces, a reading of
+each face, and three fields for the exchange. A field the Chapter cannot yet
+fill reads *to be entered by the Secretary* rather than being invented; the
+site's own idiom for a blank, as with a vacant office.
+
+Coin photographs are cut by **fitting a circle**, not by flood-fill: the disc is
+found from its texture (a struck coin is busy, a desk is smooth), the largest
+textured body taken, and the circle drawn from its bounding box. Colour keys and
+percentile radii were both tried first and both failed — the one leaked into the
+lit desk, the other overshot on scattered warm pixels.
+
 ## The three tongues
 
 The page is written in English. `assets/ws-lang.js` carries the same page in
@@ -141,6 +156,16 @@ brotherhood — Widows Sons, Chapter, MRA, and the motto as it is embroidered.
 
 **So: change a line of English on the page and its Greek and Spanish must be
 changed here under the new wording, or that line quietly reverts to English.**
+
+**Rebuild the file by re-splitting the live one**, never from a saved copy of
+its head and tail. A snapshot taken once and reused silently undid every
+hand-edit made to the file in between — a menu breakpoint sat three commits
+wrong that way before a width sweep caught it.
+
+The bar's own rule: `nav.links` carries **no `min-width:0`**. With it the box
+shrank while the links spilled out of it and ran under the flags — overlap that
+no overflow check can see. Without it, anything that no longer fits shows up as
+real page overflow, which the sweep catches.
 `officers.html` and `secretary.html` are not yet translated; the file is written
 to be loaded by any page that wants it.
 

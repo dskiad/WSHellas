@@ -1011,6 +1011,65 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 #visitors .custom p{margin:0;font:400 17px/1.62 'EB Garamond',Georgia,serif;color:#ddd8cf}
 #visitors .custom p b{color:#f2e7c5;font-weight:600}
 
+/* ---------- the letters ----------
+   A letter is a quotation, not the site's own prose: it is set as it was
+   sent, and it stays in the tongue it was written in whatever tongue the
+   page is read in. Only the frame around it — the heading, the one line
+   that says what it is, the button — is translated. */
+#visitors .letters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+#visitors .letter{padding:22px 24px 20px;border-radius:10px;
+  background:linear-gradient(150deg,rgba(23,21,18,.95),rgba(7,7,8,.97));
+  border:1px solid rgba(203,168,103,.26);box-shadow:0 14px 30px rgba(0,0,0,.42)}
+#visitors .letter header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+#visitors .letter header h3{margin:0;font:700 19px/1.18 'Cinzel',serif;color:#f1eee5}
+#visitors .letter header span{font:600 9.5px/1.35 'Oswald',sans-serif;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--steel-dim)}
+#visitors .letter-line{margin:0 0 14px;font:400 15.5px/1.55 'EB Garamond',Georgia,serif;color:#d2cdc4}
+#visitors .letter-shot{margin:0 0 14px;padding:12px;background:#070708;
+  border:1px solid rgba(255,255,255,.08);border-radius:8px}
+/* the certificate is a tall portrait; unchecked it makes its card four
+   times the height of the letter beside it */
+#visitors .letter-shot img{display:block;width:auto;max-width:100%;max-height:460px;
+  height:auto;margin:0 auto;border-radius:5px}
+#visitors .letter-shot figcaption{margin-top:10px;font:400 14.5px/1.5 'EB Garamond',Georgia,serif;color:#c9c4bb}
+#visitors .letter-shot figcaption b{color:#f2e7c5;font-weight:600}
+
+#visitors .letter-open{border:1px solid rgba(203,168,103,.28);border-radius:8px;
+  background:rgba(0,0,0,.34);overflow:hidden}
+#visitors .letter-open summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;
+  padding:13px 16px;font:600 11px/1.3 'Oswald',sans-serif;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold-bright);transition:background .18s ease,color .18s ease}
+#visitors .letter-open summary::-webkit-details-marker{display:none}
+#visitors .letter-open summary:before{content:'';flex:none;width:22px;height:22px;border-radius:50%;
+  border:1px solid rgba(203,168,103,.55);background:rgba(0,0,0,.45);
+  background-image:linear-gradient(currentColor,currentColor),linear-gradient(currentColor,currentColor);
+  background-size:9px 1.5px,1.5px 9px;background-position:center,center;background-repeat:no-repeat;
+  transition:transform .22s ease}
+#visitors .letter-open[open] summary:before{transform:rotate(135deg)}
+#visitors .letter-open summary:hover{background:rgba(203,168,103,.07);color:#f0d69b}
+#visitors .letter-open summary:focus-visible{outline:2px solid var(--gold-bright);outline-offset:-3px}
+#visitors .letter-body{padding:4px 18px 18px}
+#visitors .letter-body p{margin:0 0 11px;font:400 15.5px/1.6 'EB Garamond',Georgia,serif;color:#d2cdc4;text-align:justify}
+#visitors .letter-body p:last-child{margin-bottom:0}
+#visitors .letter-body b{color:#f2e7c5;font-weight:600}
+#visitors .letter-body .where{font:600 10px/1.4 'Oswald',sans-serif;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold-bright);text-align:left}
+#visitors .letter-body .to{font-style:italic;color:#c9c4bb;text-align:left}
+#visitors .letter-body .sign{margin-top:16px;padding-top:12px;
+  border-top:1px solid rgba(203,168,103,.28);text-align:left}
+#visitors .letter-body .held{margin-top:14px;font-size:14px;color:#a9a49c;text-align:left}
+#visitors .letter-file{margin:12px 0 0;font:600 10.5px/1.4 'Oswald',sans-serif;letter-spacing:.13em;
+  text-transform:uppercase}
+#visitors .letter-file a{color:var(--gold-bright);text-decoration:none;border-bottom:1px solid rgba(203,168,103,.45)}
+#visitors .letter-file a:hover{color:#f0d69b}
+
+@media(max-width:900px){ #visitors .letters{grid-template-columns:1fr} }
+@media(max-width:600px){
+  #visitors .letter{padding:18px 16px 16px}
+  #visitors .letter-body{padding:4px 14px 16px}
+  #visitors .letter-body p{text-align:left;font-size:15px}
+}
+
 @media(max-width:900px){ #visitors .memo-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media(max-width:600px){
   #visitors .memo-grid{grid-template-columns:1fr}
@@ -1814,7 +1873,65 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
     <div class="place"><svg class="flag" viewBox="0 0 12 8" aria-hidden="true"><rect width="12" height="2.667" fill="#fff"/><rect y="2.667" width="12" height="2.667" fill="#00966E"/><rect y="5.333" width="12" height="2.667" fill="#D62612"/></svg><svg class="flag" viewBox="0 0 12 8" aria-hidden="true"><rect width="12" height="8" fill="#9E3039"/><rect y="3.2" width="12" height="1.6" fill="#fff"/></svg><div><h3>Bulgaria &middot; Latvia</h3><span>Awaited</span></div></div>
     <p class="awaited"><b>No token or photograph has reached the Chapter from Bulgaria or Latvia yet</b> &mdash; send them and they will be entered here as Nos. 20 onward.</p>
 
-    <div class="part-locator">PART 08.2 — THE CUSTOM</div>
+    <div class="part-locator">PART 08.2 — THE LETTERS</div>
+    <div class="letters">
+
+      <article class="letter">
+        <header>
+          <svg class="flag" viewBox="0 0 12 8" aria-hidden="true"><rect width="12" height="4" fill="#FCD116"/><rect y="4" width="12" height="2" fill="#003893"/><rect y="6" width="12" height="2" fill="#CE1126"/></svg>
+          <div><h3>Chapter Cartagena &middot; Colombia</h3>
+            <span>Widows Sons MRA &middot; Brotherhood &mdash; Loyalty &mdash; Honor &mdash; Service</span></div>
+        </header>
+        <p class="letter-line">A letter of congratulation on the raising of Chapter Hellas, sent from Cartagena de Indias on 12 September 2026 over the hand of its President.</p>
+        <details class="letter-open">
+          <summary>Read the letter as it was sent</summary>
+          <div class="letter-body" lang="en">
+            <p class="where">Cartagena de Indias, Colombia &mdash; 12 September 2026</p>
+            <p class="to">To the Brothers of Widows Sons Chapter Hellas, Greece<br>
+              Q&there4;H&there4; Dimitrios Skiadopoulos, President of Widows Sons Chapter Hellas</p>
+            <p>Very Q&there4;H&there4; Dimitrios, and dear Brothers of Widows Sons Chapter Hellas:</p>
+            <p>From the warm waters of the Caribbean and from the historic city of Cartagena de Indias, Colombia, please receive the fraternal and heartfelt greetings of Widows Sons Chapter Cartagena.</p>
+            <p>It is a true source of joy and pride for us to witness the creation of your Chapter in the land of Hellas. We wish to extend our sincerest congratulations and recognition for the effort, perseverance, and brotherhood that have made it possible to raise this new column within our great Widows Sons family.</p>
+            <p>Every new foundation represents far more than a name, an emblem, or a place on a map. It represents the will of Brothers who, united by the same principles, choose to lay another stone in a work that transcends borders, languages, and oceans.</p>
+            <p>Today, from Cartagena, we look with particular brotherly affection toward Greece, and we are honored to see the light that unites the Widows Sons extending to the land of the ancient navigators, philosophers, and builders of civilization. It is beautiful to think that, centuries later, two lands separated by seas and continents can once again meet beneath the same ideals of Brotherhood, Loyalty, Honor, and Service.</p>
+            <p>We wish to extend a special recognition to your President, our Q&there4;H&there4; Dimitrios Skiadopoulos, for his leadership and for accepting the responsibility of guiding this new Chapter through its first steps. Every great work begins with a firm intention, but it requires men of determination to turn that intention into reality. May your work always be guided by the square of righteousness, the compass of brotherhood, and the light of our ideals.</p>
+            <p>To all the Brothers of Chapter Hellas, we wish that this may be only the beginning of a long history of friendship, brotherhood, and great adventures. May the roads you travel, whether on two wheels or upon the waters, always lead you toward new horizons; but may you never forget that wherever there is a Widows Son, there will always be a brotherly hand extended in friendship.</p>
+            <p>From Cartagena, we raise our glass in honor of your new Chapter and wish that its columns may remain strong, its flame may never fade, and the chain of union that connects us today may grow stronger with every passing day.</p>
+            <p>From the Caribbean to the land of the ancient gods and philosophers, receive our fraternal embrace.</p>
+            <p>May our paths cross soon.</p>
+            <p class="sign">Fraternally,<br>
+              <b>Carlos Enrique V&eacute;lez Medrano</b><br>
+              President &middot; Widows Sons Chapter Cartagena, Colombia</p>
+          </div>
+        </details>
+        <p class="letter-file"><a href="assets/letter-cartagena-2026.docx">The letter as the Chapter received it</a></p>
+      </article>
+
+      <article class="letter">
+        <header>
+          <svg class="flag" viewBox="0 0 12 8" aria-hidden="true"><rect width="12" height="8" fill="#fff"/><rect width="12" height="2.667" fill="#0073CF"/><rect y="5.333" width="12" height="2.667" fill="#0073CF"/><g fill="#0073CF"><circle cx="6" cy="4" r=".42"/><circle cx="4.6" cy="3.3" r=".42"/><circle cx="7.4" cy="3.3" r=".42"/><circle cx="4.6" cy="4.7" r=".42"/><circle cx="7.4" cy="4.7" r=".42"/></g></svg>
+          <div><h3>Grand Chapter Honduras</h3>
+            <span>Widows Sons Grand Chapter Honduras &middot; Centro Am&eacute;rica</span></div>
+        </header>
+        <p class="letter-line">A certificate of honorary membership in the Grand Chapter, granted on 7 February 2026, sent with the colours that go with it.</p>
+        <figure class="letter-shot">
+          <img src="assets/letter-honduras-certificate.jpg?v=20260912" alt="The honorary member certificate of Widows Sons Grand Chapter Honduras, with the Honduras flag bar, the DSKIAD name tab and the HONORARY MEMBER rocker laid upon it" loading="lazy">
+          <figcaption>The certificate, with the three patches sent with it: the flag of Honduras, the name tab <b>DSKIAD</b> and the rocker <b>HONORARY MEMBER</b>.</figcaption>
+        </figure>
+        <details class="letter-open">
+          <summary>Read what the certificate says</summary>
+          <div class="letter-body">
+            <p class="where">Widows Sons Grand Chapter Honduras, Centro Am&eacute;rica &mdash; 7 February 2026</p>
+            <p>It certifies <b>V&there4;H&there4; Dimitrios Skiadopoulos</b> in the membership of Widows Sons of that Grand Chapter, and grants him <i>&laquo;todos los derechos y privilegios de miembro honor&iacute;fico de este grand chapter como s&iacute;mbolo de hermandad universal&raquo;</i> &mdash; every right and privilege of an honorary member of that Grand Chapter, as a token of universal brotherhood.</p>
+            <p>It carries the two seals of the Grand Chapter and is signed by <b>Marco Tulio Gracia C.</b>, President, and <b>Marco Tulio Milla</b>, Secretary.</p>
+            <p class="held">Part of the written text lies under the patches in the photograph and is not transcribed here; the certificate itself is held by the Secretary.</p>
+          </div>
+        </details>
+      </article>
+
+    </div>
+
+    <div class="part-locator">PART 08.3 — THE CUSTOM</div>
     <div class="custom">
       <p>A token is given to be kept and not worn, a patch is kept with the colours and never put upon them, and a brother of any recognised Chapter is welcome at the Chapter&rsquo;s seat, its table and its rides &mdash; he need only present himself to the <b><a href="secretary.html">Secretary</a></b>.</p>
     </div>
@@ -1859,7 +1976,7 @@ document.getElementById('navlinks').addEventListener('click', function(e){
   if(e.target.closest('a') && window.innerWidth <= 920){ this.style.display = 'none'; }
 });
 document.head.appendChild(Object.assign(document.createElement('script'),
-  { src:'assets/ws-lang.js?v=20260912c', defer:true }));
+  { src:'assets/ws-lang.js?v=20260912d', defer:true }));
 </script>
 </body>
 </html>

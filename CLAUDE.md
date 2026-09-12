@@ -177,7 +177,23 @@ frame. Insert an item and every later number moves — in the page, in the
 each caption is keyed by its English.
 
 A country from which nothing has yet arrived is named all the same, under
-`p.awaited`, rather than left out. A field the Chapter cannot yet fill reads
+`p.awaited`, rather than left out.
+
+**Part 08.2 holds the letters** — what other Chapters have written to Hellas.
+Each is a card: the sender under its flag, one line saying what the letter is,
+and the letter itself behind a `<details>` button, since a letter runs far
+longer than the one sentence a memo card is allowed. Cartagena's letter carries
+a link to the file as it arrived (`assets/letter-cartagena-2026.docx`);
+Honduras sent a certificate, so that card shows the photograph, its own reading,
+and says plainly that the patches lying on it cover part of the written text,
+which is therefore not transcribed.
+
+**A letter is a quotation, not the site's prose, so it is never translated.**
+It stays in the tongue it was written in whatever tongue the page is read in —
+the same rule that leaves the brethren's names and the motto as they stand.
+Only the frame around it is entered in `assets/ws-lang.js`: the heading, the
+one-line summary, the button, the caption, the link. Where the original is
+Spanish, the Spanish is quoted and an English rendering set beside it. A field the Chapter cannot yet fill reads
 *to be entered by the Secretary* rather than being invented; the site's own
 idiom for a blank, as with a vacant office.
 

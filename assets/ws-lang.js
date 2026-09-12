@@ -199,7 +199,6 @@
     "08 — Visitors’ Memo": "08 — Βιβλίο Επισκεπτών",
     "<span class=\"section-prefix\">SECTION 08 — </span>Visitors’ Memo · Chapters of the World": "<span class=\"section-prefix\">ΕΝΟΤΗΤΑ 08 — </span>Βιβλίο Επισκεπτών · Chapters του Κόσμου",
     "PART 08.1 — FOREIGN RELATIONS": "ΜΕΡΟΣ 08.1 — ΕΞΩΤΕΡΙΚΕΣ ΣΧΕΣΕΙΣ",
-    "PART 08.2 — THE CUSTOM": "ΜΕΡΟΣ 08.2 — ΤΟ ΕΘΙΜΟ",
     "What the Chapter has been given by Widows Sons abroad, and the visits it was given on — every item numbered.": "Ό,τι έχει λάβει το Chapter από Widows Sons του εξωτερικού, και οι επισκέψεις κατά τις οποίες δόθηκε — κάθε τεκμήριο αριθμημένο.",
     "Colombia": "Κολομβία",
     "Honduras": "Ονδούρα",
@@ -229,7 +228,21 @@
     "With a brother of <b>Widows Sons Colombia</b> at Cartagena.": "Με αδελφό των <b>Widows Sons Colombia</b> στην Καρταχένα.",
     "A <b>Founder’s</b> colours — and upon them a Corinthian helmet for <b>Greece</b>.": "Τα χρώματα ενός <b>Ιδρυτή</b> — και επ’ αυτών κορινθιακή περικεφαλαία για την <b>Ελλάδα</b>.",
     "Founders": "Ιδρυτές",
-    "All other members": "Όλα τα λοιπά μέλη"
+    "All other members": "Όλα τα λοιπά μέλη",
+    "PART 08.3 — THE CUSTOM": "ΜΕΡΟΣ 08.3 — ΤΟ ΕΘΙΜΟ",
+    "PART 08.2 — THE LETTERS": "ΜΕΡΟΣ 08.2 — ΟΙ ΕΠΙΣΤΟΛΕΣ",
+    "Chapter Cartagena · Colombia": "Chapter Cartagena · Κολομβία",
+    "A letter of congratulation on the raising of Chapter Hellas, sent from Cartagena de Indias on 12 September 2026 over the hand of its President.": "Επιστολή συγχαρητηρίων για την έγερση του Chapter Hellas, σταλείσα από την Καρταχένα ντε Ίντιας στις 12 Σεπτεμβρίου 2026 διά χειρός του Προέδρου της.",
+    "Read the letter as it was sent": "Διαβάστε την επιστολή όπως εστάλη",
+    "<a href=\"assets/letter-cartagena-2026.docx\">The letter as the Chapter received it</a>": "<a href=\"assets/letter-cartagena-2026.docx\">Η επιστολή όπως την έλαβε το Chapter</a>",
+    "Widows Sons Grand Chapter Honduras · Centro América": "Widows Sons Grand Chapter Honduras · Κεντρική Αμερική",
+    "A certificate of honorary membership in the Grand Chapter, granted on 7 February 2026, sent with the colours that go with it.": "Πιστοποιητικό επιτίμου μέλους του Grand Chapter, απονεμηθέν στις 7 Φεβρουαρίου 2026, σταλέν μαζί με τα διάσημα που το συνοδεύουν.",
+    "The certificate, with the three patches sent with it: the flag of Honduras, the name tab <b>DSKIAD</b> and the rocker <b>HONORARY MEMBER</b>.": "Το πιστοποιητικό, με τα τρία σήματα που το συνόδευσαν: η σημαία της Ονδούρας, η πινακίδα ονόματος <b>DSKIAD</b> και το τόξο <b>HONORARY MEMBER</b>.",
+    "Read what the certificate says": "Διαβάστε τι αναφέρει το πιστοποιητικό",
+    "Widows Sons Grand Chapter Honduras, Centro América — 7 February 2026": "Widows Sons Grand Chapter Honduras, Κεντρική Αμερική — 7 Φεβρουαρίου 2026",
+    "It certifies <b>V∴H∴ Dimitrios Skiadopoulos</b> in the membership of Widows Sons of that Grand Chapter, and grants him <i>«todos los derechos y privilegios de miembro honorífico de este grand chapter como símbolo de hermandad universal»</i> — every right and privilege of an honorary member of that Grand Chapter, as a token of universal brotherhood.": "Πιστοποιεί τον <b>V∴H∴ Dimitrios Skiadopoulos</b> ως μέλος των Widows Sons εκείνου του Grand Chapter και του απονέμει <i>«todos los derechos y privilegios de miembro honorífico de este grand chapter como símbolo de hermandad universal»</i> — κάθε δικαίωμα και προνόμιο επιτίμου μέλους εκείνου του Grand Chapter, ως σύμβολο οικουμενικής αδελφότητας.",
+    "It carries the two seals of the Grand Chapter and is signed by <b>Marco Tulio Gracia C.</b>, President, and <b>Marco Tulio Milla</b>, Secretary.": "Φέρει τις δύο σφραγίδες του Grand Chapter και υπογράφεται από τον <b>Marco Tulio Gracia C.</b>, Πρόεδρο, και τον <b>Marco Tulio Milla</b>, Γραμματέα.",
+    "Part of the written text lies under the patches in the photograph and is not transcribed here; the certificate itself is held by the Secretary.": "Μέρος του γραπτού κειμένου καλύπτεται από τα σήματα στη φωτογραφία και δεν μεταγράφεται εδώ· το ίδιο το πιστοποιητικό φυλάσσεται από τον Γραμματέα."
    },
    "es": {
     "The Motto of Chapter Hellas": "El Lema del Chapter Hellas",
@@ -395,7 +408,6 @@
     "08 — Visitors’ Memo": "08 — Libro de Visitantes",
     "<span class=\"section-prefix\">SECTION 08 — </span>Visitors’ Memo · Chapters of the World": "<span class=\"section-prefix\">SECCIÓN 08 — </span>Libro de Visitantes · Chapters del Mundo",
     "PART 08.1 — FOREIGN RELATIONS": "PARTE 08.1 — RELACIONES EXTERIORES",
-    "PART 08.2 — THE CUSTOM": "PARTE 08.2 — LA COSTUMBRE",
     "What the Chapter has been given by Widows Sons abroad, and the visits it was given on — every item numbered.": "Lo que el Chapter ha recibido de los Widows Sons del extranjero, y las visitas en que le fue dado — cada pieza numerada.",
     "Colombia": "Colombia",
     "Honduras": "Honduras",
@@ -425,7 +437,21 @@
     "With a brother of <b>Widows Sons Colombia</b> at Cartagena.": "Con un hermano de <b>Widows Sons Colombia</b> en Cartagena.",
     "A <b>Founder’s</b> colours — and upon them a Corinthian helmet for <b>Greece</b>.": "Los colores de un <b>Fundador</b> — y sobre ellos un casco corintio por <b>Grecia</b>.",
     "Founders": "Fundadores",
-    "All other members": "Todos los demás miembros"
+    "All other members": "Todos los demás miembros",
+    "PART 08.3 — THE CUSTOM": "PARTE 08.3 — LA COSTUMBRE",
+    "PART 08.2 — THE LETTERS": "PARTE 08.2 — LAS CARTAS",
+    "Chapter Cartagena · Colombia": "Chapter Cartagena · Colombia",
+    "A letter of congratulation on the raising of Chapter Hellas, sent from Cartagena de Indias on 12 September 2026 over the hand of its President.": "Carta de felicitación por la fundación del Chapter Hellas, enviada desde Cartagena de Indias el 12 de septiembre de 2026 por mano de su Presidente.",
+    "Read the letter as it was sent": "Leer la carta tal como fue enviada",
+    "<a href=\"assets/letter-cartagena-2026.docx\">The letter as the Chapter received it</a>": "<a href=\"assets/letter-cartagena-2026.docx\">La carta tal como la recibió el Chapter</a>",
+    "Widows Sons Grand Chapter Honduras · Centro América": "Widows Sons Grand Chapter Honduras · Centroamérica",
+    "A certificate of honorary membership in the Grand Chapter, granted on 7 February 2026, sent with the colours that go with it.": "Certificado de miembro honorario del Grand Chapter, otorgado el 7 de febrero de 2026, enviado con los distintivos que lo acompañan.",
+    "The certificate, with the three patches sent with it: the flag of Honduras, the name tab <b>DSKIAD</b> and the rocker <b>HONORARY MEMBER</b>.": "El certificado, con los tres parches enviados con él: la bandera de Honduras, la placa de nombre <b>DSKIAD</b> y el rocker <b>HONORARY MEMBER</b>.",
+    "Read what the certificate says": "Leer lo que dice el certificado",
+    "Widows Sons Grand Chapter Honduras, Centro América — 7 February 2026": "Widows Sons Grand Chapter Honduras, Centroamérica — 7 de febrero de 2026",
+    "It certifies <b>V∴H∴ Dimitrios Skiadopoulos</b> in the membership of Widows Sons of that Grand Chapter, and grants him <i>«todos los derechos y privilegios de miembro honorífico de este grand chapter como símbolo de hermandad universal»</i> — every right and privilege of an honorary member of that Grand Chapter, as a token of universal brotherhood.": "Certifica a <b>V∴H∴ Dimitrios Skiadopoulos</b> en la membresía de Widows Sons de ese Grand Chapter y le otorga <i>«todos los derechos y privilegios de miembro honorífico de este grand chapter como símbolo de hermandad universal»</i>.",
+    "It carries the two seals of the Grand Chapter and is signed by <b>Marco Tulio Gracia C.</b>, President, and <b>Marco Tulio Milla</b>, Secretary.": "Lleva los dos sellos del Grand Chapter y está firmado por <b>Marco Tulio Gracia C.</b>, Presidente, y <b>Marco Tulio Milla</b>, Secretario.",
+    "Part of the written text lies under the patches in the photograph and is not transcribed here; the certificate itself is held by the Secretary.": "Parte del texto escrito queda bajo los parches en la fotografía y no se transcribe aquí; el certificado mismo lo custodia el Secretario."
    }
   };
 

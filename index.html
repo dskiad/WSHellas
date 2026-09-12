@@ -1027,10 +1027,13 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 #visitors .letter-line{margin:0 0 14px;font:400 15.5px/1.55 'EB Garamond',Georgia,serif;color:#d2cdc4}
 #visitors .letter-shot{margin:0 0 14px;padding:12px;background:#070708;
   border:1px solid rgba(255,255,255,.08);border-radius:8px}
-/* the certificate is a tall portrait; unchecked it makes its card four
-   times the height of the letter beside it */
-#visitors .letter-shot img{display:block;width:auto;max-width:100%;max-height:460px;
-  height:auto;margin:0 auto;border-radius:5px}
+/* A letter is a tall portrait; unchecked it makes its card several times
+   the height of whatever stands beside it, so the box is fixed and the
+   sheet is fitted inside it. The box must have a size of its own: with
+   width:auto an image that has not loaded yet is 0 x 0, and a lazy image
+   with no area is never judged to be in view, so it never loads at all. */
+#visitors .letter-shot img{display:block;width:100%;height:460px;object-fit:contain;
+  border-radius:5px;background:#0b0b0c}
 #visitors .letter-shot figcaption{margin-top:10px;font:400 14.5px/1.5 'EB Garamond',Georgia,serif;color:#c9c4bb}
 #visitors .letter-shot figcaption b{color:#f2e7c5;font-weight:600}
 
@@ -1065,6 +1068,7 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
 
 @media(max-width:900px){ #visitors .letters{grid-template-columns:1fr} }
 @media(max-width:600px){
+  #visitors .letter-shot img{height:360px}
   #visitors .letter{padding:18px 16px 16px}
   #visitors .letter-body{padding:4px 14px 16px}
   #visitors .letter-body p{text-align:left;font-size:15px}
@@ -1829,49 +1833,55 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
       <li class="pic"><span class="no">10</span>
         <figure><img src="assets/visit-cartagena-founder.jpg?v=20260912" alt="The front of a Founder's colours: Raised a Freemason Branded a Widows Son, and a Corinthian helmet patch reading GREECE" loading="lazy">
           <figcaption>A <b>Founder&rsquo;s</b> colours &mdash; and upon them a Corinthian helmet for <b>Greece</b>.</figcaption></figure></li>
+      <li class="pic"><span class="no">11</span>
+        <figure><img src="assets/cartagena-crest.jpg?v=20260912" alt="The crest of Widows Sons Chapter Cartagena: a helmed skull bearing the square and compasses, crossed swords and laurel" loading="lazy">
+          <figcaption>The crest of <b>Chapter Cartagena</b> &mdash; the helmed skull between crossed swords.</figcaption></figure></li>
+      <li class="pic"><span class="no">12</span>
+        <figure><img src="assets/cartagena-colours.jpg?v=20260912" alt="The colours of Widows Sons Cartagena Colombia: the WIDOWS SONS rocker, the winged oval, and the CARTAGENA and COLOMBIA rockers" loading="lazy">
+          <figcaption>The colours of <b>Cartagena &middot; Colombia</b>, read as their three pieces.</figcaption></figure></li>
     </ul>
 
     <div class="place"><svg class="flag" viewBox="0 0 12 8" aria-hidden="true"><rect width="12" height="8" fill="#fff"/><rect width="12" height="2.667" fill="#0073CF"/><rect y="5.333" width="12" height="2.667" fill="#0073CF"/><g fill="#0073CF"><circle cx="6" cy="4" r=".42"/><circle cx="4.6" cy="3.3" r=".42"/><circle cx="7.4" cy="3.3" r=".42"/><circle cx="4.6" cy="4.7" r=".42"/><circle cx="7.4" cy="4.7" r=".42"/></g></svg><div><h3>Honduras</h3><span>Grand Chapter Honduras</span></div></div>
     <ul class="memo-grid">
-      <li class="pic"><span class="no">11</span>
+      <li class="pic"><span class="no">13</span>
         <figure><img src="assets/visit-honduras-colours.jpg?v=20260912" alt="The back of a Grand Chapter Honduras vest: WIDOWS SONS rocker, the winged oval, GRAND CHAPTER and HONDURAS" loading="lazy">
           <figcaption>The colours of <b>Grand Chapter Honduras</b>.</figcaption></figure></li>
-      <li class="pic"><span class="no">12</span>
+      <li class="pic"><span class="no">14</span>
         <figure><img src="assets/visit-honduras-brother.jpg?v=20260912" alt="A brother of Grand Chapter Honduras, his vest carrying a Widows Sons El Salvador patch and the name Milla" loading="lazy">
           <figcaption>A brother of Honduras &mdash; his vest also carries <b>Widows Sons El Salvador</b>.</figcaption></figure></li>
-      <li class="pic"><span class="no">13</span>
+      <li class="pic"><span class="no">15</span>
         <figure><img src="assets/visit-honduras-brethren.jpg?v=20260912" alt="The Founding President of Chapter Hellas with two brethren of Grand Chapter Honduras" loading="lazy">
           <figcaption>With the brethren of Honduras &mdash; the <b>Founder</b> and the <b>President</b> of that Grand Chapter.</figcaption></figure></li>
     </ul>
 
     <div class="place"><svg class="flag" viewBox="0 0 12 8" aria-hidden="true"><rect width="12" height="8" fill="#009B3A"/><path d="M6 1 11 4 6 7 1 4z" fill="#FEDF00"/><circle cx="6" cy="4" r="1.6" fill="#002776"/></svg><div><h3>Brasil</h3><span>Grand Chapter Brasil &middot; Santa Catarina</span></div></div>
     <ul class="memo-grid">
-      <li class="tok"><span class="no">14</span>
+      <li class="tok"><span class="no">16</span>
         <figure><img src="assets/token-brasil-bridge.webp?v=20260912" alt="Grand Chapter Brasil Santa Catarina token: the Hercilio Luz bridge within a chain border" loading="lazy">
           <figcaption><b>Santa Catarina</b> &mdash; the bridge, in a border of chain.</figcaption></figure></li>
-      <li class="tok"><span class="no">15</span>
+      <li class="tok"><span class="no">17</span>
         <figure><img src="assets/token-brasil-ws.webp?v=20260912" alt="Grand Chapter Brasil Santa Catarina token, reverse: the letters WS on the Brazilian colours" loading="lazy">
           <figcaption><b>Santa Catarina</b> &mdash; reverse: WS upon the Brazilian colours.</figcaption></figure></li>
-      <li class="pic"><span class="no">16</span>
+      <li class="pic"><span class="no">18</span>
         <figure><img src="assets/visit-brasil-colours.jpg?v=20260912" alt="The back of a Grand Chapter Brasil vest: WIDOWS SONS rocker, the winged oval, GRAND CHAPTER BRASIL and SANTA CATARINA" loading="lazy">
           <figcaption>The colours of <b>Grand Chapter Brasil &middot; Santa Catarina</b>.</figcaption></figure></li>
     </ul>
 
     <div class="place"><img class="flag" src="assets/official-emblem.webp?v=20260912" alt="" style="border-radius:50%;width:24px;height:24px;background:#fff"><div><h3>Widows Sons MRA</h3><span>The Association itself</span></div></div>
     <ul class="memo-grid">
-      <li class="tok"><span class="no">17</span>
+      <li class="tok"><span class="no">19</span>
         <figure><img src="assets/token-ws20-brotherhood.webp?v=20260912" alt="Twenty Years of Brotherhood coin, 1998 to 2018, with the all-seeing eye in a radiant triangle" loading="lazy">
           <figcaption><b>Twenty Years of Brotherhood</b>, 1998&ndash;2018.</figcaption></figure></li>
-      <li class="tok"><span class="no">18</span>
+      <li class="tok"><span class="no">20</span>
         <figure><img src="assets/token-ws20-founded.webp?v=20260912" alt="The reverse of the anniversary coin: Founded and Established, February 18, 1998, upon the shape of Illinois" loading="lazy">
           <figcaption><b>Founded &amp; established</b>, 18 February 1998, upon Illinois.</figcaption></figure></li>
-      <li class="tok"><span class="no">19</span>
+      <li class="tok"><span class="no">21</span>
         <figure><img src="assets/token-raised-branded.webp?v=20260912" alt="A coin reading Raised a Freemason, Branded a Widows Sons, with a motorcycle engine at its centre" loading="lazy">
           <figcaption><b>Raised a Freemason, branded a Widows Son.</b></figcaption></figure></li>
     </ul>
 
     <div class="place"><svg class="flag" viewBox="0 0 12 8" aria-hidden="true"><rect width="12" height="2.667" fill="#fff"/><rect y="2.667" width="12" height="2.667" fill="#00966E"/><rect y="5.333" width="12" height="2.667" fill="#D62612"/></svg><svg class="flag" viewBox="0 0 12 8" aria-hidden="true"><rect width="12" height="8" fill="#9E3039"/><rect y="3.2" width="12" height="1.6" fill="#fff"/></svg><div><h3>Bulgaria &middot; Latvia</h3><span>Awaited</span></div></div>
-    <p class="awaited"><b>No token or photograph has reached the Chapter from Bulgaria or Latvia yet</b> &mdash; send them and they will be entered here as Nos. 20 onward.</p>
+    <p class="awaited"><b>No token or photograph has reached the Chapter from Bulgaria or Latvia yet</b> &mdash; send them and they will be entered here as Nos. 22 onward.</p>
 
     <div class="part-locator">PART 08.2 — THE LETTERS</div>
     <div class="letters">
@@ -1883,6 +1893,10 @@ footer .fmotto{font-family:'Mrs Saint Delafield',cursive; color:var(--crimson-br
             <span>Widows Sons MRA &middot; Brotherhood &mdash; Loyalty &mdash; Honor &mdash; Service</span></div>
         </header>
         <p class="letter-line">A letter of congratulation on the raising of Chapter Hellas, sent from Cartagena de Indias on 12 September 2026 over the hand of its President.</p>
+        <figure class="letter-shot">
+          <img src="assets/letter-cartagena-sheet.jpg?v=20260912" alt="The letter from Widows Sons Chapter Cartagena on its letterhead, signed by its President" loading="lazy">
+          <figcaption>The letter on the letterhead of <b>Chapter Cartagena</b>, under the hand of its President.</figcaption>
+        </figure>
         <details class="letter-open">
           <summary>Read the letter as it was sent</summary>
           <div class="letter-body" lang="en">
@@ -1976,7 +1990,7 @@ document.getElementById('navlinks').addEventListener('click', function(e){
   if(e.target.closest('a') && window.innerWidth <= 920){ this.style.display = 'none'; }
 });
 document.head.appendChild(Object.assign(document.createElement('script'),
-  { src:'assets/ws-lang.js?v=20260912d', defer:true }));
+  { src:'assets/ws-lang.js?v=20260912e', defer:true }));
 </script>
 </body>
 </html>

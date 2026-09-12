@@ -182,11 +182,22 @@ A country from which nothing has yet arrived is named all the same, under
 **Part 08.2 holds the letters** — what other Chapters have written to Hellas.
 Each is a card: the sender under its flag, one line saying what the letter is,
 and the letter itself behind a `<details>` button, since a letter runs far
-longer than the one sentence a memo card is allowed. Cartagena's letter carries
-a link to the file as it arrived (`assets/letter-cartagena-2026.docx`);
-Honduras sent a certificate, so that card shows the photograph, its own reading,
-and says plainly that the patches lying on it cover part of the written text,
+longer than the one sentence a memo card is allowed. Each card also shows the
+document itself. Cartagena's letter carries a link to the file as it arrived
+(`assets/letter-cartagena-2026.docx`); Honduras sent a certificate, so that
+card says plainly that the patches lying on it cover part of the written text,
 which is therefore not transcribed.
+
+A letter is a tall portrait, so `.letter-shot img` is given a **fixed box with
+`object-fit:contain`**, not `width:auto` with a `max-height`. The box must have
+a size of its own: an image that has not loaded yet is 0 × 0 under `width:auto`,
+and a `loading="lazy"` image with no area is never judged to be in view, so it
+never loads at all. That is a silent failure — the picture is simply absent.
+
+When counting broken images in this section, **take `loading` off and await
+every `load` event** rather than scrolling and waiting. A scroll sweep races
+the lazy loader and reports images broken that are merely still in flight;
+that false alarm cost a round here.
 
 **A letter is a quotation, not the site's prose, so it is never translated.**
 It stays in the tongue it was written in whatever tongue the page is read in —

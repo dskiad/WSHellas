@@ -226,7 +226,6 @@
     "The <b>Founding President</b> with the brethren of Colombia and their <b>National President</b>.": "Ο <b>Ιδρυτής Πρόεδρος</b> με τους αδελφούς της Κολομβίας και τον <b>Εθνικό Πρόεδρό</b> τους.",
     "With a brother of <b>Widows Sons Colombia</b> at Cartagena.": "Με αδελφό των <b>Widows Sons Colombia</b> στην Καρταχένα.",
     "A <b>Founder’s</b> colours — and upon them a Corinthian helmet for <b>Greece</b>.": "Τα χρώματα ενός <b>Ιδρυτή</b> — και επ’ αυτών κορινθιακή περικεφαλαία για την <b>Ελλάδα</b>.",
-    "Founders": "Ιδρυτές",
     "All other members": "Όλα τα λοιπά μέλη",
     "PART 08.3 — THE CUSTOM": "ΜΕΡΟΣ 08.3 — ΤΟ ΕΘΙΜΟ",
     "PART 08.2 — THE LETTERS": "ΜΕΡΟΣ 08.2 — ΟΙ ΕΠΙΣΤΟΛΕΣ",
@@ -245,7 +244,8 @@
     "<b>No token or photograph has reached the Chapter from Bulgaria or Latvia yet</b> — send them and they will be entered here as Nos. 22 onward.": "<b>Ουδέν νόμισμα ή φωτογραφία έχει φθάσει στο Chapter από Βουλγαρία ή Λετονία έως τώρα</b> — αποστείλατέ τα και θα καταχωρηθούν εδώ ως αρ. 22 και εξής.",
     "The crest of <b>Chapter Cartagena</b> — the helmed skull between crossed swords.": "Το έμβλημα του <b>Chapter Cartagena</b> — η κρανοφόρος νεκροκεφαλή ανάμεσα σε χιαστί ξίφη.",
     "The colours of <b>Cartagena · Colombia</b>, read as their three pieces.": "Τα χρώματα της <b>Καρταχένα · Κολομβία</b>, αναγνωσμένα στα τρία τους μέρη.",
-    "The letter on the letterhead of <b>Chapter Cartagena</b>, under the hand of its President.": "Η επιστολή στο επιστολόχαρτο του <b>Chapter Cartagena</b>, διά χειρός του Προέδρου της."
+    "The letter on the letterhead of <b>Chapter Cartagena</b>, under the hand of its President.": "Η επιστολή στο επιστολόχαρτο του <b>Chapter Cartagena</b>, διά χειρός του Προέδρου της.",
+    "Presidents · Most Honorary (Grand Masters) · Founders": "Πρόεδροι · Ύψιστοι Επίτιμοι (Μεγάλοι Διδάσκαλοι) · Ιδρυτές"
    },
    "es": {
     "The Motto of Chapter Hellas": "El Lema del Chapter Hellas",
@@ -438,7 +438,6 @@
     "The <b>Founding President</b> with the brethren of Colombia and their <b>National President</b>.": "El <b>Presidente Fundador</b> con los hermanos de Colombia y su <b>Presidente Nacional</b>.",
     "With a brother of <b>Widows Sons Colombia</b> at Cartagena.": "Con un hermano de <b>Widows Sons Colombia</b> en Cartagena.",
     "A <b>Founder’s</b> colours — and upon them a Corinthian helmet for <b>Greece</b>.": "Los colores de un <b>Fundador</b> — y sobre ellos un casco corintio por <b>Grecia</b>.",
-    "Founders": "Fundadores",
     "All other members": "Todos los demás miembros",
     "PART 08.3 — THE CUSTOM": "PARTE 08.3 — LA COSTUMBRE",
     "PART 08.2 — THE LETTERS": "PARTE 08.2 — LAS CARTAS",
@@ -457,7 +456,8 @@
     "<b>No token or photograph has reached the Chapter from Bulgaria or Latvia yet</b> — send them and they will be entered here as Nos. 22 onward.": "<b>Ninguna moneda ni fotografía ha llegado aún al Chapter desde Bulgaria o Letonia</b> — envíenlas y quedarán asentadas aquí a partir del n.º 22.",
     "The crest of <b>Chapter Cartagena</b> — the helmed skull between crossed swords.": "El emblema del <b>Chapter Cartagena</b> — la calavera con casco entre espadas cruzadas.",
     "The colours of <b>Cartagena · Colombia</b>, read as their three pieces.": "Los colores de <b>Cartagena · Colombia</b>, leídos en sus tres piezas.",
-    "The letter on the letterhead of <b>Chapter Cartagena</b>, under the hand of its President.": "La carta en el membrete del <b>Chapter Cartagena</b>, de puño y letra de su Presidente."
+    "The letter on the letterhead of <b>Chapter Cartagena</b>, under the hand of its President.": "La carta en el membrete del <b>Chapter Cartagena</b>, de puño y letra de su Presidente.",
+    "Presidents · Most Honorary (Grand Masters) · Founders": "Presidentes · Muy Honorarios (Grandes Maestros) · Fundadores"
    }
   };
 

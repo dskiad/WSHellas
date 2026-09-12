@@ -137,11 +137,11 @@ the height was set for.
 ## The pin
 
 Section 03 shows the extra regalia: one pin in two borders. The **braided
-silver** is the Founders'; the **plain gold edge**, with no silver on the
-triangle at all, is worn by all other members. (It was the President's and the
-Grand Master's until the Chapter settled it on the Founders.) The centre and
-the wings are identical — the border is the whole distinction. Both are cut out
-of their white ground and carried as WebP.
+silver** is for the **Presidents, the Most Honorary (Grand Masters) and the
+Founders**; the **plain gold edge**, with no silver on the triangle at all, is
+worn by all other members. The centre and the wings are identical — the border
+is the whole distinction. Both are cut out of their white ground and carried
+as WebP.
 
 **The section shows and does not explain.** It carries the two pins — each an
 image, its name and the one line saying who wears it — and nothing else; the

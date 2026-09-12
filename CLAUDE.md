@@ -127,12 +127,19 @@ magnet Ø10 × 3 mm. Settle which governs before anything is struck.
 
 ## The visitors' memo
 
-Section 08 is the Chapter's register of its meetings with Widows Sons abroad:
-what was given, what was received, and from whose hand. Each entry is a card —
-the chapter's flag and name, the token photographed on both faces, a reading of
-each face, and three fields for the exchange. A field the Chapter cannot yet
-fill reads *to be entered by the Secretary* rather than being invented; the
-site's own idiom for a blank, as with a vacant office.
+Section 08 is the Chapter's register of its meetings with Widows Sons abroad.
+It is a register, not an essay: one card per item, **numbered in a single run
+across the whole section** and carrying one sentence, so the Chapter can correct
+an entry by its number. The cards are grouped by country, each group under a
+flag; `li.tok` holds a token cut to its disc, `li.pic` a photograph in its
+frame. Insert an item and every later number moves — in the page, in the
+`Nos. N onward` line of the awaited note, **and in `assets/ws-lang.js`**, where
+each caption is keyed by its English.
+
+A country from which nothing has yet arrived is named all the same, under
+`p.awaited`, rather than left out. A field the Chapter cannot yet fill reads
+*to be entered by the Secretary* rather than being invented; the site's own
+idiom for a blank, as with a vacant office.
 
 Coin photographs are cut by **fitting a circle**, not by flood-fill: the disc is
 found from its texture (a struck coin is busy, a desk is smooth), the largest

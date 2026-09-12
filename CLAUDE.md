@@ -106,6 +106,34 @@ the Greek and Spanish text, so a renumbering must re-key those entries and bump
 the number inside each translation, or the moved sections quietly revert to
 English.
 
+## The officers' vests
+
+Section 04 and `officers.html` both show each duty written on the back of a
+real vest — `assets/officers-vest-bg.jpg`, an actual photograph, laid in as an
+`<img>` behind the text, not a shape drawn in CSS.
+
+**All of its geometry lives in `assets/officer-vest-background.css`** — the
+height, the insets, the width and size of the duty block. That file is linked
+after each page's own `<style>`, so it is the one authority; the
+`officer-vest-sizing-2026` blocks in the two pages are deliberately empty and
+must stay that way. They once held a second, conflicting set of numbers, and
+the pages were drawn by whichever rule happened to come last.
+
+The photograph is 420 × 525, so its own proportion is h = 1.25 w, and it is
+laid in with `object-fit:fill` — it takes the shape of its box. Section 04
+lays the offices out in three grids of quite different width (440px for the
+leadership row, 260px for the four principal officers, 356px for the nine
+others), so **each grid is given a height of its own**. One height across all
+three stretched the same vest by 14% on the widest card and by 85% on the
+narrowest, and the narrow ones read as ribbons rather than garments.
+
+A card carries a fixed height, so **the longest duty must be measured into
+it** — the Secretary's is the longest in the Chapter, and 600px used to cut
+the last three lines off it under `overflow:hidden`, silently. Change a duty,
+a font or a column count and re-measure `scrollHeight - clientHeight` on every
+shell, **in all three tongues**: Greek and Spanish run longer than the English
+the height was set for.
+
 ## The pin
 
 Section 03 sets out the extra regalia: one pin in two borders. The **braided

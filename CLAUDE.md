@@ -136,15 +136,27 @@ the height was set for.
 
 ## The pin
 
-Section 03 sets out the extra regalia: one pin in two borders. The **braided
-silver** is the President's and the one presented to a Grand Master; the **plain
-gold edge**, with no silver on the triangle at all, is worn by every member. The
-centre and the wings are identical — the border is the whole distinction. Both
-are cut out of their white ground and carried as WebP.
+Section 03 shows the extra regalia: one pin in two borders. The **braided
+silver** is the Founders'; the **plain gold edge**, with no silver on the
+triangle at all, is worn by all other members. (It was the President's and the
+Grand Master's until the Chapter settled it on the Founders.) The centre and
+the wings are identical — the border is the whole distinction. Both are cut out
+of their white ground and carried as WebP.
+
+**The section shows and does not explain.** It carries the two pins — each an
+image, its name and the one line saying who wears it — and nothing else; the
+lead, the readings of each border, the *how it is told* notes and the rule on
+the common centre were all struck out at the Chapter's word. The two cards are
+levelled with `align-items:stretch` and `h3{margin-top:auto}`, because the two
+photographs are framed a little differently and the titles otherwise sit at
+different heights.
 
 The technical part sits behind a `<details>` button and opens on demand: a
 native disclosure, no script, and its summary is translated like any other
-block.
+block. The specification sheet inside it reports `naturalWidth === 0` until the
+button is opened — a closed `<details>` keeps it out of layout, so lazy loading
+never fires. That is correct, not a broken image; check it with the disclosure
+open.
 
 The measurements on the page (50 × 32 mm, 2.5–3.0 mm thick, N52 magnet) are
 taken from `assets/pin-spec-sheet.jpg`, which is the sheet shown — **and that
